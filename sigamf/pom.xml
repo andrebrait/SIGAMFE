@@ -25,25 +25,8 @@
 						<target>1.8</target>
 						<showDeprecation>true</showDeprecation>
 						<showWarnings>true</showWarnings>
+						<optimize>true</optimize>
 					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.bsc.maven</groupId>
-					<artifactId>maven-processor-plugin</artifactId>
-					<executions>
-						<execution>
-							<id>process</id>
-							<goals>
-								<goal>process</goal>
-							</goals>
-							<phase>generate-sources</phase>
-							<configuration>
-								<processors>
-									<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-								</processors>
-							</configuration>
-						</execution>
-					</executions>
 					<dependencies>
 						<dependency>
 							<groupId>org.hibernate</groupId>
@@ -74,9 +57,9 @@
 			<version>18.0</version>
 		</dependency>
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.35</version>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>1.1.8</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -98,7 +81,10 @@
 			<artifactId>spring-data-jpa</artifactId>
 			<version>1.8.0.RELEASE</version>
 		</dependency>
-
-
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
 	</dependencies>
 </project>
