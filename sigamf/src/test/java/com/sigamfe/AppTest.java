@@ -1,4 +1,4 @@
-package com.sigamf;
+package com.sigamfe;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

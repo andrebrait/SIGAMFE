@@ -1,4 +1,4 @@
-package com.sigamf;
+package com.sigamfe;
 
 /**
  * Hello world!

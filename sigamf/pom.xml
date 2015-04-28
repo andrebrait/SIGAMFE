@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com</groupId>
-	<artifactId>sigamf</artifactId>
+	<artifactId>sigamfe</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>sigamf</name>
+	<name>sigamfe</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
