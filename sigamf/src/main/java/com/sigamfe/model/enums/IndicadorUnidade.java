@@ -8,11 +8,11 @@ import lombok.Getter;
 import com.sigamfe.exception.SIGAMFException;
 
 /**
- * The Enum IndicadorSN.
+ * The Enum IndicadorUnidade.
  */
-public enum IndicadorSN {
+public enum IndicadorUnidade {
 
-	SIM("S", "Sim"), NAO("N", "Não");
+	UNIDADE("UN", "Unidade"), DUZIA("DZ", "Dúzia");
 
 	@Getter
 	private String codigo;
@@ -20,31 +20,30 @@ public enum IndicadorSN {
 	@Getter
 	private String label;
 
-	private IndicadorSN(String codigo, String label) {
+	private IndicadorUnidade(String codigo, String label) {
 		this.codigo = codigo;
 		this.label = label;
 	}
 
 	@Converter(autoApply = true)
-	public static class IndicadorSNConverter implements AttributeConverter<IndicadorSN, String> {
+	public static class IndicadorUnidadeConverter implements AttributeConverter<IndicadorUnidade, String> {
 
 		@Override
-		public String convertToDatabaseColumn(IndicadorSN attribute) {
+		public String convertToDatabaseColumn(IndicadorUnidade attribute) {
 			return attribute.getCodigo();
 		}
 
 		@Override
-		public IndicadorSN convertToEntityAttribute(String dbData) {
+		public IndicadorUnidade convertToEntityAttribute(String dbData) {
 			switch (dbData) {
-			case "S":
-				return SIM;
-			case "N":
-				return NAO;
+			case "UN":
+				return UNIDADE;
+			case "DZ":
+				return DUZIA;
 			default:
 				throw new SIGAMFException(new IllegalArgumentException(dbData + "não é um valor conhecido"));
 			}
 		}
 
 	}
-
 }

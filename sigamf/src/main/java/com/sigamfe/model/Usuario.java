@@ -25,6 +25,8 @@ public class Usuario extends BaseEntity<String> {
 
 	private static final long serialVersionUID = 345500811513095092L;
 
+	// TODO INCOMPLETO
+
 	@Id
 	@Size(min = 6, max = 50)
 	@Column(name = "LOGIN", length = 50)
