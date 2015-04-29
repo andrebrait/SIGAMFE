@@ -1,7 +1,7 @@
 package com.sigamfe.model;
 
-import java.util.Date;
-
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -15,12 +15,14 @@ import lombok.EqualsAndHashCode;
 
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.model.enums.IndicadorUnidade;
-import com.sigamfe.model.enums.IndicadorUnidade.IndicadorUnidadeConverter;
+import com.sigamfe.model.enums.converters.IndicadorUnidadeConverter;
 
 @Entity
 @Table(name = "material")
 @Data
 @EqualsAndHashCode(callSuper = false, of = "codigo")
+@AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
+		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
 public class Material extends BaseEntity<Integer> {
 
 	private static final long serialVersionUID = 2542442156839971981L;
@@ -46,13 +48,6 @@ public class Material extends BaseEntity<Integer> {
 	@Convert(converter = IndicadorUnidadeConverter.class)
 	@Column(name = "UNIDADE", nullable = false, length = 2)
 	private IndicadorUnidade indicadorUnidade;
-
-	@NotNull
-	@Column(name = "DATACRIACAO", nullable = false)
-	private Date dataCriacao;
-
-	@Column(name = "DATAATUALIZACAO", nullable = true)
-	private Date dataAtualizacao;
 
 	@Override
 	public Integer getId() {
