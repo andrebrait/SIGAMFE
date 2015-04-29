@@ -1,4 +1,4 @@
-package com.sigamfe.springdata.jpa.config;
+package com.sigamfe.configuration.springdata.jpa.config;
 
 import java.util.Properties;
 

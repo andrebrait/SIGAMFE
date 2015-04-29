@@ -13,11 +13,12 @@ public class MainWindow {
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
-					MainWindow window = new MainWindow();
+					final MainWindow window = new MainWindow();
 					window.frame.setVisible(true);
-				} catch (Exception e) {
+				} catch (final Exception e) {
 					e.printStackTrace();
 				}
 			}

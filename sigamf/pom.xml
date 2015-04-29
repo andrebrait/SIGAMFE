@@ -87,5 +87,11 @@
 			<artifactId>validation-api</artifactId>
 			<version>1.1.0.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jasypt</groupId>
+			<artifactId>jasypt-hibernate4</artifactId>
+			<version>1.9.2</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 </project>

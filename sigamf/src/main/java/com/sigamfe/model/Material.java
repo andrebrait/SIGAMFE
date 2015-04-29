@@ -47,7 +47,7 @@ public class Material extends BaseEntity<Integer> {
 	@Size(min = 2, max = 2)
 	@Convert(converter = IndicadorUnidadeConverter.class)
 	@Column(name = "UNIDADE", nullable = false, length = 2)
-	private IndicadorUnidade indicadorUnidade;
+	private IndicadorUnidade unidade;
 
 	@Override
 	public Integer getId() {
