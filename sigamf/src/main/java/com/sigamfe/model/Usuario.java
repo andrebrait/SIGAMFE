@@ -21,7 +21,9 @@ import org.hibernate.annotations.TypeDef;
 import org.jasypt.hibernate4.type.EncryptedStringType;
 
 import com.sigamfe.model.base.BaseEntity;
+import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.model.enums.PermissaoUsuario;
+import com.sigamfe.model.enums.converters.IndicadorSNConverter;
 import com.sigamfe.model.enums.converters.PermissaoUsuarioConverter;
 
 /**
@@ -41,7 +43,7 @@ import com.sigamfe.model.enums.converters.PermissaoUsuarioConverter;
 @EqualsAndHashCode(callSuper = false, of = "login")
 @AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
-public class Usuario extends BaseEntity<String> {
+public class Usuario extends BaseEntity {
 
 	private static final long serialVersionUID = 345500811513095092L;
 
@@ -69,7 +71,12 @@ public class Usuario extends BaseEntity<String> {
 
 	@NotNull
 	@Digits(integer = 11, fraction = 0)
-	@Column(name = "telefone", nullable = false)
+	@Column(name = "TELEFONE", nullable = false)
 	private Long telefone;
+
+	@NotNull
+	@Convert(converter = IndicadorSNConverter.class)
+	@Column(name = "INDICADORATIVO", nullable = false, length = 1)
+	private IndicadorSN ativo;
 
 }

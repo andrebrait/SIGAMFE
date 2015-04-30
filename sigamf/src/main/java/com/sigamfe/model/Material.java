@@ -1,11 +1,14 @@
 package com.sigamfe.model;
 
+import java.util.List;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
@@ -22,11 +25,11 @@ import com.sigamfe.model.enums.converters.IndicadorUnidadeConverter;
 @Entity
 @Table(name = "material")
 @Data
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = "pedidosMaterial")
 @EqualsAndHashCode(callSuper = false, of = "codigo")
 @AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
-public class Material extends BaseEntity<Integer> {
+public class Material extends BaseEntity {
 
 	private static final long serialVersionUID = 2542442156839971981L;
 
@@ -54,5 +57,8 @@ public class Material extends BaseEntity<Integer> {
 	@Convert(converter = IndicadorUnidadeConverter.class)
 	@Column(name = "UNIDADE", nullable = false, length = 2)
 	private IndicadorUnidade unidade;
+
+	@OneToMany(mappedBy = "material")
+	private List<PedidoMaterial> pedidosMaterial;
 
 }
