@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.Type;
@@ -27,11 +28,12 @@ import com.sigamfe.model.base.BaseEntity;
 		name = "encryptedString",
 		typeClass = EncryptedStringType.class,
 		parameters = {
-				@Parameter(name = "encryptorRegisteredName", value = "strongHibernateStringEncryptor")
+			@Parameter(name = "encryptorRegisteredName", value = "strongHibernateStringEncryptor")
 		})
 @Entity
 @Table(name = "usuario")
 @Data
+@ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false, of = "login")
 @AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
@@ -49,15 +51,5 @@ public class Usuario extends BaseEntity<String> {
 	@Column(name = "SENHA", nullable = false, length = 1000)
 	@Type(type = "encryptedString")
 	private String senha;
-
-	@Override
-	public String getId() {
-		return login;
-	}
-
-	@Override
-	public void setId(String id) {
-		login = id;
-	}
 
 }

@@ -3,7 +3,7 @@ package com.sigamfe.model.enums.converters;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import com.sigamfe.exception.SIGAMFException;
+import com.sigamfe.exception.EnumException;
 import com.sigamfe.model.enums.IndicadorSN;
 
 @Converter(autoApply = true)
@@ -16,12 +16,12 @@ public class IndicadorSNConverter implements AttributeConverter<IndicadorSN, Str
 
 	@Override
 	public IndicadorSN convertToEntityAttribute(String dbData) {
-		for (IndicadorSN ind : IndicadorSN.values()) {
+		for (final IndicadorSN ind : IndicadorSN.values()) {
 			if (ind.getCodigo().equals(dbData)) {
 				return ind;
 			}
 		}
-		throw new SIGAMFException(new IllegalArgumentException(dbData + "não é um valor conhecido"));
+		throw new EnumException(dbData);
 	}
 
 }

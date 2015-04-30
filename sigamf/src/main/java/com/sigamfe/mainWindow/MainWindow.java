@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
+import com.sigamfe.model.Material;
+
 public class MainWindow {
 
 	private JFrame frame;
@@ -18,6 +20,7 @@ public class MainWindow {
 				try {
 					final MainWindow window = new MainWindow();
 					window.frame.setVisible(true);
+					System.out.println(new Material().toString());
 				} catch (final Exception e) {
 					e.printStackTrace();
 				}

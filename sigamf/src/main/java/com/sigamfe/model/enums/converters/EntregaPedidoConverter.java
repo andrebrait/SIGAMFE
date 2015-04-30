@@ -4,19 +4,19 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 import com.sigamfe.exception.EnumException;
-import com.sigamfe.model.enums.IndicadorUnidade;
+import com.sigamfe.model.enums.EntregaPedido;
 
 @Converter(autoApply = true)
-public class IndicadorUnidadeConverter implements AttributeConverter<IndicadorUnidade, String> {
+public class EntregaPedidoConverter implements AttributeConverter<EntregaPedido, String> {
 
 	@Override
-	public String convertToDatabaseColumn(IndicadorUnidade attribute) {
+	public String convertToDatabaseColumn(EntregaPedido attribute) {
 		return attribute.getCodigo();
 	}
 
 	@Override
-	public IndicadorUnidade convertToEntityAttribute(String dbData) {
-		for (final IndicadorUnidade ind : IndicadorUnidade.values()) {
+	public EntregaPedido convertToEntityAttribute(String dbData) {
+		for (final EntregaPedido ind : EntregaPedido.values()) {
 			if (ind.getCodigo().equals(dbData)) {
 				return ind;
 			}
