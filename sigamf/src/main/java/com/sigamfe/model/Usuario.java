@@ -3,9 +3,11 @@ package com.sigamfe.model;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -19,6 +21,8 @@ import org.hibernate.annotations.TypeDef;
 import org.jasypt.hibernate4.type.EncryptedStringType;
 
 import com.sigamfe.model.base.BaseEntity;
+import com.sigamfe.model.enums.PermissaoUsuario;
+import com.sigamfe.model.enums.converters.PermissaoUsuarioConverter;
 
 /**
  * The Class Usuario.
@@ -42,6 +46,7 @@ public class Usuario extends BaseEntity<String> {
 	private static final long serialVersionUID = 345500811513095092L;
 
 	@Id
+	@NotNull
 	@Size(min = 6, max = 50)
 	@Column(name = "LOGIN", length = 50)
 	private String login;
@@ -51,5 +56,20 @@ public class Usuario extends BaseEntity<String> {
 	@Column(name = "SENHA", nullable = false, length = 1000)
 	@Type(type = "encryptedString")
 	private String senha;
+
+	@NotNull
+	@Convert(converter = PermissaoUsuarioConverter.class)
+	@Column(name = "PERMISSAO", nullable = false, length = 1)
+	private PermissaoUsuario permissao;
+
+	@NotNull
+	@Digits(integer = 11, fraction = 0)
+	@Column(name = "CPF", nullable = false, unique = true)
+	private Long cpf;
+
+	@NotNull
+	@Digits(integer = 11, fraction = 0)
+	@Column(name = "telefone", nullable = false)
+	private Long telefone;
 
 }

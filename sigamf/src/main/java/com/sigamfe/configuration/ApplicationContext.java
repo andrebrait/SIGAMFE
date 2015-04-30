@@ -1,4 +1,4 @@
-package com.sigamfe.configuration.springdata.jpa.config;
+package com.sigamfe.configuration;
 
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.hibernate4.encryptor.HibernatePBEStringEncryptor;

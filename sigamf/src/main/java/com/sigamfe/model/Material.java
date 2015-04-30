@@ -31,6 +31,7 @@ public class Material extends BaseEntity<Integer> {
 	private static final long serialVersionUID = 2542442156839971981L;
 
 	@Id
+	@NotNull
 	@Digits(fraction = 0, integer = 4)
 	@Column(name = "CODIGO", precision = 4)
 	private Integer codigo;
