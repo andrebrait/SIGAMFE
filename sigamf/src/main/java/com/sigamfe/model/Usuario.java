@@ -27,7 +27,7 @@ import com.sigamfe.model.base.BaseEntity;
 		name = "encryptedString",
 		typeClass = EncryptedStringType.class,
 		parameters = {
-				@Parameter(name = "encryptorRegisteredName", value = "hibernateSenhaEncryptor")
+				@Parameter(name = "encryptorRegisteredName", value = "strongHibernateStringEncryptor")
 		})
 @Entity
 @Table(name = "usuario")
@@ -45,7 +45,8 @@ public class Usuario extends BaseEntity<String> {
 	private String login;
 
 	@NotNull
-	@Column(name = "SENHA", nullable = false, length = 256)
+	@Size(min = 6, max = 15)
+	@Column(name = "SENHA", nullable = false, length = 1000)
 	@Type(type = "encryptedString")
 	private String senha;
 
