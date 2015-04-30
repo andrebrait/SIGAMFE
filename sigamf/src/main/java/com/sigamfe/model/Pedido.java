@@ -1,11 +1,13 @@
 package com.sigamfe.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,6 +22,10 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import com.sigamfe.model.base.BaseEntity;
+import com.sigamfe.model.enums.EntregaPedido;
+import com.sigamfe.model.enums.EstadoPedido;
+import com.sigamfe.model.enums.FormaPagamento;
+import com.sigamfe.model.enums.converters.FormaPagamentoConverter;
 
 @Entity
 @Table(name = "pedido")
@@ -43,7 +49,31 @@ public class Pedido extends BaseEntity {
 	@JoinColumn(name = "CLIENTE", nullable = false)
 	private Cliente cliente;
 
-	private String formaPagamento; // FIXME Mudar para Enum?
+	@NotNull
+	@Convert(converter = FormaPagamentoConverter.class)
+	@Column(name = "FORMAPAGAMENTO", nullable = false, length = 2)
+	private FormaPagamento formaPagamento;
+
+	@NotNull
+	@Digits(fraction = 2, integer = 1)
+	@Column(name = "DECIMAL", nullable = false)
+	private Float desconto;
+
+	private EntregaPedido turnoEntrega;
+
+	private String enderecoEntrega;
+
+	private Long taxaEntrega;
+
+	private Long total;
+
+	private Date dataEntrega;
+
+	private Date dataDevolucao;
+
+	private EstadoPedido estado;
+
+	private String observação;
 
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.REMOVE)
 	private List<PedidoMaterial> materiaisPedido;
