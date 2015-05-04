@@ -1,10 +1,11 @@
-package com.sigamfe.configuration.springdata.jpa.config;
+package com.sigamfe.configuration;
 
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.mariadb.jdbc.MySQLDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -27,9 +28,10 @@ public class PersistenceContext {
 
 	@Bean(destroyMethod = "close")
 	DataSource dataSource(Environment env) {
-		HikariConfig dataSourceConfig = new HikariConfig();
-		dataSourceConfig.setDriverClassName(env.getRequiredProperty("db.driver"));
-		dataSourceConfig.setJdbcUrl(env.getRequiredProperty("db.url"));
+		final HikariConfig dataSourceConfig = new HikariConfig();
+		final DataSource datasource = new MySQLDataSource(env.getRequiredProperty("db.hostname"),
+				Integer.parseInt(env.getRequiredProperty("db.port")), env.getRequiredProperty("db.database"));
+		dataSourceConfig.setDataSource(datasource);
 		dataSourceConfig.setUsername(env.getRequiredProperty("db.username"));
 		dataSourceConfig.setPassword(env.getRequiredProperty("db.password"));
 
@@ -38,12 +40,12 @@ public class PersistenceContext {
 
 	@Bean
 	LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, Environment env) {
-		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+		final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryBean.setDataSource(dataSource);
 		entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 		entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty("entitymanager.packages.to.scan"));
 
-		Properties jpaProperties = new Properties();
+		final Properties jpaProperties = new Properties();
 
 		// Configures the used database dialect. This allows Hibernate to create
 		// SQL
@@ -74,7 +76,7 @@ public class PersistenceContext {
 
 	@Bean
 	JpaTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-		JpaTransactionManager transactionManager = new JpaTransactionManager();
+		final JpaTransactionManager transactionManager = new JpaTransactionManager();
 		transactionManager.setEntityManagerFactory(entityManagerFactory);
 		return transactionManager;
 	}

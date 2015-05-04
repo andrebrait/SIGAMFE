@@ -56,7 +56,7 @@ public class Pedido extends BaseEntity {
 
 	@NotNull
 	@Digits(fraction = 2, integer = 1)
-	@Column(name = "DECIMAL", nullable = false)
+	@Column(name = "DESCONTO", nullable = false)
 	private Float desconto;
 
 	private EntregaPedido turnoEntrega;
