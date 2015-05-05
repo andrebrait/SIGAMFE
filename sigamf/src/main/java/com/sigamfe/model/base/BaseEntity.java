@@ -1,12 +1,17 @@
 package com.sigamfe.model.base;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
+import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.ToString;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 /**
  * The Class BaseEntity.
@@ -17,12 +22,21 @@ import lombok.ToString;
 @Data
 @ToString
 @MappedSuperclass
-public abstract class BaseEntity implements Serializable {
+public abstract class BaseEntity<ID extends Serializable> implements Serializable {
 
 	private static final long serialVersionUID = -5479406946881675009L;
 
-	protected Date dataAtualizacao;
+	@LastModifiedDate
+	@Convert(converter = LocalDateTimeConverter.class)
+	protected LocalDateTime dataAtualizacao;
 
-	protected Date dataCriacao;
+	@NotNull
+	@CreatedDate
+	@Convert(converter = LocalDateTimeConverter.class)
+	protected LocalDateTime dataCriacao;
+
+	public abstract ID getId();
+
+	public abstract void setId(ID id);
 
 }

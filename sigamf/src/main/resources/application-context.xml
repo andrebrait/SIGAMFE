@@ -14,9 +14,8 @@
     http://www.springframework.org/schema/tx/spring-tx.xsd
     http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
     
-    <context:component-scan base-package="com.sigamfe.configuration" />
-    <context:component-scan base-package="com.sigamfe.model" />
-    <context:component-scan base-package="com.sigamfe.repository" />
-    <context:component-scan base-package="com.sigamfe.aspect" />
+    <context:component-scan base-package="com.sigamfe" />
+    
+    
     
     </beans>

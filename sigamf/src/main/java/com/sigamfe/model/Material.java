@@ -7,6 +7,8 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -26,17 +28,22 @@ import com.sigamfe.model.enums.converters.IndicadorUnidadeConverter;
 @Table(name = "material")
 @Data
 @ToString(callSuper = true, exclude = "pedidosMaterial")
-@EqualsAndHashCode(callSuper = false, of = "codigo")
-@AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
+@EqualsAndHashCode(callSuper = false, of = "id")
+@AttributeOverrides(value = {
+		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
-public class Material extends BaseEntity {
+public class Material extends BaseEntity<Integer> {
 
 	private static final long serialVersionUID = 2542442156839971981L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+	private Integer id;
+
 	@NotNull
 	@Digits(fraction = 0, integer = 4)
-	@Column(name = "CODIGO", precision = 4)
+	@Column(name = "CODIGO", precision = 4, nullable = false, unique = true)
 	private Integer codigo;
 
 	@Size(max = 200)
@@ -46,12 +53,12 @@ public class Material extends BaseEntity {
 	@NotNull
 	@Digits(fraction = 2, integer = 6)
 	@Column(name = "VALORALUG", nullable = false, precision = 8, scale = 2)
-	private Double valorAluguel;
+	private Float valorAluguel;
 
 	@NotNull
 	@Digits(fraction = 2, integer = 6)
 	@Column(name = "VALORREPO", nullable = false, precision = 8, scale = 2)
-	private Double valorReposicao;
+	private Float valorReposicao;
 
 	@NotNull
 	@Convert(converter = IndicadorUnidadeConverter.class)

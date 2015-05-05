@@ -36,7 +36,7 @@ import com.sigamfe.model.enums.converters.IndicadorSNConverter;
 		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Cliente extends BaseEntity {
+public abstract class Cliente extends BaseEntity<Integer> {
 
 	private static final long serialVersionUID = -3608712352669272090L;
 

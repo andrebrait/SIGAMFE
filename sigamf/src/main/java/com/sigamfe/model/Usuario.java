@@ -5,6 +5,8 @@ import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
@@ -34,23 +36,27 @@ import com.sigamfe.model.enums.converters.PermissaoUsuarioConverter;
 		name = "encryptedString",
 		typeClass = EncryptedStringType.class,
 		parameters = {
-			@Parameter(name = "encryptorRegisteredName", value = "strongHibernateStringEncryptor")
+				@Parameter(name = "encryptorRegisteredName", value = "strongHibernateStringEncryptor")
 		})
 @Entity
 @Table(name = "usuario")
 @Data
 @ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false, of = "login")
+@EqualsAndHashCode(callSuper = false, of = "id")
 @AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
-public class Usuario extends BaseEntity {
+public class Usuario extends BaseEntity<Integer> {
 
 	private static final long serialVersionUID = 345500811513095092L;
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
+	private Integer id;
+
 	@NotNull
 	@Size(min = 6, max = 50)
-	@Column(name = "LOGIN", length = 50)
+	@Column(name = "LOGIN", length = 50, nullable = false, unique = true)
 	private String login;
 
 	@NotNull

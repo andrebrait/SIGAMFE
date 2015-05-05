@@ -18,6 +18,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import com.sigamfe.model.PedidoMaterial.PedidoMaterialPK;
 import com.sigamfe.model.base.BaseEntity;
 
 @Entity
@@ -28,7 +29,7 @@ import com.sigamfe.model.base.BaseEntity;
 @AttributeOverrides(value = {
 		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
-public class PedidoMaterial extends BaseEntity {
+public class PedidoMaterial extends BaseEntity<PedidoMaterialPK> {
 
 	private static final long serialVersionUID = -2163115726384201247L;
 
@@ -42,12 +43,12 @@ public class PedidoMaterial extends BaseEntity {
 
 		@NotNull
 		@Digits(fraction = 0, integer = 6)
-		@Column(name = "CODPEDIDO", nullable = false)
+		@Column(name = "IDPEDIDO", nullable = false, precision = 6, scale = 0)
 		private Integer codPedido;
 
 		@NotNull
 		@Digits(fraction = 0, integer = 4)
-		@Column(name = "CODMATERIAL", nullable = false)
+		@Column(name = "IDMATERIAL", nullable = false, precision = 4, scale = 0)
 		private Integer codMaterial;
 	}
 
@@ -56,12 +57,12 @@ public class PedidoMaterial extends BaseEntity {
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "CODPEDIDO", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "IDPEDIDO", nullable = false, insertable = false, updatable = false)
 	private Pedido pedido;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "CODMATERIAL", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "IDMATERIAL", nullable = false, insertable = false, updatable = false)
 	private Material material;
 
 	@NotNull
