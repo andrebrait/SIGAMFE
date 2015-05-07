@@ -101,7 +101,7 @@ public class Pedido extends BaseEntity<Integer> {
 
 	@Size(max = 500)
 	@Column(name = "OBSERVACAO", nullable = true, length = 500)
-	private String observação;
+	private String observacao;
 
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.REMOVE)
 	private List<PedidoMaterial> materiaisPedido;
