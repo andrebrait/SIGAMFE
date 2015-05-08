@@ -1,4 +1,4 @@
-package com.sigamfe.gui;
+package com.sigamfe.view;
 
 import java.awt.EventQueue;
 import java.awt.Window.Type;
@@ -15,17 +15,24 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
-import com.sigamfe.configuration.PersistenceContext;
+import com.sigamfe.configuration.ApplicationConfiguration;
+import com.sigamfe.configuration.PersistenceConfiguration;
+import com.sigamfe.model.Usuario;
+import com.sigamfe.model.enums.IndicadorSN;
+import com.sigamfe.model.enums.PermissaoUsuario;
+import com.sigamfe.repository.UsuarioRepository;
 
-@Configuration
-@ComponentScan(basePackages = { "com.sigamfe" })
-public class MainWindow {
+@Component
+public class MainWindowSwing {
 
 	private JFrame login;
+
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
 	private static SpringApplication app;
 	private JTextField usernameField;
@@ -36,11 +43,11 @@ public class MainWindow {
 	 */
 	public static void main(String[] args) {
 
-		PersistenceContext.setDB_DATABASE("sigamfe");
-		PersistenceContext.setDB_HOSTNAME("localhost");
-		PersistenceContext.setDB_PORT("52000");
+		PersistenceConfiguration.setDB_DATABASE("sigamfe");
+		PersistenceConfiguration.setDB_HOSTNAME("localhost");
+		PersistenceConfiguration.setDB_PORT("52000");
 
-		app = new SpringApplication(MainWindow.class);
+		app = new SpringApplication(ApplicationConfiguration.class);
 		app.setWebEnvironment(false);
 		app.setShowBanner(false);
 		app.setHeadless(false);
@@ -49,7 +56,7 @@ public class MainWindow {
 			@Override
 			public void run() {
 				try {
-					final MainWindow window = new MainWindow();
+					final MainWindowSwing window = new MainWindowSwing();
 					window.login.setVisible(true);
 				} catch (final Exception e) {
 					e.printStackTrace();
@@ -59,14 +66,11 @@ public class MainWindow {
 
 	}
 
-	public static void main2(String[] args) {
-
-	}
-
 	/**
 	 * Create the application.
 	 */
-	public MainWindow() {
+	@Autowired
+	public MainWindowSwing() {
 		initialize();
 	}
 
@@ -110,8 +114,14 @@ public class MainWindow {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				app.run();
-
 				JOptionPane.showMessageDialog(login, "Você entrou!", "Login com sucesso", JOptionPane.INFORMATION_MESSAGE);
+				final Usuario user = new Usuario();
+				user.setCpf(1479524689L);
+				user.setLogin("andrebrait");
+				user.setSenha("pitchula");
+				user.setPermissao(PermissaoUsuario.ADMINISTRADOR);
+				user.setAtivo(IndicadorSN.SIM);
+				usuarioRepository.save(user);
 			}
 		});
 
@@ -127,44 +137,44 @@ public class MainWindow {
 				.createParallelGroup(Alignment.TRAILING)
 				.addGroup(
 						groupLayout
-						.createSequentialGroup()
-						.addContainerGap()
-						.addGroup(
-								groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(usernameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(passwordLabel))
+								.createSequentialGroup()
+								.addContainerGap()
+								.addGroup(
+										groupLayout.createParallelGroup(Alignment.TRAILING)
+												.addComponent(usernameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(passwordLabel))
 								.addGap(18)
 								.addGroup(
 										groupLayout.createParallelGroup(Alignment.LEADING, false).addComponent(usernameField)
-										.addComponent(passwordField, 226, 226, Short.MAX_VALUE)).addGap(7))
-				.addGroup(
-												groupLayout.createSequentialGroup().addGap(80)
-												.addComponent(btnEntrar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGap(49)
-												.addComponent(btnCancelar, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE).addGap(74)));
+												.addComponent(passwordField, 226, 226, Short.MAX_VALUE)).addGap(7))
+										.addGroup(
+						groupLayout.createSequentialGroup().addGap(80)
+								.addComponent(btnEntrar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGap(49)
+								.addComponent(btnCancelar, GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE).addGap(74)));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(
 						groupLayout
-						.createSequentialGroup()
-						.addGap(41)
-						.addGroup(
-								groupLayout
-								.createParallelGroup(Alignment.BASELINE)
-								.addComponent(usernameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(usernameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-										GroupLayout.PREFERRED_SIZE))
-										.addGap(18)
-										.addGroup(
-												groupLayout
+								.createSequentialGroup()
+								.addGap(41)
+								.addGroup(
+										groupLayout
+												.createParallelGroup(Alignment.BASELINE)
+												.addComponent(usernameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(usernameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+														GroupLayout.PREFERRED_SIZE))
+								.addGap(18)
+								.addGroup(
+										groupLayout
 												.createParallelGroup(Alignment.BASELINE)
 												.addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 														GroupLayout.PREFERRED_SIZE)
-														.addComponent(passwordLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-														.addGap(18)
-														.addGroup(
-																groupLayout.createParallelGroup(Alignment.BASELINE)
-																.addComponent(btnEntrar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-																.addComponent(btnCancelar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-																.addGap(110)));
+												.addComponent(passwordLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addGap(18)
+								.addGroup(
+										groupLayout.createParallelGroup(Alignment.BASELINE)
+												.addComponent(btnEntrar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+												.addComponent(btnCancelar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addGap(110)));
 		login.getContentPane().setLayout(groupLayout);
 	}
 }

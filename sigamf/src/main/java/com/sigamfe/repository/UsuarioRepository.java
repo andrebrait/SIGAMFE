@@ -1,9 +1,12 @@
 package com.sigamfe.repository;
 
+import org.springframework.stereotype.Component;
+
 import com.sigamfe.model.Usuario;
 import com.sigamfe.repository.base.BaseRepository;
 
-public interface UsuarioRepository extends UsuarioRepositoryCustom, BaseRepository<Usuario, Integer> {
+@Component
+public interface UsuarioRepository extends BaseRepository<Usuario, Integer>, UsuarioRepositoryCustom {
 
 	public Usuario findByLogin(String login);
 
