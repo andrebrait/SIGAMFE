@@ -1,8 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1">
-	<!-- TODO Add Nodes -->
-</AnchorPane>
 
+<AnchorPane prefHeight="320.0" prefWidth="240.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <Pane fx:id="MainPane" prefHeight="320.0" prefWidth="320.0">
+         <children>
+            <Pane layoutX="33.0" layoutY="95.0">
+               <children>
+                  <TextField layoutX="106.0" />
+                  <Label layoutY="4.0" text="Nome de usuário" />
+               </children>
+            </Pane>
+            <Pane layoutX="33.0" layoutY="135.0">
+               <children>
+                  <TextField layoutX="106.0" />
+                  <Label layoutY="4.0" text="Senha" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
