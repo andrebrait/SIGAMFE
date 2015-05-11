@@ -5,24 +5,40 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="320.0" prefWidth="240.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane prefHeight="320.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane fx:id="MainPane" prefHeight="320.0" prefWidth="320.0">
-         <children>
-            <Pane layoutX="33.0" layoutY="95.0">
-               <children>
-                  <TextField layoutX="106.0" />
-                  <Label layoutY="4.0" text="Nome de usuário" />
-               </children>
-            </Pane>
-            <Pane layoutX="33.0" layoutY="135.0">
-               <children>
-                  <TextField layoutX="106.0" />
-                  <Label layoutY="4.0" text="Senha" />
-               </children>
-            </Pane>
-         </children>
-      </Pane>
+      <TabPane prefHeight="344.0" prefWidth="316.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Buceta">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="305.0" prefWidth="303.0">
+                     <children>
+                        <Pane fx:id="MainPane" prefHeight="314.0" prefWidth="316.0">
+                           <children>
+                              <Pane layoutX="33.0" layoutY="95.0">
+                                 <children>
+                                    <TextField fx:id="username" layoutX="106.0" />
+                                    <Label layoutY="4.0" text="Nome de usuário" />
+                                 </children>
+                              </Pane>
+                              <Pane fx:id="password" layoutX="33.0" layoutY="135.0">
+                                 <children>
+                                    <TextField layoutX="106.0" />
+                                    <Label layoutY="4.0" text="Senha" />
+                                 </children>
+                              </Pane>
+                           </children>
+                        </Pane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Caralho">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
