@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
-import com.sigamfe.controller.MainWindowController;
+import com.sigamfe.controller.LoginController;
 
 @Configuration
 @Lazy
@@ -24,8 +24,8 @@ public class ScreensConfiguration {
 	}
 
 	@Bean
-	public MainWindowController mainWindowController() {
-		return new MainWindowController();
+	public LoginController mainWindowController() {
+		return new LoginController();
 	}
 
 }
