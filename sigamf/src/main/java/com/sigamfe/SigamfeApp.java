@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.sigamfe.configuration.ApplicationConfiguration;
 import com.sigamfe.configuration.PersistenceConfiguration;
 import com.sigamfe.configuration.ScreensConfiguration;
 import com.sigamfe.repository.UsuarioRepository;
@@ -22,7 +21,7 @@ public class SigamfeApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
-		final ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
+		final ApplicationContext context = new AnnotationConfigApplicationContext(SigamfeApp.class);
 		final ScreensConfiguration screens = context.getBean(ScreensConfiguration.class);
 		screens.setPrimaryStage(primaryStage);
 		System.out.println(usuarioRepository);

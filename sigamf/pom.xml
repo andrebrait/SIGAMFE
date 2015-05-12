@@ -114,6 +114,12 @@
 			<artifactId>javassist</artifactId>
 			<version>3.19.0-GA</version>
 		</dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>font-awesome</artifactId>
+			<version>4.3.0-2</version>
+		</dependency>
+
 	</dependencies>
 
 	<properties>
@@ -173,7 +179,7 @@
 				<artifactId>javafx-maven-plugin</artifactId>
 				<version>8.1.2</version>
 				<configuration>
-					<mainClass>com.sigamfe.gui.MainWindow</mainClass>
+					<mainClass>com.sigamfe.gui.SigamfeApp</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>
