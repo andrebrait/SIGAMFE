@@ -29,14 +29,14 @@ import com.zaxxer.hikari.HikariDataSource;
  */
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories("com.sigamfe.repository")
+@EnableJpaRepositories(basePackages = "com.sigamfe.repository")
 public class PersistenceConfiguration {
 
 	@Getter
 	@Setter
-	private static String DB_HOSTNAME, DB_PORT, DB_DATABASE;
+	private static String DB_HOSTNAME, DB_PORT;
 
-	private static final String DB_USERNAME = "sigamfe", DB_PASSWORD = "TEHASi", AUTOCONNECTION_TEST_QUERY = "SELECT 1";
+	private static final String DB_USERNAME = "sigamfe", DB_PASSWORD = "TEHASi", AUTOCONNECTION_TEST_QUERY = "SELECT 1", DB_DATABASE = "sigamfe";
 	private static final boolean AUTO_COMMIT = true;
 
 	@Bean(destroyMethod = "close")
