@@ -17,11 +17,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import org.hibernate.annotations.Parameter;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
-import org.jasypt.hibernate4.type.EncryptedStringType;
-
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.model.enums.PermissaoUsuario;
@@ -32,12 +27,6 @@ import com.sigamfe.model.enums.converters.PermissaoUsuarioConverter;
  * The Class Usuario.
  */
 
-@TypeDef(
-		name = "encryptedString",
-		typeClass = EncryptedStringType.class,
-		parameters = {
-				@Parameter(name = "encryptorRegisteredName", value = "strongHibernateStringEncryptor")
-		})
 @Entity
 @Table(name = "usuario")
 @Data
@@ -60,9 +49,7 @@ public class Usuario extends BaseEntity<Integer> {
 	private String login;
 
 	@NotNull
-	@Size(min = 6, max = 15)
 	@Column(name = "SENHA", nullable = false, length = 1000)
-	@Type(type = "encryptedString")
 	private String senha;
 
 	@NotNull

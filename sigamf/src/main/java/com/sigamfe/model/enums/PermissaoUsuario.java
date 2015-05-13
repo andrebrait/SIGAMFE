@@ -4,7 +4,7 @@ import lombok.Getter;
 
 public enum PermissaoUsuario {
 
-	VENDEDOR("V", "Vendedor"), ADMINISTRADOR("A", "Administrador");
+	VENDEDOR("ROLE_USER", "Vendedor"), ADMINISTRADOR("ROLE_ADMIN", "Administrador");
 
 	@Getter
 	private String codigo;
