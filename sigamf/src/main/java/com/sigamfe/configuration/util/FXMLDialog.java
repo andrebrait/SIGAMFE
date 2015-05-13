@@ -15,6 +15,7 @@ import javafx.util.Callback;
 import com.sigamfe.controller.iface.DialogController;
 
 public class FXMLDialog extends Stage {
+
 	public FXMLDialog(DialogController controller, URL fxml, Window owner) {
 		this(controller, fxml, owner, StageStyle.DECORATED);
 	}
