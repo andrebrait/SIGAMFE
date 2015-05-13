@@ -18,7 +18,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import com.sigamfe.model.base.LocalDateTimeConverter;
 import com.sigamfe.model.enums.EstadoPedido;
@@ -49,7 +49,7 @@ public class PedidoPendencia implements Serializable {
 	private EstadoPedido estado;
 
 	@NotNull
-	@CreationTimestamp
+	@CreatedDate
 	@Convert(converter = LocalDateTimeConverter.class)
 	@Column(name = "DATAMUDANCA", nullable = false)
 	protected LocalDateTime dataMudanca;

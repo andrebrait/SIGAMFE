@@ -1,5 +1,7 @@
 package com.sigamfe;
 
+import java.time.LocalDateTime;
+
 import javafx.application.Application;
 import javafx.application.Preloader;
 import javafx.stage.Stage;
@@ -14,6 +16,8 @@ import org.springframework.context.annotation.Lazy;
 import com.sigamfe.configuration.PersistenceConfiguration;
 import com.sigamfe.configuration.ScreensConfiguration;
 import com.sigamfe.model.Usuario;
+import com.sigamfe.model.enums.IndicadorSN;
+import com.sigamfe.model.enums.PermissaoUsuario;
 import com.sigamfe.repository.UsuarioRepository;
 
 @Lazy
@@ -60,6 +64,18 @@ public class SigamfeApp extends Application {
 
 		screens.setPrimaryStage(stage);
 		screens.loginDialog().show();
+
+		if (usuarioRepository.count() == 0) {
+			final Usuario usuario = new Usuario();
+			usuario.setLogin("admSigamfe");
+			usuario.setSenhaEncriptando(pooledPBEStringEncryptor, "sigPass");
+			usuario.setAtivo(IndicadorSN.SIM);
+			usuario.setCpf("014.795.246-89");
+			usuario.setDataCriacao(LocalDateTime.now());
+			usuario.setTelefone(930040829L);
+			usuario.setPermissao(PermissaoUsuario.ADMINISTRADOR);
+			usuarioRepository.save(usuario);
+		}
 
 		final Usuario usuario = usuarioRepository.findByLogin("admSigamfe");
 		System.out.println(usuario);

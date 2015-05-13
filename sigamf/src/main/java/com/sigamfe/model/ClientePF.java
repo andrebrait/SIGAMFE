@@ -11,6 +11,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 @Entity
 @Table(name = "clientepf")
 @Data
@@ -26,9 +28,10 @@ public class ClientePF extends Cliente {
 
 	private static final long serialVersionUID = -7903983878811741635L;
 
-	@Digits(fraction = 0, integer = 11)
-	@Column(name = "CPF", nullable = true, unique = true)
-	private Long cpf;
+	@Size(max = 15)
+	@CPF
+	@Column(name = "CPF", nullable = true, unique = true, length = 15)
+	private String cpf;
 
 	@Digits(fraction = 0, integer = 11)
 	@Column(name = "CNH", nullable = true, unique = true)

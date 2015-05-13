@@ -20,7 +20,7 @@ import com.sigamfe.controller.system.ErrorController;
 @Lazy
 public class ScreensConfiguration {
 
-	public static final String viewPath = "com/sigamfe/view/";
+	public static final String viewPath = "/com/sigamfe/view/";
 
 	@Getter
 	@Setter
