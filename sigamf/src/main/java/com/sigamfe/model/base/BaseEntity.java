@@ -10,8 +10,8 @@ import javax.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.ToString;
 
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 /**
  * The Class BaseEntity.
@@ -26,12 +26,12 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
 
 	private static final long serialVersionUID = -5479406946881675009L;
 
-	@LastModifiedDate
+	@UpdateTimestamp
 	@Convert(converter = LocalDateTimeConverter.class)
 	protected LocalDateTime dataAtualizacao;
 
 	@NotNull
-	@CreatedDate
+	@CreationTimestamp
 	@Convert(converter = LocalDateTimeConverter.class)
 	protected LocalDateTime dataCriacao;
 

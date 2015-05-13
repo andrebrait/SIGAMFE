@@ -26,19 +26,16 @@ import lombok.ToString;
 
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.model.enums.EntregaPedido;
-import com.sigamfe.model.enums.EstadoPedido;
 import com.sigamfe.model.enums.FormaPagamento;
 import com.sigamfe.model.enums.converters.EntregaPedidoConverter;
-import com.sigamfe.model.enums.converters.EstadoPedidoConverter;
 import com.sigamfe.model.enums.converters.FormaPagamentoConverter;
 
 @Entity
 @Table(name = "pedido")
 @Data
-@ToString(callSuper = true, exclude = "materiaisPedido")
+@ToString(callSuper = true, exclude = { "materiaisPedido", "pendencias" })
 @EqualsAndHashCode(callSuper = false, of = "id")
-@AttributeOverrides(value = {
-		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
+@AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
 public class Pedido extends BaseEntity<Integer> {
 
@@ -94,15 +91,13 @@ public class Pedido extends BaseEntity<Integer> {
 	@Column(name = "DATADEVOLUCAO", nullable = false)
 	private Date dataDevolucao;
 
-	@NotNull
-	@Convert(converter = EstadoPedidoConverter.class)
-	@Column(name = "ESTADO", nullable = false, length = 1)
-	private EstadoPedido estado;
-
 	@Size(max = 500)
 	@Column(name = "OBSERVACAO", nullable = true, length = 500)
 	private String observacao;
 
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.REMOVE)
 	private List<PedidoMaterial> materiaisPedido;
+
+	@OneToMany(mappedBy = "pedido", cascade = CascadeType.REMOVE)
+	private List<PedidoPendencia> pendencias;
 }

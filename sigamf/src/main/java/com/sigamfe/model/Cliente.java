@@ -15,7 +15,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -30,10 +29,9 @@ import com.sigamfe.model.enums.converters.IndicadorSNConverter;
 @Entity
 @Table(name = "cliente")
 @Data
-@ToString(callSuper = true, exclude = "pedidos")
+@ToString(callSuper = true, exclude = { "pedidos", "telefones" })
 @EqualsAndHashCode(callSuper = false, of = "id")
-@AttributeOverrides(value = {
-		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
+@AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Cliente extends BaseEntity<Integer> {
@@ -56,13 +54,14 @@ public abstract class Cliente extends BaseEntity<Integer> {
 	private String endereco;
 
 	@NotNull
-	@Digits(fraction = 0, integer = 11)
-	@Column(name = "TELEFONE1", nullable = false)
-	private Long telefone1;
+	@Size(max = 200)
+	@Column(name = "ENDERECOENTREGA", nullable = false, length = 200)
+	private String enderecoEntrega;
 
-	@Digits(fraction = 0, integer = 11)
-	@Column(name = "TELEFONE2", nullable = true)
-	private Long telefone2;
+	@NotNull
+	@Convert(converter = IndicadorSNConverter.class)
+	@Column(name = "INDICADORHISTORICOBLOQUEIO", nullable = false, length = 1)
+	private IndicadorSN jaFoiBloqueado;
 
 	@NotNull
 	@Convert(converter = IndicadorSNConverter.class)
@@ -71,5 +70,8 @@ public abstract class Cliente extends BaseEntity<Integer> {
 
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
 	private List<Pedido> pedidos;
+
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
+	private List<TelefoneCliente> telefones;
 
 }

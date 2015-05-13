@@ -4,7 +4,8 @@ import lombok.Getter;
 
 public enum EstadoPedido {
 
-	ABERTO("A", "Aberto"), PAGO("P", "Pago"), IRREGULAR("I", "Irregular"), FECHADO("F", "Fechado");
+	ABERTO("AB", "Aberto"), PAGO("PG", "Pago"), PENDENCIA_ALUGUEL("PA", "Pendência (aluguel)"), PENDENCIA("PE", "Pendência"), REPOSICAO("RP",
+			"Reposição"), PENDENCIA_TOTAL("PT", "Pendência (total)"), FECHADO("FE", "Fechado");
 
 	@Getter
 	private String codigo;

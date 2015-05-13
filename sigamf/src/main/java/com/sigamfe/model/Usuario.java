@@ -17,6 +17,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import org.hibernate.validator.constraints.br.CPF;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 
 import com.sigamfe.model.base.BaseEntity;
@@ -60,9 +61,10 @@ public class Usuario extends BaseEntity<Integer> {
 	private PermissaoUsuario permissao;
 
 	@NotNull
-	@Digits(integer = 11, fraction = 0)
-	@Column(name = "CPF", nullable = false, unique = true)
-	private Long cpf;
+	@CPF
+	@Size(max = 15)
+	@Column(name = "CPF", nullable = false, unique = true, length = 15)
+	private String cpf;
 
 	@NotNull
 	@Digits(integer = 11, fraction = 0)

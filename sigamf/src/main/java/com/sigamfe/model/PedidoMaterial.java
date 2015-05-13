@@ -26,8 +26,7 @@ import com.sigamfe.model.base.BaseEntity;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false, of = "id")
-@AttributeOverrides(value = {
-		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
+@AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
 public class PedidoMaterial extends BaseEntity<PedidoMaterialPK> {
 
@@ -73,4 +72,8 @@ public class PedidoMaterial extends BaseEntity<PedidoMaterialPK> {
 	@Digits(fraction = 0, integer = 6)
 	@Column(name = "QUANTIDADEREPOSICAO", nullable = true)
 	private Integer quantidadeReposicao;
+
+	@Digits(fraction = 0, integer = 6)
+	@Column(name = "QUANTIDADEDEVOLVIDA", nullable = true)
+	private Integer quantidadeDevolvida;
 }
