@@ -3,13 +3,17 @@ package com.sigamfe.configuration;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import lombok.Setter;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
 
+import com.sigamfe.configuration.util.FXMLDialog;
 import com.sigamfe.controller.LoginController;
+import com.sigamfe.controller.system.ErrorController;
 
 @Configuration
 @Lazy
@@ -19,13 +23,36 @@ public class ScreensConfiguration {
 	private Stage primaryStage;
 
 	public void showScreen(Parent screen) {
-		primaryStage.setScene(new Scene(screen, 800, 600));
+		showScreen(screen, 800, 600);
+	}
+
+	public void showScreen(Parent screen, Integer sizeH, Integer sizeV) {
+		primaryStage.setScene(new Scene(screen, sizeH, sizeV));
 		primaryStage.show();
 	}
 
 	@Bean
-	public LoginController mainWindowController() {
-		return new LoginController();
+	@Scope("prototype")
+	public FXMLDialog errorDialog() {
+		return new FXMLDialog(errorController(), getClass().getResource("error.fxml"), primaryStage, StageStyle.UNDECORATED);
+	}
+
+	@Bean
+	@Scope("prototype")
+	public ErrorController errorController() {
+		return new ErrorController();
+	}
+
+	@Bean
+	@Scope("prototype")
+	public FXMLDialog loginDialog() {
+		return new FXMLDialog(loginController(), getClass().getResource("login.fxml"), primaryStage, StageStyle.UNDECORATED);
+	}
+
+	@Bean
+	@Scope("prototype")
+	public LoginController loginController() {
+		return new LoginController(this);
 	}
 
 }

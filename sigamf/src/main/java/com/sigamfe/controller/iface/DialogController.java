@@ -1,6 +1,6 @@
 package com.sigamfe.controller.iface;
 
-import com.sigamfe.controller.base.FXMLDialog;
+import com.sigamfe.configuration.util.FXMLDialog;
 
 public interface DialogController {
 	void setDialog(FXMLDialog dialog);

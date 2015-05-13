@@ -4,7 +4,10 @@ import lombok.Getter;
 
 public enum PermissaoUsuario {
 
-	VENDEDOR("ROLE_USER", "Vendedor"), ADMINISTRADOR("ROLE_ADMIN", "Administrador");
+	VENDEDOR("ROLE_USER", "V", "Vendedor"), ADMINISTRADOR("ROLE_ADMIN", "A", "Administrador");
+
+	@Getter
+	private String codigoSpringSecurity;
 
 	@Getter
 	private String codigo;
@@ -12,7 +15,8 @@ public enum PermissaoUsuario {
 	@Getter
 	private String label;
 
-	private PermissaoUsuario(String codigo, String label) {
+	private PermissaoUsuario(String codigoSpringSecurity, String codigo, String label) {
+		this.codigoSpringSecurity = codigoSpringSecurity;
 		this.codigo = codigo;
 		this.label = label;
 	}

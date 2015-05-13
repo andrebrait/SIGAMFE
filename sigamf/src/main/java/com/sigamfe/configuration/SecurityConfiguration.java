@@ -2,10 +2,13 @@ package com.sigamfe.configuration;
 
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.springsecurity3.authentication.encoding.PBEPasswordEncoder;
+import org.springframework.boot.autoconfigure.security.AuthenticationManagerConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
@@ -14,7 +17,7 @@ public class SecurityConfiguration {
 	@Bean
 	public PooledPBEStringEncryptor encryptor() {
 		final PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
-		encryptor.setAlgorithm("PBEWithMD5AndTripleDES");
+		encryptor.setAlgorithm("PBEWithMD5AndDES");
 		encryptor.setPassword("SIGAMFE_Pass_###71662####$%$%");
 		encryptor.setPoolSize(4);
 		encryptor.setKeyObtentionIterations(2);
@@ -36,4 +39,9 @@ public class SecurityConfiguration {
 		return auth;
 	}
 
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationProvider authenticationProvider) {
+		final AuthenticationManagerBuilder authenticationManagerBuilder = new AuthenticationManagerBuilder(objectPostProcessor);
+		authenticationManagerBuilder.setSharedObject(sharedType, object);jdbcAuthentication()
+	}
 }

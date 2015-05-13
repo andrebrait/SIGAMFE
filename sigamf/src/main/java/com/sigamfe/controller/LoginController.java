@@ -3,8 +3,6 @@ package com.sigamfe.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
-import lombok.Setter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,20 +10,17 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 
+import com.sigamfe.configuration.PersistenceConfiguration;
 import com.sigamfe.configuration.ScreensConfiguration;
-import com.sigamfe.controller.base.FXMLDialog;
+import com.sigamfe.configuration.util.FXMLDialog;
 import com.sigamfe.controller.iface.DialogController;
 
-@Controller
 public class LoginController implements DialogController {
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	private final ScreensConfiguration screens;
-
-	@Setter
 	private FXMLDialog dialog;
 
 	public LoginController(ScreensConfiguration screens) {
@@ -33,13 +28,16 @@ public class LoginController implements DialogController {
 	}
 
 	@FXML
-	private Label header;
+	public Label labelErro;
 
 	@FXML
-	private TextField username;
+	public TextField username;
 
 	@FXML
-	private TextField password;
+	public TextField password;
+
+	@FXML
+	public Label labelServidor;
 
 	@FXML
 	public void login() {
@@ -48,12 +46,24 @@ public class LoginController implements DialogController {
 			authToken = authenticationManager.authenticate(authToken);
 			SecurityContextHolder.getContext().setAuthentication(authToken);
 		} catch (final AuthenticationException e) {
-			header.setText("Usuário ou senha errados. Tente novamente.");
-			header.setTextFill(Color.DARKRED);
+			labelErro.setText("Erro: usuário ou senha inválidos");
 			return;
 		}
 		dialog.close();
-		screens.showScreen(screens.customerDataScreen());
+	}
+
+	@FXML
+	public void changeServer() {
+
+	}
+
+	@Override
+	public void setDialog(FXMLDialog dialog) {
+		this.dialog = dialog;
+	}
+
+	private void updateLabelServidor() {
+		this.labelServidor.setText(PersistenceConfiguration.getDB_HOSTNAME() + ":" + PersistenceConfiguration.getDB_PORT());
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.sigamfe.controller.base;
+package com.sigamfe.configuration.util;
 
 import java.io.IOException;
 import java.net.URL;

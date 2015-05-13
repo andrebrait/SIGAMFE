@@ -17,6 +17,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
+
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.model.enums.PermissaoUsuario;
@@ -71,5 +73,13 @@ public class Usuario extends BaseEntity<Integer> {
 	@Convert(converter = IndicadorSNConverter.class)
 	@Column(name = "INDICADORATIVO", nullable = false, length = 1)
 	private IndicadorSN ativo;
+
+	public String getSenhaDecriptada(PooledPBEStringEncryptor encryptor) {
+		return encryptor.decrypt(senha);
+	}
+
+	public void setSenhaEncriptando(PooledPBEStringEncryptor encryptor, String senha) {
+		setSenha(encryptor.encrypt(senha));
+	}
 
 }

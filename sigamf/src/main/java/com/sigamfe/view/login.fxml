@@ -1,44 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="320.0" prefWidth="240.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="320.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sigamfe.controller.LoginController">
    <children>
-      <TabPane prefHeight="344.0" prefWidth="316.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-          <Tab text="Buceta">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="305.0" prefWidth="303.0">
-                     <children>
-                        <Pane fx:id="MainPane" prefHeight="314.0" prefWidth="316.0">
-                           <children>
-                              <Pane layoutX="33.0" layoutY="95.0">
-                                 <children>
-                                    <TextField fx:id="username" layoutX="106.0" />
-                                    <Label layoutY="4.0" text="Nome de usuário" />
-                                 </children>
-                              </Pane>
-                              <Pane fx:id="password" layoutX="33.0" layoutY="135.0">
-                                 <children>
-                                    <TextField layoutX="106.0" />
-                                    <Label layoutY="4.0" text="Senha" />
-                                 </children>
-                              </Pane>
-                           </children>
-                        </Pane>
-                     </children>
-                  </AnchorPane>
-            </content>
-          </Tab>
-          <Tab text="Caralho">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-            </content>
-          </Tab>
-        </tabs>
-      </TabPane>
+      <Pane layoutX="14.0" layoutY="246.0" prefHeight="60.0" prefWidth="284.0" snapToPixel="false" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
+         <children>
+            <TextField fx:id="password" layoutX="53.0" layoutY="35.0" prefHeight="25.0" prefWidth="155.0" />
+            <Label layoutY="4.0" prefHeight="17.0" prefWidth="42.0" text="Usuário" />
+            <TextField fx:id="username" layoutX="53.0" prefHeight="25.0" prefWidth="155.0" />
+            <Label layoutY="38.0" prefHeight="17.0" prefWidth="42.0" text="Senha" />
+            <Button layoutX="221.0" layoutY="35.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="49.0" text="Entrar" />
+         </children>
+      </Pane>
+      <Text layoutX="15.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGAMFE">
+         <font>
+            <Font size="64.0" />
+         </font>
+      </Text>
+      <Box depth="100.0" height="100.0" layoutX="463.0" layoutY="158.0" rotate="109.7" width="100.0">
+         <rotationAxis>
+            <Point3D x="1.0" y="1.0" z="1.0" />
+         </rotationAxis>
+      </Box>
+      <Text layoutX="331.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Servidor:" wrappingWidth="35.0">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Text>
+      <Text fx:id="labelServidor" layoutX="368.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="endereço" wrappingWidth="220.3125">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Text>
+      <Text layoutX="14.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistema de Gerenciamento de Aluguel de Material para Festas e Eventos" textAlignment="CENTER" wrappingWidth="257.3125" />
+      <Button layoutX="592.0" layoutY="296.0" mnemonicParsing="false" onAction="#changeServer" prefHeight="12.0" prefWidth="42.0" text="Alterar">
+         <font>
+            <Font size="9.0" />
+         </font>
+      </Button>
+      <Label fx:id="labelErro" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="218.0" prefHeight="17.0" prefWidth="284.0" textAlignment="CENTER" textFill="RED" />
    </children>
 </AnchorPane>

@@ -1,4 +1,4 @@
-package com.sigamfe.configuration;
+package com.sigamfe.configuration.util;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sigamfe.model.Usuario;
 import com.sigamfe.model.enums.IndicadorSN;
 
-@Service("assembler")
+@Service("userAssembler")
 public class UserAssembler {
 
 	@Transactional(readOnly = true)
@@ -23,7 +23,8 @@ public class UserAssembler {
 		final boolean credentialsNonExpired = enabled;
 		final boolean accountNonLocked = enabled;
 
-		final Collection<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(usuario.getPermissao().getCodigo()));
+		final Collection<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(usuario.getPermissao()
+				.getCodigoSpringSecurity()));
 
 		final User user = new User(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		return user;
