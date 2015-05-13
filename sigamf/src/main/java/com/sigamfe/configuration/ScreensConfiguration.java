@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import lombok.Getter;
 import lombok.Setter;
 
 import org.springframework.context.annotation.Bean;
@@ -19,6 +20,9 @@ import com.sigamfe.controller.system.ErrorController;
 @Lazy
 public class ScreensConfiguration {
 
+	public static final String viewPath = "/com/sigamfe/view/";
+
+	@Getter
 	@Setter
 	private Stage primaryStage;
 
@@ -34,7 +38,7 @@ public class ScreensConfiguration {
 	@Bean
 	@Scope("prototype")
 	public FXMLDialog errorDialog() {
-		return new FXMLDialog(errorController(), getClass().getResource("error.fxml"), primaryStage, StageStyle.UNDECORATED);
+		return new FXMLDialog(errorController(), getClass().getResource(viewPath + "error.fxml"), primaryStage, StageStyle.DECORATED);
 	}
 
 	@Bean
@@ -46,7 +50,7 @@ public class ScreensConfiguration {
 	@Bean
 	@Scope("prototype")
 	public FXMLDialog loginDialog() {
-		return new FXMLDialog(loginController(), getClass().getResource("login.fxml"), primaryStage, StageStyle.UNDECORATED);
+		return new FXMLDialog(loginController(), getClass().getResource(viewPath + "login.fxml"), primaryStage, StageStyle.DECORATED);
 	}
 
 	@Bean

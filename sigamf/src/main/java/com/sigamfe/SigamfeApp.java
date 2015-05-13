@@ -53,7 +53,6 @@ public class SigamfeApp extends Application {
 		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
 
 		stage.setTitle("SIGAMFE");
-		stage.setResizable(false);
 		stage.centerOnScreen();
 		stage.show();
 

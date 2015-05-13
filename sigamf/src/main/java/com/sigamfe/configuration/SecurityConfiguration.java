@@ -2,13 +2,10 @@ package com.sigamfe.configuration;
 
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.jasypt.springsecurity3.authentication.encoding.PBEPasswordEncoder;
-import org.springframework.boot.autoconfigure.security.AuthenticationManagerConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 @Configuration
@@ -39,9 +36,4 @@ public class SecurityConfiguration {
 		return auth;
 	}
 
-	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationProvider authenticationProvider) {
-		final AuthenticationManagerBuilder authenticationManagerBuilder = new AuthenticationManagerBuilder(objectPostProcessor);
-		authenticationManagerBuilder.setSharedObject(sharedType, object);jdbcAuthentication()
-	}
 }
