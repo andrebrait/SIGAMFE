@@ -73,9 +73,8 @@ public class SigamfeApp extends Application {
 			usuarioRepository.saveAndFlush(usuario);
 		}
 
-		final Usuario usuario = usuarioRepository.findByLogin("admSigamfe");
-		System.out.println(usuario);
-		System.out.println(usuario.getSenhaDecriptada(pooledPBEStringEncryptor));
+		throw new RuntimeException("LOLOLOL");
+
 	}
 
 	public static void main(String[] args) {

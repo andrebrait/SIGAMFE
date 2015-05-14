@@ -1,5 +1,7 @@
 package com.sigamfe.model.enums.converters;
 
+import java.util.Optional;
+
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
@@ -11,7 +13,7 @@ public class IndicadorUnidadeConverter implements AttributeConverter<IndicadorUn
 
 	@Override
 	public String convertToDatabaseColumn(IndicadorUnidade attribute) {
-		return attribute.getCodigo();
+		return Optional.ofNullable(attribute).map(IndicadorUnidade::getCodigo).orElse(null);
 	}
 
 	@Override
