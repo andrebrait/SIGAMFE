@@ -14,7 +14,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Lazy;
 
 import com.sigamfe.configuration.PersistenceConfiguration;
-import com.sigamfe.configuration.ScreensConfiguration;
+import com.sigamfe.configuration.util.FXMLDialog;
+import com.sigamfe.controller.LoginController;
 import com.sigamfe.model.Usuario;
 import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.model.enums.PermissaoUsuario;
@@ -56,10 +57,9 @@ public class SigamfeApp extends Application {
 
 		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
 
-		final ScreensConfiguration screens = applicationContext.getBean(ScreensConfiguration.class);
+		final FXMLDialog loginDialog = applicationContext.getBean(LoginController.class).getDialog();
 
-		screens.setPrimaryStage(screens.mainDialog());
-		screens.loginDialog().show();
+		loginDialog.show();
 
 		if (usuarioRepository.count() == 0) {
 			final Usuario usuario = new Usuario();
@@ -72,8 +72,6 @@ public class SigamfeApp extends Application {
 			usuario.setPermissao(PermissaoUsuario.ADMINISTRADOR);
 			usuarioRepository.saveAndFlush(usuario);
 		}
-
-		throw new RuntimeException("LOLOLOL");
 
 	}
 

@@ -1,36 +1,46 @@
 package com.sigamfe.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+import javax.annotation.PostConstruct;
+
+import lombok.Getter;
+import lombok.Setter;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 
 import com.sigamfe.configuration.PersistenceConfiguration;
-import com.sigamfe.configuration.ScreensConfiguration;
 import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.configuration.util.FXMLDialog;
 import com.sigamfe.controller.iface.DialogController;
 
-public class LoginController implements DialogController, Initializable {
+@Controller
+@Lazy
+@Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+public class LoginController implements DialogController {
 
-	private final ScreensConfiguration screens;
+	@Autowired
+	private MainWindowController mainWindowController;
 
 	@Autowired
 	private AuthenticationProvider authenticationProvider;
 
+	@Getter
+	@Setter
 	private FXMLDialog dialog;
 
 	@FXML
@@ -45,25 +55,13 @@ public class LoginController implements DialogController, Initializable {
 	@FXML
 	private Text labelServidor;
 
-	public LoginController(ScreensConfiguration screens) {
-		this.screens = screens;
-	}
-
-	@Override
-	public void setDialog(FXMLDialog dialog) {
-		dialog.setOnCloseRequest(e -> Platform.exit());
-		dialog.setResizable(false);
-		dialog.setTitle(Titles.LOGIN_WINDOW_TITLE);
-		this.dialog = dialog;
-	}
-
 	@FXML
 	public void login() {
 		Authentication authToken = new UsernamePasswordAuthenticationToken(username.getText(), password.getText());
 		try {
 			authToken = authenticationProvider.authenticate(authToken);
 			SecurityContextHolder.getContext().setAuthentication(authToken);
-			screens.getPrimaryStage().show();
+			mainWindowController.getDialog().show();
 			dialog.close();
 		} catch (final AuthenticationException e) {
 			labelErro.setText("Erro: usuário ou senha inválidos");
@@ -75,12 +73,16 @@ public class LoginController implements DialogController, Initializable {
 
 	}
 
-	private void updateLabelServidor() {
-		this.labelServidor.setText(PersistenceConfiguration.getDB_HOSTNAME() + ":" + PersistenceConfiguration.getDB_PORT());
+	@PostConstruct
+	public void initialize() {
+		setDialog(new FXMLDialog(this, mainWindowController.getDialog()));
+		dialog.setOnCloseRequest(e -> Platform.exit());
+		dialog.setResizable(false);
+		dialog.setTitle(Titles.LOGIN_WINDOW_TITLE);
+		updateLabelServidor();
 	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		updateLabelServidor();
+	private void updateLabelServidor() {
+		this.labelServidor.setText(PersistenceConfiguration.getDB_HOSTNAME() + ":" + PersistenceConfiguration.getDB_PORT());
 	}
 }

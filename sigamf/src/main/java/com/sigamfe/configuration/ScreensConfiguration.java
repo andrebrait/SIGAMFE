@@ -1,64 +1,10 @@
 package com.sigamfe.configuration;
 
-import javafx.stage.Stage;
-import lombok.Getter;
-import lombok.Setter;
-
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
-
-import com.sigamfe.configuration.util.FXMLDialog;
-import com.sigamfe.configuration.util.FXMLMainWindow;
-import com.sigamfe.controller.LoginController;
-import com.sigamfe.controller.MainWindowController;
-import com.sigamfe.controller.system.ErrorController;
 
 @Configuration
 @Lazy
 public class ScreensConfiguration {
-
-	public static final String viewPath = "/com/sigamfe/views/";
-
-	@Getter
-	@Setter
-	private Stage primaryStage;
-
-	@Bean
-	@Scope("prototype")
-	public FXMLDialog errorDialog() {
-		return new FXMLDialog(errorController(), getClass().getResource(viewPath + "Error.fxml"), primaryStage);
-	}
-
-	@Bean
-	@Scope("prototype")
-	public ErrorController errorController() {
-		return new ErrorController();
-	}
-
-	@Bean
-	@Scope("prototype")
-	public FXMLDialog loginDialog() {
-		return new FXMLDialog(loginController(), getClass().getResource(viewPath + "Login.fxml"), primaryStage);
-	}
-
-	@Bean
-	@Scope("prototype")
-	public LoginController loginController() {
-		return new LoginController(this);
-	}
-
-	@Bean
-	@Scope("prototype")
-	public FXMLMainWindow mainDialog() {
-		return new FXMLMainWindow(mainWindowController(), getClass().getResource(viewPath + "MainWindow.fxml"));
-	}
-
-	@Bean
-	@Scope("prototype")
-	public MainWindowController mainWindowController() {
-		return new MainWindowController(this);
-	}
 
 }

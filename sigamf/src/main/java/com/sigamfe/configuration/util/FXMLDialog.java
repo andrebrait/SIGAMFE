@@ -1,7 +1,9 @@
 package com.sigamfe.configuration.util;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,19 +14,38 @@ import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Callback;
 
+import javax.management.RuntimeErrorException;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.ResourceUtils;
+
 import com.sigamfe.controller.iface.DialogController;
 
 public class FXMLDialog extends Stage {
 
-	public FXMLDialog(DialogController controller, URL fxml, Window owner) {
-		this(controller, fxml, owner, StageStyle.DECORATED);
+	public static final String VIEW_PATH = "classpath:com/sigamfe/views/";
+
+	public static final URL getPathByController(DialogController controller) {
+		try {
+			return ResourceUtils.getURL(VIEW_PATH + StringUtils.removeEndIgnoreCase(controller.getClass().getSimpleName(), "Controller") + ".fxml");
+		} catch (final FileNotFoundException e) {
+			throw new RuntimeErrorException(new Error(e));
+		}
 	}
 
-	public FXMLDialog(final DialogController controller, URL fxml, Window owner, StageStyle style) {
-		super(style);
-		initOwner(owner);
-		initModality(Modality.WINDOW_MODAL);
-		final FXMLLoader loader = new FXMLLoader(fxml);
+	public FXMLDialog(DialogController controller, Window owner) {
+		this(controller, owner, Modality.WINDOW_MODAL, StageStyle.DECORATED);
+	}
+
+	public FXMLDialog(DialogController controller, Modality modality, Window owner) {
+		this(controller, owner, modality, StageStyle.DECORATED);
+	}
+
+	public FXMLDialog(DialogController controller, Window owner, Modality modality, StageStyle style) {
+		super(Optional.ofNullable(style).orElse(StageStyle.DECORATED));
+		Optional.ofNullable(owner).ifPresent(e -> initOwner(e));
+		Optional.ofNullable(modality).ifPresent(e -> initModality(e));
+		final FXMLLoader loader = new FXMLLoader(getPathByController(controller));
 		try {
 			loader.setControllerFactory(new Callback<Class<?>, Object>() {
 				@Override
@@ -32,7 +53,6 @@ public class FXMLDialog extends Stage {
 					return controller;
 				}
 			});
-			controller.setDialog(this);
 			setScene(new Scene((Parent) loader.load()));
 		} catch (final IOException e) {
 			throw new RuntimeException(e);
