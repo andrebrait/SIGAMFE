@@ -1,5 +1,7 @@
 package com.sigamfe.model.enums.converters;
 
+import java.util.Optional;
+
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
@@ -11,7 +13,7 @@ public class EntregaPedidoConverter implements AttributeConverter<EntregaPedido,
 
 	@Override
 	public String convertToDatabaseColumn(EntregaPedido attribute) {
-		return attribute.getCodigo();
+		return Optional.ofNullable(attribute).map(EntregaPedido::getCodigo).orElse(null);
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
@@ -19,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.sigamfe.configuration.PersistenceConfiguration;
 import com.sigamfe.configuration.ScreensConfiguration;
+import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.configuration.util.FXMLDialog;
 import com.sigamfe.controller.iface.DialogController;
 
@@ -38,7 +40,7 @@ public class LoginController implements DialogController, Initializable {
 	private TextField username;
 
 	@FXML
-	private TextField password;
+	private PasswordField password;
 
 	@FXML
 	private Text labelServidor;
@@ -51,6 +53,7 @@ public class LoginController implements DialogController, Initializable {
 	public void setDialog(FXMLDialog dialog) {
 		dialog.setOnCloseRequest(e -> Platform.exit());
 		dialog.setResizable(false);
+		dialog.setTitle(Titles.LOGIN_WINDOW_TITLE);
 		this.dialog = dialog;
 	}
 
@@ -60,9 +63,10 @@ public class LoginController implements DialogController, Initializable {
 		try {
 			authToken = authenticationProvider.authenticate(authToken);
 			SecurityContextHolder.getContext().setAuthentication(authToken);
+			screens.getPrimaryStage().show();
+			dialog.close();
 		} catch (final AuthenticationException e) {
 			labelErro.setText("Erro: usuário ou senha inválidos");
-			return;
 		}
 	}
 

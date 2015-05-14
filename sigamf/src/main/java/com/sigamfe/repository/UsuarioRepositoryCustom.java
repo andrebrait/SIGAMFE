@@ -1,5 +1,7 @@
 package com.sigamfe.repository;
 
+import java.util.List;
+
 import com.sigamfe.model.Usuario;
 
 public interface UsuarioRepositoryCustom {
@@ -9,6 +11,6 @@ public interface UsuarioRepositoryCustom {
 	 *
 	 * @return the usuario
 	 */
-	public Usuario findTest();
+	public List<Usuario> findAllAtivos();
 
 }

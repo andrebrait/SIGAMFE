@@ -22,7 +22,7 @@
 				<TextField fx:id="username" layoutX="53.0" prefHeight="25.0"
 					prefWidth="155.0" />
 				<Label layoutY="38.0" prefHeight="17.0" prefWidth="42.0" text="Senha" />
-				<TextField fx:id="password" layoutX="53.0" layoutY="35.0"
+				<PasswordField fx:id="password" layoutX="53.0" layoutY="35.0"
 					prefHeight="25.0" prefWidth="155.0" />
 				<Label layoutY="4.0" prefHeight="17.0" prefWidth="42.0" text="Usuário" />
 				<Button layoutX="221.0" layoutY="35.0" mnemonicParsing="false"

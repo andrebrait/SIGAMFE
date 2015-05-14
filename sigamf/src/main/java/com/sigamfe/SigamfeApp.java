@@ -56,13 +56,9 @@ public class SigamfeApp extends Application {
 
 		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
 
-		stage.setTitle("SIGAMFE");
-		stage.centerOnScreen();
-		stage.show();
-
 		final ScreensConfiguration screens = applicationContext.getBean(ScreensConfiguration.class);
 
-		screens.setPrimaryStage(stage);
+		screens.setPrimaryStage(screens.mainDialog());
 		screens.loginDialog().show();
 
 		if (usuarioRepository.count() == 0) {
@@ -74,7 +70,7 @@ public class SigamfeApp extends Application {
 			usuario.setDataCriacao(LocalDateTime.now());
 			usuario.setTelefone(930040829L);
 			usuario.setPermissao(PermissaoUsuario.ADMINISTRADOR);
-			usuarioRepository.save(usuario);
+			usuarioRepository.saveAndFlush(usuario);
 		}
 
 		final Usuario usuario = usuarioRepository.findByLogin("admSigamfe");
