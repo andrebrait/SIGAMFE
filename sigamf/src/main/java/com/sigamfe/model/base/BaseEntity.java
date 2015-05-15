@@ -22,7 +22,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 @Data
 @ToString
 @MappedSuperclass
-public abstract class BaseEntity<ID extends Serializable> implements Serializable {
+public abstract class BaseEntity<ID extends Serializable> implements Serializable, GenericEntityIface<ID> {
 
 	private static final long serialVersionUID = -5479406946881675009L;
 
@@ -34,9 +34,5 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
 	@CreatedDate
 	@Convert(converter = LocalDateTimeConverter.class)
 	protected LocalDateTime dataCriacao;
-
-	public abstract ID getId();
-
-	public abstract void setId(ID id);
 
 }

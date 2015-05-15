@@ -1,9 +1,8 @@
 package com.sigamfe.controller;
 
-import com.sigamfe.controller.base.DialogController;
+import com.sigamfe.controller.base.BaseController;
 
-
-public interface LoginController extends DialogController {
+public interface LoginController extends BaseController {
 
 	void login();
 

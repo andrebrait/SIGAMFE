@@ -32,13 +32,11 @@ public class SigamfeApp extends Application {
 	@Autowired
 	private PooledPBEStringEncryptor pooledPBEStringEncryptor;
 
-	private static ConfigurableApplicationContext applicationContext;
-
-	private static String[] savedArgs;
+	public ConfigurableApplicationContext applicationContext;
 
 	@Override
 	public void init() throws Exception {
-		applicationContext = SpringApplication.run(SigamfeApp.class, savedArgs);
+		applicationContext = SpringApplication.run(getClass());
 		applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
 	}
 
@@ -48,19 +46,13 @@ public class SigamfeApp extends Application {
 		applicationContext.close();
 	}
 
-	public static void launchApp(String[] args) {
-		SigamfeApp.savedArgs = args;
-		Application.launch(SigamfeApp.class, args);
-	}
-
 	@Override
 	public void start(Stage stage) throws Exception {
 
 		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
 
 		LoginController loginController = applicationContext.getBean(LoginController.class);
-
-		loginController.getDialog().showAndWait();
+		loginController.initializeWindow();
 
 		if (usuarioRepository.count() == 0) {
 			Usuario usuario = new Usuario();
@@ -81,6 +73,6 @@ public class SigamfeApp extends Application {
 		PersistenceConfiguration.setDB_HOSTNAME("localhost");
 		PersistenceConfiguration.setDB_PORT("52000");
 
-		launchApp(args);
+		launch(args);
 	}
 }
