@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class ExceptionHandler {
 
-	@Pointcut("execution(public * com.sigamfe.controller.*.*(..))")
+	@Pointcut("execution(public * com.sigamfe..*.*(..))")
 	public void controllerMethods() {
 
 	}
