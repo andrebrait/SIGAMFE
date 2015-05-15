@@ -6,9 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-
-import javax.annotation.PostConstruct;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +24,7 @@ import com.sigamfe.configuration.PersistenceConfiguration;
 import com.sigamfe.configuration.constants.Messages;
 import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.configuration.util.FXMLDialog;
+import com.sigamfe.repository.UsuarioRepository;
 
 @Component
 @Lazy
@@ -38,6 +36,9 @@ public class LoginControllerImpl implements LoginController {
 
 	@Autowired
 	private AuthenticationProvider authenticationProvider;
+
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
 	@Getter
 	@Setter
@@ -63,10 +64,9 @@ public class LoginControllerImpl implements LoginController {
 			authToken = authenticationProvider.authenticate(authToken);
 			SecurityContextHolder.getContext().setAuthentication(authToken);
 			mainWindowController.getDialog().show();
-			throw new RuntimeException("eee");
+			dialog.close();
 		} catch (AuthenticationException e) {
 			labelErro.setText(Messages.LOGIN_INVALIDO);
-			throw new RuntimeException(e);
 		}
 	}
 
@@ -77,8 +77,8 @@ public class LoginControllerImpl implements LoginController {
 	}
 
 	@Override
-	@PostConstruct
 	public void initializeWindow() {
+		mainWindowController.initializeWindow();
 		setDialog(new FXMLDialog(this, mainWindowController.getDialog()));
 		dialog.setOnCloseRequest(e -> Platform.exit());
 		dialog.setResizable(false);

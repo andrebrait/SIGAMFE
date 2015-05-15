@@ -1,9 +1,6 @@
 package com.sigamfe.controller;
 
 import javafx.stage.Modality;
-
-import javax.annotation.PostConstruct;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +22,6 @@ public class MainWindowControllerImpl implements MainWindowController {
 	private FXMLDialog dialog;
 
 	@Override
-	@PostConstruct
 	public void initializeWindow() {
 		setDialog(new FXMLDialog(this, null, Modality.NONE));
 		dialog.setResizable(true);

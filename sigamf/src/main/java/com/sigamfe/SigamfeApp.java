@@ -30,6 +30,9 @@ public class SigamfeApp extends Application {
 	private UsuarioRepository usuarioRepository;
 
 	@Autowired
+	private LoginController loginController;
+
+	@Autowired
 	private PooledPBEStringEncryptor pooledPBEStringEncryptor;
 
 	private static ConfigurableApplicationContext applicationContext;
@@ -58,8 +61,7 @@ public class SigamfeApp extends Application {
 
 		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
 
-		LoginController loginController = applicationContext.getBean(LoginController.class);
-
+		loginController.initializeWindow();
 		loginController.getDialog().showAndWait();
 
 		if (usuarioRepository.count() == 0) {
