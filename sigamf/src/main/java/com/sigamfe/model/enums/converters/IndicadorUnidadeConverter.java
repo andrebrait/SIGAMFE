@@ -18,7 +18,7 @@ public class IndicadorUnidadeConverter implements AttributeConverter<IndicadorUn
 
 	@Override
 	public IndicadorUnidade convertToEntityAttribute(String dbData) {
-		for (final IndicadorUnidade ind : IndicadorUnidade.values()) {
+		for (IndicadorUnidade ind : IndicadorUnidade.values()) {
 			if (ind.getCodigo().equals(dbData)) {
 				return ind;
 			}

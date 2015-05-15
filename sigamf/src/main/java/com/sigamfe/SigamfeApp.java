@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Lazy;
 
 import com.sigamfe.configuration.PersistenceConfiguration;
-import com.sigamfe.configuration.util.FXMLDialog;
 import com.sigamfe.controller.LoginController;
 import com.sigamfe.model.Usuario;
 import com.sigamfe.model.enums.IndicadorSN;
@@ -23,6 +23,7 @@ import com.sigamfe.repository.UsuarioRepository;
 
 @Lazy
 @SpringBootApplication
+@EnableAspectJAutoProxy
 public class SigamfeApp extends Application {
 
 	@Autowired
@@ -31,7 +32,7 @@ public class SigamfeApp extends Application {
 	@Autowired
 	private PooledPBEStringEncryptor pooledPBEStringEncryptor;
 
-	private ConfigurableApplicationContext applicationContext;
+	private static ConfigurableApplicationContext applicationContext;
 
 	private static String[] savedArgs;
 
@@ -47,7 +48,7 @@ public class SigamfeApp extends Application {
 		applicationContext.close();
 	}
 
-	protected static void launchApp(String[] args) {
+	public static void launchApp(String[] args) {
 		SigamfeApp.savedArgs = args;
 		Application.launch(SigamfeApp.class, args);
 	}
@@ -57,12 +58,12 @@ public class SigamfeApp extends Application {
 
 		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
 
-		final FXMLDialog loginDialog = applicationContext.getBean(LoginController.class).getDialog();
+		LoginController loginController = applicationContext.getBean(LoginController.class);
 
-		loginDialog.show();
+		loginController.getDialog().showAndWait();
 
 		if (usuarioRepository.count() == 0) {
-			final Usuario usuario = new Usuario();
+			Usuario usuario = new Usuario();
 			usuario.setLogin("admSigamfe");
 			usuario.setSenhaEncriptando(pooledPBEStringEncryptor, "sigPass");
 			usuario.setAtivo(IndicadorSN.SIM);

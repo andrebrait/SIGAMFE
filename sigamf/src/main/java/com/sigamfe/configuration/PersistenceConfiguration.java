@@ -34,13 +34,13 @@ public class PersistenceConfiguration {
 	@Setter
 	private static String DB_HOSTNAME, DB_PORT;
 
-	private static final String DB_USERNAME = "sigamfe", DB_PASSWORD = "TEHASi", AUTOCONNECTION_TEST_QUERY = "SELECT 1", DB_DATABASE = "sigamfe";
-	private static final boolean AUTO_COMMIT = true;
+	private static String DB_USERNAME = "sigamfe", DB_PASSWORD = "TEHASi", AUTOCONNECTION_TEST_QUERY = "SELECT 1", DB_DATABASE = "sigamfe";
+	private static boolean AUTO_COMMIT = true;
 
 	@Bean(destroyMethod = "close")
 	public DataSource dataSource() {
-		final DataSource datasource = new MySQLDataSource(DB_HOSTNAME, Integer.parseInt(DB_PORT), DB_DATABASE);
-		final HikariConfig hikariConfig = new HikariConfig();
+		DataSource datasource = new MySQLDataSource(DB_HOSTNAME, Integer.parseInt(DB_PORT), DB_DATABASE);
+		HikariConfig hikariConfig = new HikariConfig();
 		hikariConfig.setDataSource(datasource);
 		hikariConfig.setUsername(DB_USERNAME);
 		hikariConfig.setPassword(DB_PASSWORD);
@@ -50,17 +50,17 @@ public class PersistenceConfiguration {
 		return new HikariDataSource(hikariConfig);
 	}
 
-	private static final String PACKAGES_TO_SCAN = "com.sigamfe.model", HIBERNATE_DIALECT = "org.hibernate.dialect.MySQL5InnoDBDialect",
+	private static String PACKAGES_TO_SCAN = "com.sigamfe.model", HIBERNATE_DIALECT = "org.hibernate.dialect.MySQL5InnoDBDialect",
 			HIBERNATE_EJB_NAMING_STRATEGY = "org.hibernate.cfg.ImprovedNamingStrategy", HIBERNATE_SHOW_SQL = "false", HIBERNATE_FORMAT_SQL = "true",
 			HIBERNATE_HBM2DDL_AUTO = "validate";
 
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
-		final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryBean.setDataSource(dataSource);
 		entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 		entityManagerFactoryBean.setPackagesToScan(PACKAGES_TO_SCAN);
-		final Properties properties = new Properties();
+		Properties properties = new Properties();
 		properties.setProperty("hibernate.dialect", HIBERNATE_DIALECT);
 		properties.setProperty("hibernate.ejb.naming_strategy", HIBERNATE_EJB_NAMING_STRATEGY);
 		properties.setProperty("hibernate.show_sql", HIBERNATE_SHOW_SQL);
@@ -73,7 +73,7 @@ public class PersistenceConfiguration {
 
 	@Bean
 	public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-		final JpaTransactionManager transactionManager = new JpaTransactionManager();
+		JpaTransactionManager transactionManager = new JpaTransactionManager();
 		transactionManager.setEntityManagerFactory(entityManagerFactory);
 		return transactionManager;
 	}

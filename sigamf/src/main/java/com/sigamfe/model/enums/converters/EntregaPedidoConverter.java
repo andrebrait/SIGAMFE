@@ -18,7 +18,7 @@ public class EntregaPedidoConverter implements AttributeConverter<EntregaPedido,
 
 	@Override
 	public EntregaPedido convertToEntityAttribute(String dbData) {
-		for (final EntregaPedido ind : EntregaPedido.values()) {
+		for (EntregaPedido ind : EntregaPedido.values()) {
 			if (ind.getCodigo().equals(dbData)) {
 				return ind;
 			}

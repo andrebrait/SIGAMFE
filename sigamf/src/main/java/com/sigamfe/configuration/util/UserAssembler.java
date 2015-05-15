@@ -16,17 +16,16 @@ public class UserAssembler {
 
 	@Transactional(readOnly = true)
 	public User buildUserFromUserEntity(Usuario usuario) {
-		final String username = usuario.getLogin();
-		final String password = usuario.getSenha();
-		final boolean enabled = usuario.getAtivo().equals(IndicadorSN.SIM);
-		final boolean accountNonExpired = enabled;
-		final boolean credentialsNonExpired = enabled;
-		final boolean accountNonLocked = enabled;
+		String username = usuario.getLogin();
+		String password = usuario.getSenha();
+		boolean enabled = usuario.getAtivo().equals(IndicadorSN.SIM);
+		boolean accountNonExpired = enabled;
+		boolean credentialsNonExpired = enabled;
+		boolean accountNonLocked = enabled;
 
-		final Collection<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(usuario.getPermissao()
-				.getCodigoSpringSecurity()));
+		Collection<SimpleGrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority(usuario.getPermissao().getCodigoSpringSecurity()));
 
-		final User user = new User(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+		User user = new User(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 		return user;
 	}
 

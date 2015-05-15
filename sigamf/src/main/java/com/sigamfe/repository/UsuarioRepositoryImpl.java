@@ -26,16 +26,16 @@ public class UsuarioRepositoryImpl implements UsuarioRepositoryCustom {
 	@Override
 	public List<Usuario> findAllAtivos() {
 
-		final CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
-		final Metamodel metamodel = em.getMetamodel();
-		final EntityType<Usuario> metaType = metamodel.entity(Usuario.class);
-		final CriteriaQuery<Usuario> criteriaQuery = criteriaBuilder.createQuery(Usuario.class);
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		Metamodel metamodel = em.getMetamodel();
+		EntityType<Usuario> metaType = metamodel.entity(Usuario.class);
+		CriteriaQuery<Usuario> criteriaQuery = criteriaBuilder.createQuery(Usuario.class);
 
-		final Root<Usuario> root = criteriaQuery.from(metaType);
+		Root<Usuario> root = criteriaQuery.from(metaType);
 
 		criteriaQuery.where(criteriaBuilder.equal(root.get(Usuario_.ativo), IndicadorSN.SIM));
 
-		final TypedQuery<Usuario> query = em.createQuery(criteriaQuery);
+		TypedQuery<Usuario> query = em.createQuery(criteriaQuery);
 
 		return query.getResultList();
 	}

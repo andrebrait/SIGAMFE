@@ -18,7 +18,7 @@ public class EstadoPedidoConverter implements AttributeConverter<EstadoPedido, S
 
 	@Override
 	public EstadoPedido convertToEntityAttribute(String dbData) {
-		for (final EstadoPedido ind : EstadoPedido.values()) {
+		for (EstadoPedido ind : EstadoPedido.values()) {
 			if (ind.getCodigo().equals(dbData)) {
 				return ind;
 			}

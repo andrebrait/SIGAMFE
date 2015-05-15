@@ -10,33 +10,40 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
 
+@Component
 @Aspect
 public class ExceptionHandler {
 
-	@AfterThrowing(pointcut = "execution(public * com.sigamfe.*.*(..))", throwing = "exception")
-	public void handler(JoinPoint joinPoint, Throwable exception) {
-		showErrorAlert(exception);
+	@Pointcut("execution(public * com.sigamfe.controller.*.*(..))")
+	public void controllerMethods() {
+
+	}
+
+	@AfterThrowing(pointcut = "controllerMethods()", throwing = "ex")
+	public void handler(Throwable ex) {
+		showErrorAlert(ex);
 	}
 
 	private void showErrorAlert(Throwable ex) {
-		final Alert alert = new Alert(AlertType.ERROR);
+		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Erro");
 		alert.setHeaderText("Ocorreu um erro!");
 		alert.setContentText(ex.getMessage());
 
 		// Create expandable Exception.
-		final StringWriter sw = new StringWriter();
-		final PrintWriter pw = new PrintWriter(sw);
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
 		ex.printStackTrace(pw);
-		final String exceptionText = sw.toString();
+		String exceptionText = sw.toString();
 
-		final Label label = new Label("O stack trace do erro foi:");
+		Label label = new Label("O stack trace do erro foi:");
 
-		final TextArea textArea = new TextArea(exceptionText);
+		TextArea textArea = new TextArea(exceptionText);
 		textArea.setEditable(false);
 		textArea.setWrapText(true);
 
@@ -45,7 +52,7 @@ public class ExceptionHandler {
 		GridPane.setVgrow(textArea, Priority.ALWAYS);
 		GridPane.setHgrow(textArea, Priority.ALWAYS);
 
-		final GridPane expContent = new GridPane();
+		GridPane expContent = new GridPane();
 		expContent.setMaxWidth(Double.MAX_VALUE);
 		expContent.add(label, 0, 0);
 		expContent.add(textArea, 0, 1);

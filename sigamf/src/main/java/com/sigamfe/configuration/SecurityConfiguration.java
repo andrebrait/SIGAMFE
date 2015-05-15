@@ -13,7 +13,7 @@ public class SecurityConfiguration {
 
 	@Bean
 	public PooledPBEStringEncryptor encryptor() {
-		final PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
+		PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
 		encryptor.setAlgorithm("PBEWithMD5AndDES");
 		encryptor.setPassword("SIGAMFE_Pass_###71662####$%$%");
 		encryptor.setPoolSize(4);
@@ -23,14 +23,14 @@ public class SecurityConfiguration {
 
 	@Bean
 	public PBEPasswordEncoder passwordEncoder(PooledPBEStringEncryptor encrytor) {
-		final PBEPasswordEncoder passwordEncoder = new PBEPasswordEncoder();
+		PBEPasswordEncoder passwordEncoder = new PBEPasswordEncoder();
 		passwordEncoder.setPbeStringEncryptor(encrytor);
 		return passwordEncoder;
 	}
 
 	@Bean
 	public AuthenticationProvider authenticationProvider(PBEPasswordEncoder encoder, UserDetailsService userDetailsService) {
-		final DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
 		auth.setPasswordEncoder(encoder);
 		auth.setUserDetailsService(userDetailsService);
 		return auth;

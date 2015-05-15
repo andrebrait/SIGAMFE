@@ -18,7 +18,7 @@ public class PermissaoUsuarioConverter implements AttributeConverter<PermissaoUs
 
 	@Override
 	public PermissaoUsuario convertToEntityAttribute(String dbData) {
-		for (final PermissaoUsuario perm : PermissaoUsuario.values()) {
+		for (PermissaoUsuario perm : PermissaoUsuario.values()) {
 			if (perm.getCodigo().equals(dbData)) {
 				return perm;
 			}

@@ -18,7 +18,7 @@ public class IndicadorSNConverter implements AttributeConverter<IndicadorSN, Str
 
 	@Override
 	public IndicadorSN convertToEntityAttribute(String dbData) {
-		for (final IndicadorSN ind : IndicadorSN.values()) {
+		for (IndicadorSN ind : IndicadorSN.values()) {
 			if (ind.getCodigo().equals(dbData)) {
 				return ind;
 			}

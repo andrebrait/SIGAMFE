@@ -18,7 +18,7 @@ public class FormaPagamentoConverter implements AttributeConverter<FormaPagament
 
 	@Override
 	public FormaPagamento convertToEntityAttribute(String dbData) {
-		for (final FormaPagamento ind : FormaPagamento.values()) {
+		for (FormaPagamento ind : FormaPagamento.values()) {
 			if (ind.getCodigo().equals(dbData)) {
 				return ind;
 			}
