@@ -1,11 +1,10 @@
 package com.sigamfe.controller.base;
 
+import java.io.Serializable;
 
-public interface BaseController {
+public interface BaseController extends Serializable {
 
 	FXMLDialog getDialog();
-
-	void setDialog(FXMLDialog dialog);
 
 	void initializeWindow();
 

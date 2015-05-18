@@ -1,4 +1,4 @@
-package com.sigamfe.model.enums.converters;
+package com.sigamfe.model.enums.converter;
 
 import java.util.Optional;
 

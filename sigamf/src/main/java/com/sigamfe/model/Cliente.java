@@ -22,9 +22,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import com.sigamfe.model.base.BaseEntity;
+import com.sigamfe.model.base.AbstractBaseEntity;
 import com.sigamfe.model.enums.IndicadorSN;
-import com.sigamfe.model.enums.converters.IndicadorSNConverter;
+import com.sigamfe.model.enums.converter.IndicadorSNConverter;
 
 @Entity
 @Table(name = "cliente")
@@ -34,7 +34,7 @@ import com.sigamfe.model.enums.converters.IndicadorSNConverter;
 @AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Cliente extends BaseEntity<Integer> {
+public abstract class Cliente extends AbstractBaseEntity<Integer> {
 
 	private static final long serialVersionUID = -3608712352669272090L;
 

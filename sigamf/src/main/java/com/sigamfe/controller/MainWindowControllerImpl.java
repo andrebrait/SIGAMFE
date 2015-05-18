@@ -1,31 +1,31 @@
 package com.sigamfe.controller;
 
 import javafx.stage.Modality;
+
+import javax.annotation.PostConstruct;
+
 import lombok.Getter;
-import lombok.Setter;
 
 import org.springframework.context.annotation.Lazy;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.controller.base.FXMLDialog;
 
-@Component
+@Controller
 @Lazy
 public class MainWindowControllerImpl implements MainWindowController {
 
-	@Setter
+	private static final long serialVersionUID = 2706241759123410314L;
+
 	@Getter
 	private FXMLDialog dialog;
 
-	public MainWindowControllerImpl() {
-		this.dialog = new FXMLDialog(this);
-	}
-
 	@Override
+	@PostConstruct
 	public void initializeWindow() {
-		getDialog().initializeWindow(null, Modality.NONE, null);
-		getDialog().setMaximized(true);
-		getDialog().setTitle(Titles.MAIN_WINDOW_TITLE);
+		dialog = new FXMLDialog(this, null, Modality.NONE);
+		dialog.setMaximized(true);
+		dialog.setTitle(Titles.MAIN_WINDOW_TITLE);
 	}
 }

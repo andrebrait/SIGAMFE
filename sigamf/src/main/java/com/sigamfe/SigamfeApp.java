@@ -14,12 +14,13 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Lazy;
 
+import com.sigamfe.business.UsuarioBusiness;
 import com.sigamfe.configuration.PersistenceConfiguration;
 import com.sigamfe.controller.LoginController;
+import com.sigamfe.controller.MainWindowController;
 import com.sigamfe.model.Usuario;
 import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.model.enums.PermissaoUsuario;
-import com.sigamfe.repository.UsuarioRepository;
 
 @Lazy
 @SpringBootApplication
@@ -27,23 +28,22 @@ import com.sigamfe.repository.UsuarioRepository;
 public class SigamfeApp extends Application {
 
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private UsuarioBusiness usuarioBusiness;
+
+	public static ConfigurableApplicationContext applicationContext;
 
 	@Autowired
-	private PooledPBEStringEncryptor pooledPBEStringEncryptor;
-
-	public ConfigurableApplicationContext applicationContext;
+	public MainWindowController mainWindowController;
 
 	@Override
 	public void init() throws Exception {
 		applicationContext = SpringApplication.run(getClass());
-		applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
 	}
 
 	@Override
 	public void stop() throws Exception {
-		super.stop();
 		applicationContext.close();
+		super.stop();
 	}
 
 	@Override
@@ -51,19 +51,19 @@ public class SigamfeApp extends Application {
 
 		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
 
-		LoginController loginController = applicationContext.getBean(LoginController.class);
-		loginController.initializeWindow();
+		applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
+		applicationContext.getBean(LoginController.class);
 
-		if (usuarioRepository.count() == 0) {
+		if (usuarioBusiness.count() == 0) {
 			Usuario usuario = new Usuario();
 			usuario.setLogin("admSigamfe");
-			usuario.setSenhaEncriptando(pooledPBEStringEncryptor, "sigPass");
+			usuario.setSenhaEncriptando(applicationContext.getBean(PooledPBEStringEncryptor.class), "sigPass");
 			usuario.setAtivo(IndicadorSN.SIM);
 			usuario.setCpf("014.795.246-89");
 			usuario.setDataCriacao(LocalDateTime.now());
 			usuario.setTelefone(930040829L);
 			usuario.setPermissao(PermissaoUsuario.ADMINISTRADOR);
-			usuarioRepository.saveAndFlush(usuario);
+			usuarioBusiness.saveAndFlush(usuario);
 		}
 
 	}

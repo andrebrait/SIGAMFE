@@ -1,4 +1,4 @@
-package com.sigamfe.model.base;
+package com.sigamfe.model.converter;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

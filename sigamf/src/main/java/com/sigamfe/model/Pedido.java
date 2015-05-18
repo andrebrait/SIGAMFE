@@ -24,11 +24,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import com.sigamfe.model.base.BaseEntity;
+import com.sigamfe.model.base.AbstractBaseEntity;
 import com.sigamfe.model.enums.EntregaPedido;
 import com.sigamfe.model.enums.FormaPagamento;
-import com.sigamfe.model.enums.converters.EntregaPedidoConverter;
-import com.sigamfe.model.enums.converters.FormaPagamentoConverter;
+import com.sigamfe.model.enums.converter.EntregaPedidoConverter;
+import com.sigamfe.model.enums.converter.FormaPagamentoConverter;
 
 @Entity
 @Table(name = "pedido")
@@ -37,7 +37,7 @@ import com.sigamfe.model.enums.converters.FormaPagamentoConverter;
 @EqualsAndHashCode(callSuper = false, of = "id")
 @AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
-public class Pedido extends BaseEntity<Integer> {
+public class Pedido extends AbstractBaseEntity<Integer> {
 
 	private static final long serialVersionUID = 849368848948346967L;
 

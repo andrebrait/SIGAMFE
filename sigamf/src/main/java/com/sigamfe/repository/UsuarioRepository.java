@@ -11,7 +11,7 @@ import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.repository.base.BaseRepository;
 
 @Repository
-public interface UsuarioRepository extends BaseRepository<Usuario, Integer>, UsuarioRepositoryCustom {
+public interface UsuarioRepository extends BaseRepository<Integer, Usuario>, UsuarioRepositoryCustom {
 
 	public Usuario findByLogin(String login);
 

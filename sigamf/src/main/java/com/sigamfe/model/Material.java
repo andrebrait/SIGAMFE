@@ -20,9 +20,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import com.sigamfe.model.base.BaseEntity;
+import com.sigamfe.model.base.AbstractBaseEntity;
 import com.sigamfe.model.enums.IndicadorUnidade;
-import com.sigamfe.model.enums.converters.IndicadorUnidadeConverter;
+import com.sigamfe.model.enums.converter.IndicadorUnidadeConverter;
 
 @Entity
 @Table(name = "material")
@@ -32,7 +32,7 @@ import com.sigamfe.model.enums.converters.IndicadorUnidadeConverter;
 @AttributeOverrides(value = {
 		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
-public class Material extends BaseEntity<Integer> {
+public class Material extends AbstractBaseEntity<Integer> {
 
 	private static final long serialVersionUID = 2542442156839971981L;
 

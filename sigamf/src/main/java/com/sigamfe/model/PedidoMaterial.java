@@ -19,7 +19,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import com.sigamfe.model.PedidoMaterial.PedidoMaterialPK;
-import com.sigamfe.model.base.BaseEntity;
+import com.sigamfe.model.base.AbstractBaseEntity;
 
 @Entity
 @Table(name = "pedidomaterial")
@@ -28,7 +28,7 @@ import com.sigamfe.model.base.BaseEntity;
 @EqualsAndHashCode(callSuper = false, of = "id")
 @AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
-public class PedidoMaterial extends BaseEntity<PedidoMaterialPK> {
+public class PedidoMaterial extends AbstractBaseEntity<PedidoMaterialPK> {
 
 	private static final long serialVersionUID = -2163115726384201247L;
 

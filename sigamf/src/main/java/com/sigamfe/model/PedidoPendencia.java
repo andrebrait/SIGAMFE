@@ -20,9 +20,9 @@ import lombok.ToString;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import com.sigamfe.model.base.LocalDateTimeConverter;
+import com.sigamfe.model.converter.LocalDateTimeConverter;
 import com.sigamfe.model.enums.EstadoPedido;
-import com.sigamfe.model.enums.converters.EstadoPedidoConverter;
+import com.sigamfe.model.enums.converter.EstadoPedidoConverter;
 
 @Entity
 @Table(name = "pedidopendencia")

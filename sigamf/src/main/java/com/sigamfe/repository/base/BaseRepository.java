@@ -10,7 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
-import com.sigamfe.model.base.GenericEntityIface;
+import com.sigamfe.model.base.BaseEntity;
 
 /**
  * The Interface BaseRepository.
@@ -21,7 +21,7 @@ import com.sigamfe.model.base.GenericEntityIface;
  *            O tipo do campo ID da entidade
  */
 @NoRepositoryBean
-public interface BaseRepository<E extends GenericEntityIface<ID>, ID extends Serializable> extends JpaRepository<E, ID> {
+public interface BaseRepository<ID extends Serializable, E extends BaseEntity<ID>> extends JpaRepository<E, ID> {
 
 	/**
 	 * Returns a {@link List} of entities sorted by the given option.

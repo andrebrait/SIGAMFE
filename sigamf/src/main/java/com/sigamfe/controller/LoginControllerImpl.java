@@ -6,39 +6,37 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+
+import javax.annotation.PostConstruct;
+
 import lombok.Getter;
-import lombok.Setter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
 
+import com.sigamfe.business.UsuarioBusiness;
 import com.sigamfe.configuration.PersistenceConfiguration;
 import com.sigamfe.configuration.constants.Messages;
 import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.controller.base.FXMLDialog;
-import com.sigamfe.repository.UsuarioRepository;
 
-@Component
+@Controller
 @Lazy
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class LoginControllerImpl implements LoginController {
+
+	private static final long serialVersionUID = -7412951282356817346L;
+
+	@Autowired
+	private UsuarioBusiness usuarioBusiness;
 
 	@Autowired
 	private MainWindowController mainWindowController;
 
-	@Autowired
-	private AuthenticationProvider authenticationProvider;
-
-	@Autowired
-	private UsuarioRepository usuarioRepository;
-
 	@Getter
-	@Setter
 	private FXMLDialog dialog;
 
 	@FXML
@@ -50,22 +48,15 @@ public class LoginControllerImpl implements LoginController {
 	@FXML
 	private Text labelServidor;
 
-	public LoginControllerImpl() {
-		this.dialog = new FXMLDialog(this);
-	}
-
 	@Override
 	@FXML
 	public void login() {
-		Authentication authToken = new UsernamePasswordAuthenticationToken(username.getText(), password.getText());
-		try {
-			authToken = authenticationProvider.authenticate(authToken);
-			SecurityContextHolder.getContext().setAuthentication(authToken);
-			mainWindowController.getDialog().show();
-			getDialog().close();
-		} catch (AuthenticationException e) {
+		if (usuarioBusiness.login(username.getText(), password.getText())) {
+			dialog.getOwnerAsStage().show();
+			dialog.close();
+		} else {
 			labelErro.setText(Messages.LOGIN_INVALIDO);
-			throw new RuntimeException(e);
+
 		}
 	}
 
@@ -75,19 +66,19 @@ public class LoginControllerImpl implements LoginController {
 		// TODO Implementar esta funcionalidade
 	}
 
-	@Override
-	public void initializeWindow() {
-		getDialog().initializeWindow();
-		getDialog().setOnCloseRequest(e -> Platform.exit());
-		getDialog().setResizable(false);
-		getDialog().setTitle(Titles.LOGIN_WINDOW_TITLE);
-		mainWindowController.initializeWindow();
-		updateLabelServidor();
-		getDialog().showAndWait();
-	}
-
 	private void updateLabelServidor() {
 		labelServidor.setText(PersistenceConfiguration.getDB_HOSTNAME() + ":" + PersistenceConfiguration.getDB_PORT());
+	}
+
+	@Override
+	@PostConstruct
+	public void initializeWindow() {
+		dialog = new FXMLDialog(this, mainWindowController.getDialog());
+		dialog.setOnCloseRequest(e -> Platform.exit());
+		dialog.setResizable(false);
+		dialog.setTitle(Titles.LOGIN_WINDOW_TITLE);
+		updateLabelServidor();
+		dialog.showAndWait();
 	}
 
 }
