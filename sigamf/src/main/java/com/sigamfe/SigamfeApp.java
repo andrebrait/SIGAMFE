@@ -54,6 +54,9 @@ public class SigamfeApp extends Application {
 		applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
 		applicationContext.getBean(LoginController.class);
 
+		int a = 3;
+		System.out.println(a);
+
 		if (usuarioBusiness.count() == 0) {
 			Usuario usuario = new Usuario();
 			usuario.setLogin("admSigamfe");
