@@ -1,5 +1,7 @@
 package com.sigamfe.controller;
 
+import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.stage.Modality;
 
 import javax.annotation.PostConstruct;
@@ -27,5 +29,11 @@ public class MainWindowControllerImpl implements MainWindowController {
 		dialog = new FXMLDialog(this, null, Modality.NONE);
 		dialog.setMaximized(true);
 		dialog.setTitle(Titles.MAIN_WINDOW_TITLE);
+	}
+
+	@Override
+	@FXML
+	public void sair() {
+		Platform.exit();
 	}
 }
