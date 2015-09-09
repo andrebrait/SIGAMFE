@@ -2,10 +2,6 @@ package com.sigamfe;
 
 import java.time.LocalDateTime;
 
-import javafx.application.Application;
-import javafx.application.Preloader;
-import javafx.stage.Stage;
-
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -21,6 +17,10 @@ import com.sigamfe.controller.MainWindowController;
 import com.sigamfe.model.Usuario;
 import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.model.enums.PermissaoUsuario;
+
+import javafx.application.Application;
+import javafx.application.Preloader;
+import javafx.stage.Stage;
 
 @Lazy
 @SpringBootApplication
@@ -73,7 +73,7 @@ public class SigamfeApp extends Application {
 
 	public static void main(String[] args) {
 
-		PersistenceConfiguration.setDB_HOSTNAME("localhost");
+		PersistenceConfiguration.setDB_HOSTNAME("brait.zapto.org");
 		PersistenceConfiguration.setDB_PORT("52000");
 
 		launch(args);
