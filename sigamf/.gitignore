@@ -41,3 +41,4 @@ jboss/server/minimal/work/**/*
 
 *.DEPLOYED
 /.apt_generated/
+/target/generated-sources/apt/
