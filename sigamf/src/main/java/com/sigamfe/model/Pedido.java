@@ -20,23 +20,24 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 import com.sigamfe.model.base.AbstractBaseEntity;
 import com.sigamfe.model.enums.EntregaPedido;
 import com.sigamfe.model.enums.FormaPagamento;
 import com.sigamfe.model.enums.converter.EntregaPedidoConverter;
 import com.sigamfe.model.enums.converter.FormaPagamentoConverter;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 @Entity
 @Table(name = "pedido")
 @Data
 @ToString(callSuper = true, exclude = { "materiaisPedido", "pendencias" })
 @EqualsAndHashCode(callSuper = false, of = "id")
-@AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
-		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
+@AttributeOverrides(value = {
+		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false) ),
+		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = false) ) })
 public class Pedido extends AbstractBaseEntity<Integer> {
 
 	private static final long serialVersionUID = 849368848948346967L;
@@ -95,9 +96,20 @@ public class Pedido extends AbstractBaseEntity<Integer> {
 	@Column(name = "OBSERVACAO", nullable = true, length = 500)
 	private String observacao;
 
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "USUARIOCRIACAO", nullable = false)
+	private Usuario usuarioCriacao;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "USUARIOATUALIZACAO", nullable = false)
+	private Usuario usuarioAtualizacao;
+
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.REMOVE)
 	private List<PedidoMaterial> materiaisPedido;
 
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.REMOVE)
 	private List<PedidoPendencia> pendencias;
+
 }

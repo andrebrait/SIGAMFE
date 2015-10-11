@@ -14,22 +14,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 import org.springframework.data.annotation.CreatedDate;
 
+import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.model.converter.LocalDateTimeConverter;
 import com.sigamfe.model.enums.EstadoPedido;
 import com.sigamfe.model.enums.converter.EstadoPedidoConverter;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @Table(name = "pedidopendencia")
 @Data
 @ToString(callSuper = true, exclude = "pedido")
 @EqualsAndHashCode(callSuper = false, of = "id")
-public class PedidoPendencia implements Serializable {
+public class PedidoPendencia implements Serializable, BaseEntity<Integer> {
 
 	private static final long serialVersionUID = -399787981979837915L;
 

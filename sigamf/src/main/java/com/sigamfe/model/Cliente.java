@@ -13,26 +13,29 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 import com.sigamfe.model.base.AbstractBaseEntity;
 import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.model.enums.converter.IndicadorSNConverter;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @Table(name = "cliente")
 @Data
 @ToString(callSuper = true, exclude = { "pedidos", "telefones" })
 @EqualsAndHashCode(callSuper = false, of = "id")
-@AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
-		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
+@AttributeOverrides(value = {
+		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false) ),
+		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = false) ) })
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Cliente extends AbstractBaseEntity<Integer> {
 
@@ -67,6 +70,16 @@ public abstract class Cliente extends AbstractBaseEntity<Integer> {
 	@Convert(converter = IndicadorSNConverter.class)
 	@Column(name = "INDICADORBLOQUEIO", nullable = false, length = 1)
 	private IndicadorSN bloqueado;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "USUARIOCRIACAO", nullable = false)
+	private Usuario usuarioCriacao;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "USUARIOATUALIZACAO", nullable = false)
+	private Usuario usuarioAtualizacao;
 
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
 	private List<Pedido> pedidos;

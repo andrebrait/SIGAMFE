@@ -7,12 +7,13 @@ import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
-import lombok.Data;
-
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.sigamfe.model.Usuario;
 import com.sigamfe.model.converter.LocalDateTimeConverter;
+
+import lombok.Data;
 
 /**
  * The Class BaseEntity.
@@ -34,5 +35,9 @@ public abstract class AbstractBaseEntity<ID extends Serializable> implements Ser
 	@CreatedDate
 	@Convert(converter = LocalDateTimeConverter.class)
 	protected LocalDateTime dataCriacao;
+
+	public abstract Usuario getUsuarioAtualizacao();
+
+	public abstract Usuario getUsuarioCriacao();
 
 }

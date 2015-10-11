@@ -8,14 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 import org.hibernate.validator.constraints.br.CPF;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
@@ -26,6 +24,10 @@ import com.sigamfe.model.enums.PermissaoUsuario;
 import com.sigamfe.model.enums.converter.IndicadorSNConverter;
 import com.sigamfe.model.enums.converter.PermissaoUsuarioConverter;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
 /**
  * The Class Usuario.
  */
@@ -35,8 +37,9 @@ import com.sigamfe.model.enums.converter.PermissaoUsuarioConverter;
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false, of = "id")
-@AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
-		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
+@AttributeOverrides(value = {
+		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false) ),
+		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = false) ) })
 public class Usuario extends AbstractBaseEntity<Integer> {
 
 	private static final long serialVersionUID = 345500811513095092L;
@@ -75,6 +78,14 @@ public class Usuario extends AbstractBaseEntity<Integer> {
 	@Convert(converter = IndicadorSNConverter.class)
 	@Column(name = "INDICADORATIVO", nullable = false, length = 1)
 	private IndicadorSN ativo;
+
+	@ManyToOne
+	@JoinColumn(name = "USUARIOCRIACAO", nullable = true)
+	private Usuario usuarioCriacao;
+
+	@ManyToOne
+	@JoinColumn(name = "USUARIOATUALIZACAO", nullable = true)
+	private Usuario usuarioAtualizacao;
 
 	public String getSenhaDecriptada(PooledPBEStringEncryptor encryptor) {
 		return encryptor.decrypt(senha);

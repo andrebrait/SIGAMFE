@@ -14,20 +14,21 @@ import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
+import com.sigamfe.model.PedidoMaterial.PedidoMaterialPK;
+import com.sigamfe.model.base.AbstractBaseEntity;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
-import com.sigamfe.model.PedidoMaterial.PedidoMaterialPK;
-import com.sigamfe.model.base.AbstractBaseEntity;
 
 @Entity
 @Table(name = "pedidomaterial")
 @Data
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false, of = "id")
-@AttributeOverrides(value = { @AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false)),
-		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = true)) })
+@AttributeOverrides(value = {
+		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false) ),
+		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = false) ) })
 public class PedidoMaterial extends AbstractBaseEntity<PedidoMaterialPK> {
 
 	private static final long serialVersionUID = -2163115726384201247L;
@@ -76,4 +77,14 @@ public class PedidoMaterial extends AbstractBaseEntity<PedidoMaterialPK> {
 	@Digits(fraction = 0, integer = 6)
 	@Column(name = "QUANTIDADEDEVOLVIDA", nullable = true)
 	private Integer quantidadeDevolvida;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "USUARIOCRIACAO", nullable = false)
+	private Usuario usuarioCriacao;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "USUARIOATUALIZACAO", nullable = false)
+	private Usuario usuarioAtualizacao;
 }
