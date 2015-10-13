@@ -6,6 +6,10 @@ import java.time.LocalDateTime;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
+/**
+ * Classe LocalDateTimeConverter. Converte Timestamp do banco de dados MySQL em
+ * LocalDateTime (JDK 8).
+ */
 @Converter(autoApply = true)
 public class LocalDateTimeConverter implements AttributeConverter<LocalDateTime, Timestamp> {
 

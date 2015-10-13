@@ -1,5 +1,6 @@
 package com.sigamfe.model;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
@@ -13,12 +14,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.sigamfe.model.base.AbstractBaseEntity;
+import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.enums.IndicadorUnidade;
 import com.sigamfe.model.enums.converter.IndicadorUnidadeConverter;
 
@@ -29,12 +31,12 @@ import lombok.ToString;
 @Entity
 @Table(name = "material")
 @Data
-@ToString(callSuper = true, exclude = "pedidosMaterial")
+@ToString(callSuper = true, exclude = { "pedidosMaterial", "fornecedorMaterial", "imagem" })
 @EqualsAndHashCode(callSuper = false, of = "id")
 @AttributeOverrides(value = {
 		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false) ),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = false) ) })
-public class Material extends AbstractBaseEntity<Integer> {
+public class Material extends AuditableBaseEntity<Integer> {
 
 	private static final long serialVersionUID = 2542442156839971981L;
 
@@ -55,12 +57,17 @@ public class Material extends AbstractBaseEntity<Integer> {
 	@NotNull
 	@Digits(fraction = 2, integer = 6)
 	@Column(name = "VALORALUG", nullable = false, precision = 8, scale = 2)
-	private Float valorAluguel;
+	private BigDecimal valorAluguel;
 
 	@NotNull
 	@Digits(fraction = 2, integer = 6)
 	@Column(name = "VALORREPO", nullable = false, precision = 8, scale = 2)
-	private Float valorReposicao;
+	private BigDecimal valorReposicao;
+
+	@NotNull
+	@Digits(fraction = 0, integer = 10)
+	@Column(name = "QUANTIDADEESTOQUE", nullable = false, precision = 10, scale = 0)
+	private Integer quantidadeEstoque;
 
 	@NotNull
 	@Convert(converter = IndicadorUnidadeConverter.class)
@@ -79,5 +86,11 @@ public class Material extends AbstractBaseEntity<Integer> {
 
 	@OneToMany(mappedBy = "material")
 	private List<PedidoMaterial> pedidosMaterial;
+
+	@OneToMany(mappedBy = "material")
+	private List<FornecedorMaterial> fornecedorMaterial;
+
+	@OneToOne(mappedBy = "material")
+	private ImagemMaterial imagem;
 
 }

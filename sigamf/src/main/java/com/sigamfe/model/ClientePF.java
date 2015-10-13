@@ -7,12 +7,15 @@ import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.br.CPF;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import org.hibernate.validator.constraints.br.CPF;
-
+/**
+ * Classe ClientePF. Representa um cliente pessoa física.
+ */
 @Entity
 @Table(name = "clientepf")
 @Data

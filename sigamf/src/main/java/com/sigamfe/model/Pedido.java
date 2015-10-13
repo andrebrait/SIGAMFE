@@ -1,11 +1,11 @@
 package com.sigamfe.model;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -20,11 +20,13 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.sigamfe.model.base.AbstractBaseEntity;
+import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.enums.EntregaPedido;
 import com.sigamfe.model.enums.FormaPagamento;
+import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.model.enums.converter.EntregaPedidoConverter;
 import com.sigamfe.model.enums.converter.FormaPagamentoConverter;
+import com.sigamfe.model.enums.converter.IndicadorSNConverter;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,7 +40,7 @@ import lombok.ToString;
 @AttributeOverrides(value = {
 		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false) ),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = false) ) })
-public class Pedido extends AbstractBaseEntity<Integer> {
+public class Pedido extends AuditableBaseEntity<Integer> {
 
 	private static final long serialVersionUID = 849368848948346967L;
 
@@ -63,9 +65,19 @@ public class Pedido extends AbstractBaseEntity<Integer> {
 	private FormaPagamento formaPagamento;
 
 	@NotNull
-	@Digits(fraction = 2, integer = 1)
-	@Column(name = "DESCONTO", nullable = false, precision = 3, scale = 2)
-	private Float desconto;
+	@Convert(converter = IndicadorSNConverter.class)
+	@Column(name = "INDICADORPRAZO", nullable = false, length = 1)
+	private IndicadorSN prazo;
+
+	@NotNull
+	@Digits(fraction = 2, integer = 6)
+	@Column(name = "DESCONTO", nullable = false, precision = 8, scale = 2)
+	private BigDecimal desconto;
+
+	@NotNull
+	@Digits(fraction = 2, integer = 6)
+	@Column(name = "TOTALBRUTO", nullable = false, precision = 8, scale = 2)
+	private BigDecimal totalBruto;
 
 	@NotNull
 	@Convert(converter = EntregaPedidoConverter.class)
@@ -78,12 +90,12 @@ public class Pedido extends AbstractBaseEntity<Integer> {
 
 	@Digits(fraction = 2, integer = 6)
 	@Column(name = "TAXAENTREGA", nullable = true, precision = 8, scale = 2)
-	private Float taxaEntrega;
+	private BigDecimal taxaEntrega;
 
 	@NotNull
 	@Digits(fraction = 2, integer = 6)
 	@Column(name = "TOTAL", nullable = false, precision = 8, scale = 2)
-	private Float total;
+	private BigDecimal total;
 
 	@Column(name = "DATAENTREGA", nullable = true)
 	private Date dataEntrega;
@@ -106,10 +118,10 @@ public class Pedido extends AbstractBaseEntity<Integer> {
 	@JoinColumn(name = "USUARIOATUALIZACAO", nullable = false)
 	private Usuario usuarioAtualizacao;
 
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "pedido")
 	private List<PedidoMaterial> materiaisPedido;
 
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.REMOVE)
-	private List<PedidoPendencia> pendencias;
+	@OneToMany(mappedBy = "pedido")
+	private List<PedidoEstado> pendencias;
 
 }

@@ -1,13 +1,21 @@
 package com.sigamfe.model.enums;
 
+import com.sigamfe.model.enums.interfaces.PersistentEnum;
+
 import lombok.Getter;
 
 /**
- * The Enum IndicadorUnidade.
+ * Enum IndicadorUnidade. Indica a unidade em que o material será considerado no
+ * sistema.
  */
-public enum IndicadorUnidade {
+public enum IndicadorUnidade implements PersistentEnum {
 
-	UNIDADE("UN", "Unidade"), DUZIA("DZ", "Dúzia");
+	/** Unidade */
+	UNIDADE("UN", "Unidade"),
+	/**
+	 * Dúzia
+	 */
+	DUZIA("DZ", "Dúzia");
 
 	@Getter
 	private String codigo;

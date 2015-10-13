@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.br.CPF;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 
-import com.sigamfe.model.base.AbstractBaseEntity;
+import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.model.enums.PermissaoUsuario;
 import com.sigamfe.model.enums.converter.IndicadorSNConverter;
@@ -40,7 +40,7 @@ import lombok.ToString;
 @AttributeOverrides(value = {
 		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false) ),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = false) ) })
-public class Usuario extends AbstractBaseEntity<Integer> {
+public class Usuario extends AuditableBaseEntity<Integer> {
 
 	private static final long serialVersionUID = 345500811513095092L;
 

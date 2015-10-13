@@ -20,7 +20,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.sigamfe.model.base.AbstractBaseEntity;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.model.enums.converter.IndicadorSNConverter;
 
@@ -28,6 +30,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+/**
+ * Classe cliente. Representa um cliente no sistema, seja PJ ou PF.
+ */
 @Entity
 @Table(name = "cliente")
 @Data
@@ -37,7 +42,7 @@ import lombok.ToString;
 		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false) ),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = false) ) })
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Cliente extends AbstractBaseEntity<Integer> {
+public abstract class Cliente extends AuditableBaseEntity<Integer> {
 
 	private static final long serialVersionUID = -3608712352669272090L;
 
@@ -46,7 +51,7 @@ public abstract class Cliente extends AbstractBaseEntity<Integer> {
 	@Column(name = "ID")
 	private Integer id;
 
-	@NotNull
+	@NotEmpty
 	@Size(max = 50)
 	@Column(name = "NOME", nullable = false, length = 50)
 	private String nome;
@@ -56,7 +61,7 @@ public abstract class Cliente extends AbstractBaseEntity<Integer> {
 	@Column(name = "ENDERECO", nullable = false, length = 200)
 	private String endereco;
 
-	@NotNull
+	@NotEmpty
 	@Size(max = 200)
 	@Column(name = "ENDERECOENTREGA", nullable = false, length = 200)
 	private String enderecoEntrega;
@@ -81,7 +86,7 @@ public abstract class Cliente extends AbstractBaseEntity<Integer> {
 	@JoinColumn(name = "USUARIOATUALIZACAO", nullable = false)
 	private Usuario usuarioAtualizacao;
 
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos;
 
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)

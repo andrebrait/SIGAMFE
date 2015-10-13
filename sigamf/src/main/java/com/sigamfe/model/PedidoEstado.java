@@ -26,11 +26,11 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
-@Table(name = "pedidopendencia")
+@Table(name = "pedidoestado")
 @Data
 @ToString(callSuper = true, exclude = "pedido")
 @EqualsAndHashCode(callSuper = false, of = "id")
-public class PedidoPendencia implements Serializable, BaseEntity<Integer> {
+public class PedidoEstado implements Serializable, BaseEntity<Integer> {
 
 	private static final long serialVersionUID = -399787981979837915L;
 
@@ -54,5 +54,10 @@ public class PedidoPendencia implements Serializable, BaseEntity<Integer> {
 	@Convert(converter = LocalDateTimeConverter.class)
 	@Column(name = "DATAMUDANCA", nullable = false)
 	protected LocalDateTime dataMudanca;
+
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "USUARIOMUDANCA", nullable = false)
+	private Usuario usuarioMudanca;
 
 }

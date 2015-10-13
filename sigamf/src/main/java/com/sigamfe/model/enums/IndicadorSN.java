@@ -1,13 +1,18 @@
 package com.sigamfe.model.enums;
 
+import com.sigamfe.model.enums.interfaces.PersistentEnum;
+
 import lombok.Getter;
 
 /**
- * The Enum IndicadorSN.
+ * Enum IndicadorSN. Usado para indicar estados de SIM/NÃO.
  */
-public enum IndicadorSN {
+public enum IndicadorSN implements PersistentEnum {
 
-	SIM("S", "Sim"), NAO("N", "Não");
+	/** Indicador SIM */
+	SIM("S", "Sim"),
+	/** Indicador NAO */
+	NAO("N", "Não");
 
 	@Getter
 	private String codigo;

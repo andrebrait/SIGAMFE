@@ -15,7 +15,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 import com.sigamfe.model.PedidoMaterial.PedidoMaterialPK;
-import com.sigamfe.model.base.AbstractBaseEntity;
+import com.sigamfe.model.base.AuditableBaseEntity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,27 +29,27 @@ import lombok.ToString;
 @AttributeOverrides(value = {
 		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false) ),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = false) ) })
-public class PedidoMaterial extends AbstractBaseEntity<PedidoMaterialPK> {
+public class PedidoMaterial extends AuditableBaseEntity<PedidoMaterialPK> {
 
 	private static final long serialVersionUID = -2163115726384201247L;
 
 	@Embeddable
 	@Data
 	@ToString(callSuper = false)
-	@EqualsAndHashCode(callSuper = false, of = { "codPedido", "codMaterial" })
+	@EqualsAndHashCode(callSuper = false, of = { "idPedido", "idMaterial" })
 	public static class PedidoMaterialPK implements Serializable {
 
 		private static final long serialVersionUID = 1228615997649469608L;
 
 		@NotNull
-		@Digits(fraction = 0, integer = 6)
-		@Column(name = "IDPEDIDO", nullable = false, precision = 6, scale = 0)
-		private Integer codPedido;
+		@Digits(fraction = 0, integer = 10)
+		@Column(name = "IDPEDIDO", nullable = false, precision = 10, scale = 0)
+		private Integer idPedido;
 
 		@NotNull
-		@Digits(fraction = 0, integer = 4)
-		@Column(name = "IDMATERIAL", nullable = false, precision = 4, scale = 0)
-		private Integer codMaterial;
+		@Digits(fraction = 0, integer = 10)
+		@Column(name = "IDMATERIAL", nullable = false, precision = 10, scale = 0)
+		private Integer idMaterial;
 	}
 
 	@EmbeddedId

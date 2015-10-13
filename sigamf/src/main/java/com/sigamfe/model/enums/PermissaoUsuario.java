@@ -1,10 +1,23 @@
 package com.sigamfe.model.enums;
 
+import com.sigamfe.model.enums.interfaces.PersistentEnum;
+
 import lombok.Getter;
 
-public enum PermissaoUsuario {
+/**
+ * Enum PermissaoUsuario. Indica a permissão do Usuário. Inclui o indicador de
+ * papel usado pelo Spring Security.
+ */
+public enum PermissaoUsuario implements PersistentEnum {
 
-	VENDEDOR("ROLE_USER", "V", "Vendedor"), ADMINISTRADOR("ROLE_ADMIN", "A", "Administrador");
+	/**
+	 * Vendedor
+	 */
+	VENDEDOR("ROLE_USER", "V", "Vendedor"),
+	/**
+	 * Administrador
+	 */
+	ADMINISTRADOR("ROLE_ADMIN", "A", "Administrador");
 
 	@Getter
 	private String codigoSpringSecurity;
