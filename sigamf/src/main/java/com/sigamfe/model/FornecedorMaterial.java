@@ -19,8 +19,10 @@ import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.model.enums.IndicadorUnidade;
 import com.sigamfe.model.enums.converter.IndicadorUnidadeConverter;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
@@ -34,6 +36,8 @@ public class FornecedorMaterial implements BaseEntity<FornecedorMaterialPK> {
 
 	@Embeddable
 	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
 	@ToString(callSuper = false)
 	@EqualsAndHashCode(callSuper = false, of = { "idFornecedor", "idMaterial" })
 	public static class FornecedorMaterialPK implements Serializable {
@@ -82,7 +86,7 @@ public class FornecedorMaterial implements BaseEntity<FornecedorMaterialPK> {
 	 */
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
-		this.getId().setIdFornecedor(fornecedor.getId());
+		this.getId().setIdFornecedor(fornecedor == null ? null : fornecedor.getId());
 	}
 
 	/**
@@ -93,7 +97,7 @@ public class FornecedorMaterial implements BaseEntity<FornecedorMaterialPK> {
 	 */
 	public void setMaterial(Material material) {
 		this.material = material;
-		this.getId().setIdMaterial(material.getId());
+		this.getId().setIdMaterial(material == null ? null : material.getId());
 	}
 
 }

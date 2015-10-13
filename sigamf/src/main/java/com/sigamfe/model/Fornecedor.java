@@ -30,7 +30,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "fornecedor")
 @Data
-@ToString(callSuper = true, exclude = "fornecedorMateriais")
+@ToString(callSuper = true, exclude = { "fornecedorMateriais", "telefones", "usuarioCriacao", "usuarioAtualizacao" })
 @EqualsAndHashCode(callSuper = false, of = "id")
 @AttributeOverrides(value = {
 		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false) ),
@@ -61,5 +61,8 @@ public class Fornecedor extends AuditableBaseEntity<Integer> {
 
 	@OneToMany(mappedBy = "fornecedor")
 	private List<FornecedorMaterial> fornecedorMateriais;
+
+	@OneToMany(mappedBy = "fornecedor")
+	private List<TelefoneFornecedor> telefones;
 
 }

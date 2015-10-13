@@ -1,6 +1,5 @@
 package com.sigamfe.model;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -28,9 +27,9 @@ import lombok.ToString;
 @Entity
 @Table(name = "pedidoestado")
 @Data
-@ToString(callSuper = true, exclude = "pedido")
+@ToString(callSuper = false, exclude = { "pedido", "usuarioMudanca" })
 @EqualsAndHashCode(callSuper = false, of = "id")
-public class PedidoEstado implements Serializable, BaseEntity<Integer> {
+public class PedidoEstado implements BaseEntity<Integer> {
 
 	private static final long serialVersionUID = -399787981979837915L;
 
@@ -53,7 +52,7 @@ public class PedidoEstado implements Serializable, BaseEntity<Integer> {
 	@CreatedDate
 	@Convert(converter = LocalDateTimeConverter.class)
 	@Column(name = "DATAMUDANCA", nullable = false)
-	protected LocalDateTime dataMudanca;
+	private LocalDateTime dataMudanca;
 
 	@NotNull
 	@ManyToOne

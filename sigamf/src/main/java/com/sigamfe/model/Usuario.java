@@ -15,6 +15,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.br.CPF;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 
@@ -29,13 +30,12 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * The Class Usuario.
+ * Classe Usuario. Representa um usuário do sistema.
  */
-
 @Entity
 @Table(name = "usuario")
 @Data
-@ToString(callSuper = true)
+@ToString(callSuper = true, exclude = { "usuarioCriacao", "usuarioAtualizacao" })
 @EqualsAndHashCode(callSuper = false, of = "id")
 @AttributeOverrides(value = {
 		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false) ),
@@ -49,12 +49,12 @@ public class Usuario extends AuditableBaseEntity<Integer> {
 	@Column(name = "ID")
 	private Integer id;
 
-	@NotNull
+	@NotEmpty
 	@Size(min = 6, max = 50)
 	@Column(name = "LOGIN", length = 50, nullable = false, unique = true)
 	private String login;
 
-	@NotNull
+	@NotEmpty
 	@Column(name = "SENHA", nullable = false, length = 1000)
 	private String senha;
 
@@ -63,7 +63,7 @@ public class Usuario extends AuditableBaseEntity<Integer> {
 	@Column(name = "PERMISSAO", nullable = false, length = 1)
 	private PermissaoUsuario permissao;
 
-	@NotNull
+	@NotEmpty
 	@CPF
 	@Size(max = 15)
 	@Column(name = "CPF", nullable = false, unique = true, length = 15)

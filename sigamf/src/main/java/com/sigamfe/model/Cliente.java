@@ -36,7 +36,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "cliente")
 @Data
-@ToString(callSuper = true, exclude = { "pedidos", "telefones" })
+@ToString(callSuper = true, exclude = { "pedidos", "telefones", "usuarioCriacao", "usuarioAtualizacao" })
 @EqualsAndHashCode(callSuper = false, of = "id")
 @AttributeOverrides(value = {
 		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false) ),

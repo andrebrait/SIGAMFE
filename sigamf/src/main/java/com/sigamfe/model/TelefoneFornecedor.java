@@ -13,7 +13,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.sigamfe.model.TelefoneCliente.TelefoneClientePK;
+import com.sigamfe.model.TelefoneFornecedor.TelefoneFornecedorPK;
 import com.sigamfe.model.base.BaseEntity;
 
 import lombok.AllArgsConstructor;
@@ -23,28 +23,28 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name = "telefonecliente")
+@Table(name = "telefonefornecedor")
 @Data
-@ToString(callSuper = false, exclude = "cliente")
+@ToString(callSuper = false, exclude = "fornecedor")
 @EqualsAndHashCode(callSuper = false, of = "id")
-public class TelefoneCliente implements BaseEntity<TelefoneClientePK> {
+public class TelefoneFornecedor implements BaseEntity<TelefoneFornecedorPK> {
 
-	private static final long serialVersionUID = -6897413676120195334L;
+	private static final long serialVersionUID = 4519541791492468821L;
 
 	@Data
 	@Embeddable
 	@AllArgsConstructor
 	@NoArgsConstructor
 	@ToString(callSuper = false)
-	@EqualsAndHashCode(callSuper = false, of = { "idCliente", "telefone" })
-	public static class TelefoneClientePK implements Serializable {
+	@EqualsAndHashCode(callSuper = false, of = { "idFornecedor", "telefone" })
+	public static class TelefoneFornecedorPK implements Serializable {
 
-		private static final long serialVersionUID = -2520894707311269576L;
+		private static final long serialVersionUID = 1793948713323650141L;
 
 		@NotNull
 		@Digits(fraction = 0, integer = 10)
-		@Column(name = "IDCLIENTE", nullable = false, precision = 10, scale = 0)
-		private Integer idCliente;
+		@Column(name = "IDFORNECEDOR", nullable = false, precision = 10, scale = 0)
+		private Integer idFornecedor;
 
 		@NotNull
 		@Digits(fraction = 0, integer = 11)
@@ -53,26 +53,26 @@ public class TelefoneCliente implements BaseEntity<TelefoneClientePK> {
 	}
 
 	@EmbeddedId
-	private TelefoneClientePK id;
+	private TelefoneFornecedorPK id;
 
 	@NotNull
 	@ManyToOne
-	@JoinColumn(name = "IDCLIENTE", nullable = false, insertable = false, updatable = false)
-	private Cliente cliente;
+	@JoinColumn(name = "IDFORNECEDOR", nullable = false, insertable = false, updatable = false)
+	private Fornecedor fornecedor;
 
 	@Size(max = 200)
 	@Column(name = "OBSERVACOES", length = 200, nullable = true)
 	private String observacoes;
 
 	/**
-	 * Atribui o cliente a esta entidade
+	 * Atribui o fornecedor a esta entidade
 	 *
-	 * @param cliente
-	 *            o novo cliente.
+	 * @param fornecedor
+	 *            o novo fornecedor.
 	 */
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-		this.getId().setIdCliente(cliente == null ? null : cliente.getId());
+	public void setFornecedor(Fornecedor fornecedor) {
+		this.fornecedor = fornecedor;
+		this.getId().setIdFornecedor(fornecedor == null ? null : fornecedor.getId());
 	}
 
 }

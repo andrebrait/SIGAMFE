@@ -29,7 +29,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "movimentoestoque")
 @Data
-@ToString(callSuper = false)
+@ToString(callSuper = false, exclude = { "material", "usuario" })
 @EqualsAndHashCode(callSuper = false, of = "id")
 public class MovimentoEstoque implements BaseEntity<Long> {
 

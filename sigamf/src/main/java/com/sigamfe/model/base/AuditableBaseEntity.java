@@ -30,6 +30,7 @@ public abstract class AuditableBaseEntity<ID extends Serializable> implements Ba
 
 	private static final long serialVersionUID = -5479406946881675009L;
 
+	@NotNull
 	@LastModifiedDate
 	@Convert(converter = LocalDateTimeConverter.class)
 	protected LocalDateTime dataAtualizacao;

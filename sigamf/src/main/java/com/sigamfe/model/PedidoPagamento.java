@@ -1,10 +1,13 @@
 package com.sigamfe.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -14,8 +17,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
-import com.sigamfe.model.PedidoMaterial.PedidoMaterialPK;
+import com.sigamfe.model.PedidoPagamento.PedidoPagamentoPK;
 import com.sigamfe.model.base.AuditableBaseEntity;
+import com.sigamfe.model.converter.LocalDateTimeConverter;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,26 +28,26 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name = "pedidomaterial")
+@Table(name = "pedidopagamento")
 @Data
-@ToString(callSuper = true, exclude = { "pedido", "material", "usuarioCriacao", "usuarioAtualizacao" })
+@ToString(callSuper = true, exclude = { "pedido", "usuarioCriacao", "usuarioAtualizacao" })
 @EqualsAndHashCode(callSuper = false, of = "id")
 @AttributeOverrides(value = {
 		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false) ),
 		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = false) ) })
-public class PedidoMaterial extends AuditableBaseEntity<PedidoMaterialPK> {
+public class PedidoPagamento extends AuditableBaseEntity<PedidoPagamentoPK> {
 
-	private static final long serialVersionUID = -2163115726384201247L;
+	private static final long serialVersionUID = 7209346864721608568L;
 
 	@Embeddable
 	@Data
 	@AllArgsConstructor
 	@NoArgsConstructor
 	@ToString(callSuper = false)
-	@EqualsAndHashCode(callSuper = false, of = { "idPedido", "idMaterial" })
-	public static class PedidoMaterialPK implements Serializable {
+	@EqualsAndHashCode(callSuper = false, of = { "idPedido", "parcela" })
+	public static class PedidoPagamentoPK implements Serializable {
 
-		private static final long serialVersionUID = 1228615997649469608L;
+		private static final long serialVersionUID = -739747676661525329L;
 
 		@NotNull
 		@Digits(fraction = 0, integer = 10)
@@ -51,13 +55,13 @@ public class PedidoMaterial extends AuditableBaseEntity<PedidoMaterialPK> {
 		private Integer idPedido;
 
 		@NotNull
-		@Digits(fraction = 0, integer = 10)
-		@Column(name = "IDMATERIAL", nullable = false, precision = 10, scale = 0)
-		private Integer idMaterial;
+		@Digits(fraction = 0, integer = 2)
+		@Column(name = "PARCELA", nullable = false, precision = 2, scale = 0)
+		private Short parcela;
 	}
 
 	@EmbeddedId
-	private PedidoMaterialPK id;
+	private PedidoPagamentoPK id;
 
 	@NotNull
 	@ManyToOne
@@ -65,22 +69,18 @@ public class PedidoMaterial extends AuditableBaseEntity<PedidoMaterialPK> {
 	private Pedido pedido;
 
 	@NotNull
-	@ManyToOne
-	@JoinColumn(name = "IDMATERIAL", nullable = false, insertable = false, updatable = false)
-	private Material material;
+	@Digits(fraction = 2, integer = 6)
+	@Column(name = "VALOR", nullable = false, scale = 2, precision = 8)
+	private BigDecimal valor;
 
 	@NotNull
-	@Digits(fraction = 0, integer = 6)
-	@Column(name = "QUANTIDADE", nullable = false)
-	private Integer quantidade;
+	@Convert(converter = LocalDateTimeConverter.class)
+	@Column(name = "DATAESPERADA", nullable = false)
+	private LocalDateTime dataEsperada;
 
-	@Digits(fraction = 0, integer = 6)
-	@Column(name = "QUANTIDADEREPOSICAO", nullable = true)
-	private Integer quantidadeReposicao;
-
-	@Digits(fraction = 0, integer = 6)
-	@Column(name = "QUANTIDADEDEVOLVIDA", nullable = true)
-	private Integer quantidadeDevolvida;
+	@Convert(converter = LocalDateTimeConverter.class)
+	@Column(name = "DATAPAGAMENTO", nullable = true)
+	private LocalDateTime dataPagamento;
 
 	@NotNull
 	@ManyToOne
@@ -102,16 +102,4 @@ public class PedidoMaterial extends AuditableBaseEntity<PedidoMaterialPK> {
 		this.pedido = pedido;
 		this.getId().setIdPedido(pedido == null ? null : pedido.getId());
 	}
-
-	/**
-	 * Atribui o material a esta entidade.
-	 *
-	 * @param material
-	 *            o novo material
-	 */
-	public void setMaterial(Material material) {
-		this.material = material;
-		this.getId().setIdMaterial(material == null ? null : material.getId());
-	}
-
 }

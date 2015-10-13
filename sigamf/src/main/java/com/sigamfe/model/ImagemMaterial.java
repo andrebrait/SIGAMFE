@@ -1,7 +1,5 @@
 package com.sigamfe.model;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -23,9 +21,6 @@ import lombok.ToString;
 @Data
 @ToString(callSuper = false, exclude = "imagem")
 @EqualsAndHashCode(callSuper = false, of = "id")
-@AttributeOverrides(value = {
-		@AttributeOverride(name = "dataCriacao", column = @Column(name = "DATACRIACAO", nullable = false) ),
-		@AttributeOverride(name = "dataAtualizacao", column = @Column(name = "DATAATUALIZACAO", nullable = false) ) })
 public class ImagemMaterial implements BaseEntity<Integer> {
 
 	private static final long serialVersionUID = -2843596916310581046L;
