@@ -51,11 +51,6 @@ public class Pedido extends AuditableBaseEntity<Integer> {
 	private Integer id;
 
 	@NotNull
-	@Digits(fraction = 0, integer = 6)
-	@Column(name = "CODIGO", precision = 6, scale = 0, nullable = false, unique = true)
-	private Integer codigo;
-
-	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "CLIENTE", nullable = false)
 	private Cliente cliente;

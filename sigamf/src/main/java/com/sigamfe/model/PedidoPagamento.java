@@ -57,7 +57,7 @@ public class PedidoPagamento extends AuditableBaseEntity<PedidoPagamentoPK> {
 		@NotNull
 		@Digits(fraction = 0, integer = 2)
 		@Column(name = "PARCELA", nullable = false, precision = 2, scale = 0)
-		private Short parcela;
+		private Byte parcela;
 	}
 
 	@EmbeddedId

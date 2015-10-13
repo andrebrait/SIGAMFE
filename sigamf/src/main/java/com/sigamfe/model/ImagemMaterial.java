@@ -17,9 +17,9 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 @Entity
-@Table(name = "material")
+@Table(name = "materialimagem")
 @Data
-@ToString(callSuper = false, exclude = "imagem")
+@ToString(callSuper = false, exclude = { "imagem", "material" })
 @EqualsAndHashCode(callSuper = false, of = "id")
 public class ImagemMaterial implements BaseEntity<Integer> {
 
@@ -35,8 +35,8 @@ public class ImagemMaterial implements BaseEntity<Integer> {
 	private Material material;
 
 	@NotEmpty
-	@Column(name = "IMAGEM", nullable = false)
-	private byte[] imagem;
+	@Column(name = "IMAGEM", nullable = false, columnDefinition = "mediumblob")
+	private Byte[] imagem;
 
 	/**
 	 * Atribui o material a esta entidade.
