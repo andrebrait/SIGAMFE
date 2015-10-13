@@ -1,30 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sigamfe.controller.MainWindowControllerImpl">
+<VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sigamfe.controller.MainWindowControllerImpl">
    <children>
-      <MenuBar prefHeight="25.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="Arquivo">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#sair" text="Sair" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Editar">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Ajuda">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
+      <MenuBar fx:id="mainWindowMenuBar" prefHeight="25.0" prefWidth="600.0" visible="false">
+         <menus>
+            <Menu mnemonicParsing="false" text="Arquivo">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#sair" text="Sair" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Editar">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Delete" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Ajuda">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="About" />
+               </items>
+            </Menu>
+         </menus>
       </MenuBar>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+         <center>
+            <TitledPane collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="320.0" text="Login no SIGAMFE" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <content>
+                  <Pane prefHeight="164.0" prefWidth="318.0">
+                     <children>
+                        <PasswordField fx:id="password" layoutX="104.0" layoutY="70.0" onAction="#login" prefHeight="25.0" prefWidth="180.0" />
+                        <TextField fx:id="username" layoutX="103.0" layoutY="24.0" prefHeight="25.0" prefWidth="180.0" />
+                        <Label layoutX="34.0" layoutY="28.0" text="Usuário" />
+                        <Label layoutX="34.0" layoutY="74.0" text="Senha" />
+                        <Button layoutX="135.0" layoutY="126.0" mnemonicParsing="false" onAction="#login" text="Entrar" />
+                        <Label fx:id="labelErro" layoutX="32.0" layoutY="102.0" prefHeight="17.0" prefWidth="254.0" textAlignment="CENTER" textFill="RED" />
+                     </children>
+                  </Pane>
+               </content>
+            </TitledPane>
+         </center>
+         <top>
+            <VBox alignment="CENTER">
+               <children>
+                  <Pane VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label alignment="CENTER" layoutX="232.0" layoutY="54.0" text="Festa Nossa" textAlignment="CENTER">
+                           <font>
+                              <Font size="64.0" />
+                           </font>
+                        </Label>
+                        <Box depth="100.0" height="100.0" layoutX="706.0" layoutY="101.0" nodeOrientation="LEFT_TO_RIGHT" rotate="109.0" width="100.0">
+                           <rotationAxis>
+                              <Point3D x="1.0" y="1.0" z="1.0" />
+                           </rotationAxis>
+                        </Box>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </top>
+      </BorderPane>
    </children>
-</AnchorPane>
+</VBox>
