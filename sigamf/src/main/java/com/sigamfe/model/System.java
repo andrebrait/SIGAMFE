@@ -18,13 +18,13 @@ import lombok.EqualsAndHashCode;
 @Data
 @Table(name = "system")
 @EqualsAndHashCode(callSuper = false, of = "id")
-public class System implements BaseEntity<Short> {
+public class System implements BaseEntity<Byte> {
 
 	private static final long serialVersionUID = 7797452984436492733L;
 
 	@Id
 	@Column(name = "ID")
-	private Short id;
+	private Byte id;
 
 	@Convert(converter = LocalDateTimeConverter.class)
 	@Column(name = "ULTIMAVEZATUALIZOUPEDIDO", nullable = true)

@@ -1,7 +1,5 @@
 package com.sigamfe.model.enums.converter.base;
 
-import java.util.Optional;
-
 import javax.persistence.AttributeConverter;
 
 import com.sigamfe.exception.EnumException;
@@ -35,7 +33,7 @@ public abstract class PersistentEnumConverter<E extends Enum<E> & PersistentEnum
 
 	@Override
 	public String convertToDatabaseColumn(E attribute) {
-		return Optional.ofNullable(attribute).map(E::getCodigo).orElse(null);
+		return attribute == null ? null : attribute.getCodigo();
 	}
 
 	@Override
