@@ -1,15 +1,6 @@
 package com.sigamfe.controller;
 
-import javafx.application.Platform;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.text.Text;
-
 import javax.annotation.PostConstruct;
-
-import lombok.Getter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -19,9 +10,16 @@ import org.springframework.stereotype.Controller;
 
 import com.sigamfe.business.UsuarioBusiness;
 import com.sigamfe.configuration.PersistenceConfiguration;
-import com.sigamfe.configuration.constants.Messages;
 import com.sigamfe.configuration.constants.Titles;
-import com.sigamfe.controller.base.FXMLDialog;
+import com.sigamfe.controller.base.ViewStage;
+
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+import lombok.Getter;
 
 @Controller
 @Lazy
@@ -37,26 +35,28 @@ public class LoginControllerImpl implements LoginController {
 	private MainWindowController mainWindowController;
 
 	@Getter
-	private FXMLDialog dialog;
+	private ViewStage stage;
 
 	@FXML
 	private Label labelErro;
+
 	@FXML
 	private TextField username;
+
 	@FXML
 	private PasswordField password;
+
 	@FXML
-	private Text labelServidor;
+	private Text textServidor;
 
 	@Override
 	@FXML
 	public void login() {
 		if (usuarioBusiness.login(username.getText(), password.getText())) {
-			dialog.getOwnerAsStage().show();
-			dialog.close();
+			stage.getOwnerAsStage().show();
+			stage.close();
 		} else {
-			labelErro.setText(Messages.LOGIN_INVALIDO);
-
+			labelErro.setVisible(true);
 		}
 	}
 
@@ -67,18 +67,18 @@ public class LoginControllerImpl implements LoginController {
 	}
 
 	private void updateLabelServidor() {
-		labelServidor.setText(PersistenceConfiguration.getDB_HOSTNAME() + ":" + PersistenceConfiguration.getDB_PORT());
+		textServidor.setText(PersistenceConfiguration.getDB_HOSTNAME() + ":" + PersistenceConfiguration.getDB_PORT());
 	}
 
 	@Override
 	@PostConstruct
 	public void initializeWindow() {
-		dialog = new FXMLDialog(this, mainWindowController.getDialog());
-		dialog.setOnCloseRequest(e -> Platform.exit());
-		dialog.setResizable(false);
-		dialog.setTitle(Titles.LOGIN_WINDOW_TITLE);
+		stage = new ViewStage(this, mainWindowController.getStage());
+		stage.setOnCloseRequest(e -> Platform.exit());
+		stage.setResizable(false);
+		stage.setTitle(Titles.LOGIN_WINDOW_TITLE);
 		updateLabelServidor();
-		dialog.showAndWait();
+		stage.showAndWait();
 	}
 
 }

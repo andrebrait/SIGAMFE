@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
@@ -52,6 +53,11 @@ public class MovimentoEstoque implements BaseEntity<Long> {
 	private Integer quantidade;
 
 	@NotNull
+	@Digits(fraction = 0, integer = 10)
+	@Column(name = "QUANTIDADEESTOQUE", nullable = false, precision = 10, scale = 0)
+	private Integer quantidadeEstoque;
+
+	@NotNull
 	@Convert(converter = TipoMovimentoEstoqueConverter.class)
 	@Column(name = "TIPOMOVIMENTO", nullable = false, length = 2)
 	private TipoMovimentoEstoque tipo;
@@ -66,5 +72,9 @@ public class MovimentoEstoque implements BaseEntity<Long> {
 	@ManyToOne
 	@JoinColumn(name = "USUARIO", nullable = false)
 	private Usuario usuario;
+
+	@Version
+	@Column(name = "VERSION")
+	private Long version;
 
 }

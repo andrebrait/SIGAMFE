@@ -30,4 +30,14 @@ public class System implements BaseEntity<Byte> {
 	@Column(name = "ULTIMAVEZATUALIZOUPEDIDO", nullable = true)
 	private LocalDateTime ultimaVezAtualizouPedido;
 
+	@Override
+	public Long getVersion() {
+		return null;
+	}
+
+	@Override
+	public void setVersion(Long version) {
+
+	}
+
 }

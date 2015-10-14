@@ -1,7 +1,5 @@
 package com.sigamfe.business;
 
-import lombok.Getter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Lazy;
@@ -16,6 +14,8 @@ import org.springframework.stereotype.Component;
 import com.sigamfe.business.base.AbstractBusiness;
 import com.sigamfe.model.Usuario;
 import com.sigamfe.repository.UsuarioRepository;
+
+import lombok.Getter;
 
 @Component
 @Lazy

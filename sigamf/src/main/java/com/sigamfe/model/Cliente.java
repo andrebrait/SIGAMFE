@@ -17,6 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -57,14 +58,13 @@ public abstract class Cliente extends AuditableBaseEntity<Integer> {
 	private String nome;
 
 	@NotNull
-	@Size(max = 200)
-	@Column(name = "ENDERECO", nullable = false, length = 200)
-	private String endereco;
+	@ManyToOne
+	@JoinColumn(name = "ENDERECO", nullable = false)
+	private Endereco endereco;
 
-	@NotEmpty
 	@Size(max = 200)
-	@Column(name = "ENDERECOENTREGA", nullable = false, length = 200)
-	private String enderecoEntrega;
+	@Column(name = "EMAIL", nullable = true, length = 200)
+	private String email;
 
 	@NotNull
 	@Convert(converter = IndicadorSNConverter.class)
@@ -85,6 +85,10 @@ public abstract class Cliente extends AuditableBaseEntity<Integer> {
 	@ManyToOne
 	@JoinColumn(name = "USUARIOATUALIZACAO", nullable = false)
 	private Usuario usuarioAtualizacao;
+
+	@Version
+	@Column(name = "VERSION")
+	private Long version;
 
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos;

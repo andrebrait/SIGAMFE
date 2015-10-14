@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -66,11 +67,6 @@ public class Material extends AuditableBaseEntity<Integer> {
 	private BigDecimal valorReposicao;
 
 	@NotNull
-	@Digits(fraction = 0, integer = 10)
-	@Column(name = "QUANTIDADEESTOQUE", nullable = false, precision = 10, scale = 0)
-	private Integer quantidadeEstoque;
-
-	@NotNull
 	@Convert(converter = IndicadorUnidadeConverter.class)
 	@Column(name = "UNIDADE", nullable = false, length = 2)
 	private IndicadorUnidade unidade;
@@ -84,6 +80,10 @@ public class Material extends AuditableBaseEntity<Integer> {
 	@ManyToOne
 	@JoinColumn(name = "USUARIOATUALIZACAO", nullable = false)
 	private Usuario usuarioAtualizacao;
+
+	@Version
+	@Column(name = "VERSION")
+	private Long version;
 
 	@OneToMany(mappedBy = "material")
 	private List<PedidoMaterial> pedidosMaterial;

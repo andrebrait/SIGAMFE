@@ -2,7 +2,6 @@ package com.sigamfe.business.base;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,18 +36,14 @@ public interface BaseBusiness<ID extends Serializable, E extends BaseEntity<ID>>
 
 	public List<E> findAll(Sort sort);
 
-	public Optional<E> findById(ID id);
-
 	public Page<E> findById(Iterable<ID> ids, Pageable pageable);
 
 	public List<E> findById(List<ID> ids);
 
-	public E findOne(ID id);
+	public E findById(ID id);
 
 	public E save(E entity);
 
 	public List<E> save(List<E> entities);
-
-	public E saveAndFlush(E entity);
 
 }

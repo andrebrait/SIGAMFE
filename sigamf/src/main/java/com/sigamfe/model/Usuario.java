@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -86,6 +87,10 @@ public class Usuario extends AuditableBaseEntity<Integer> {
 	@ManyToOne
 	@JoinColumn(name = "USUARIOATUALIZACAO", nullable = true)
 	private Usuario usuarioAtualizacao;
+
+	@Version
+	@Column(name = "VERSION")
+	private Long version;
 
 	public String getSenhaDecriptada(PooledPBEStringEncryptor encryptor) {
 		return encryptor.decrypt(senha);

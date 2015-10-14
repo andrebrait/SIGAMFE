@@ -11,43 +11,58 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="320.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sigamfe.controller.LoginControllerImpl">
-	<children>
-		<Pane layoutX="14.0" layoutY="246.0" prefHeight="60.0" prefWidth="284.0" snapToPixel="false" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0">
-			<children>
-				<TextField fx:id="username" layoutX="53.0" prefHeight="25.0" prefWidth="155.0" />
-				<Label layoutY="38.0" prefHeight="17.0" prefWidth="42.0" text="Senha" />
-				<PasswordField fx:id="password" layoutX="53.0" layoutY="35.0" onAction="#login" prefHeight="25.0" prefWidth="155.0" />
-				<Label layoutY="4.0" prefHeight="17.0" prefWidth="42.0" text="Usuário" />
-				<Button layoutX="221.0" layoutY="35.0" mnemonicParsing="false" onAction="#login" prefHeight="25.0" prefWidth="49.0" text="Entrar" />
-			</children>
-		</Pane>
-		<Text layoutX="15.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SIGAMFE">
-			<font>
-				<Font size="64.0" />
-			</font>
-		</Text>
-		<Box depth="100.0" height="100.0" layoutX="463.0" layoutY="158.0" rotate="109.7" width="100.0">
-			<rotationAxis>
-				<Point3D x="1.0" y="1.0" z="1.0" />
-			</rotationAxis>
-		</Box>
-		<Text layoutX="331.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Servidor:" wrappingWidth="35.0">
-			<font>
-				<Font size="9.0" />
-			</font>
-		</Text>
-		<Text fx:id="labelServidor" layoutX="368.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="endereço" wrappingWidth="220.3125">
-			<font>
-				<Font size="9.0" />
-			</font>
-		</Text>
-		<Text layoutX="14.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sistema de Gerenciamento de Aluguel de Material para Festas e Eventos" textAlignment="CENTER" wrappingWidth="257.3125" />
-		<Button layoutX="592.0" layoutY="296.0" mnemonicParsing="false" onAction="#changeServer" prefHeight="12.0" prefWidth="42.0" text="Alterar">
-			<font>
-				<Font size="9.0" />
-			</font>
-		</Button>
-		<Label fx:id="labelErro" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="218.0" prefHeight="17.0" prefWidth="284.0" textAlignment="CENTER" textFill="RED" />
-	</children>
-</AnchorPane>
+<VBox alignment="CENTER" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" snapToPixel="false" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sigamfe.controller.LoginControllerImpl">
+   <children>
+      <BorderPane prefHeight="600.0" prefWidth="800.0" VBox.vgrow="ALWAYS">
+         <center>
+            <TitledPane collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="191.0" prefWidth="320.0" text="Login no SIGAMFE" BorderPane.alignment="CENTER">
+               <content>
+                  <Pane minHeight="164.0" minWidth="318.0" prefHeight="164.0" prefWidth="318.0">
+                     <children>
+                        <TextField fx:id="username" layoutX="103.0" layoutY="24.0" onAction="#login" prefHeight="25.0" prefWidth="180.0" />
+                        <PasswordField fx:id="password" layoutX="104.0" layoutY="70.0" onAction="#login" prefHeight="25.0" prefWidth="180.0" />
+                        <Button layoutX="135.0" layoutY="126.0" mnemonicParsing="false" onAction="#login" text="Entrar" />
+                        <Label layoutX="34.0" layoutY="28.0" text="Usuário" />
+                        <Label layoutX="34.0" layoutY="74.0" text="Senha" />
+                        <Label fx:id="labelErro" alignment="CENTER" contentDisplay="CENTER" layoutX="32.0" layoutY="102.0" prefHeight="17.0" prefWidth="254.0" text="Erro: usuário ou senha inválidos" textAlignment="CENTER" textFill="RED" visible="false" />
+                     </children>
+                  </Pane>
+               </content>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </TitledPane>
+         </center>
+         <top>
+            <Group BorderPane.alignment="CENTER">
+               <children>
+                  <Pane minHeight="265.0" minWidth="800.0" prefHeight="265.0" prefWidth="800.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutY="2.0" minHeight="150.0" minWidth="800.0" prefHeight="150.0" prefWidth="800.0" text="Festa Nossa" textAlignment="CENTER">
+                           <font>
+                              <Font name="Broadway" size="64.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Box depth="100.0" height="100.0" layoutX="400.0" layoutY="203.0" nodeOrientation="LEFT_TO_RIGHT" rotate="109.0" width="100.0">
+                     <rotationAxis>
+                        <Point3D x="1.0" y="1.0" z="1.0" />
+                     </rotationAxis>
+                  </Box>
+               </children>
+            </Group>
+         </top>
+         <bottom>
+            <HBox alignment="CENTER" prefHeight="30.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Servidor: " />
+                  <Text fx:id="textServidor" strokeType="OUTSIDE" strokeWidth="0.0" text="não configurado" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
+                  <Button mnemonicParsing="false" onAction="#changeServer" text="Alterar" />
+               </children>
+            </HBox>
+         </bottom>
+      </BorderPane>
+   </children>
+</VBox>

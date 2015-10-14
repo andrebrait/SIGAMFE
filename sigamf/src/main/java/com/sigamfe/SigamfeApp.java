@@ -1,7 +1,5 @@
 package com.sigamfe;
 
-import java.time.LocalDateTime;
-
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -52,10 +50,6 @@ public class SigamfeApp extends Application {
 		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
 
 		applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
-		applicationContext.getBean(LoginController.class);
-
-		int a = 3;
-		System.out.println(a);
 
 		if (usuarioBusiness.count() == 0) {
 			Usuario usuario = new Usuario();
@@ -63,11 +57,12 @@ public class SigamfeApp extends Application {
 			usuario.setSenhaEncriptando(applicationContext.getBean(PooledPBEStringEncryptor.class), "sigPass");
 			usuario.setAtivo(IndicadorSN.SIM);
 			usuario.setCpf("014.795.246-89");
-			usuario.setDataCriacao(LocalDateTime.now());
 			usuario.setTelefone(930040829L);
 			usuario.setPermissao(PermissaoUsuario.ADMINISTRADOR);
-			usuarioBusiness.saveAndFlush(usuario);
+			usuarioBusiness.save(usuario);
 		}
+
+		applicationContext.getBean(LoginController.class);
 
 	}
 

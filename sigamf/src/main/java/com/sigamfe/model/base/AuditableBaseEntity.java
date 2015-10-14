@@ -44,4 +44,8 @@ public abstract class AuditableBaseEntity<ID extends Serializable> implements Ba
 
 	public abstract Usuario getUsuarioCriacao();
 
+	public abstract void setUsuarioAtualizacao(Usuario usuarioAtualizacao);
+
+	public abstract void setUsuarioCriacao(Usuario usuarioCriacao);
+
 }

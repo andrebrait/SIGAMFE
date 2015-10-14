@@ -59,4 +59,14 @@ public class PedidoEstado implements BaseEntity<Integer> {
 	@JoinColumn(name = "USUARIOMUDANCA", nullable = false)
 	private Usuario usuarioMudanca;
 
+	@Override
+	public Long getVersion() {
+		return null;
+	}
+
+	@Override
+	public void setVersion(Long version) {
+
+	}
+
 }

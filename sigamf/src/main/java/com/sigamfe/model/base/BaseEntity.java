@@ -26,4 +26,19 @@ public interface BaseEntity<ID extends Serializable> extends Serializable {
 	 */
 	public abstract void setId(ID id);
 
+	/**
+	 * Retorna a versão da entidade
+	 *
+	 * @return A versão
+	 */
+	public abstract Long getVersion();
+
+	/**
+	 * Atribui a versão à entidade
+	 *
+	 * @param version
+	 *            a nova versão
+	 */
+	public abstract void setVersion(Long version);
+
 }

@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
@@ -77,6 +78,10 @@ public class FornecedorMaterial implements BaseEntity<FornecedorMaterialPK> {
 	@Convert(converter = IndicadorUnidadeConverter.class)
 	@Column(name = "UNIDADE", nullable = false, length = 2)
 	private IndicadorUnidade unidade;
+
+	@Version
+	@Column(name = "VERSION")
+	private Long version;
 
 	/**
 	 * Atribui o fornecedor e o ID do fornecedor ao ID desta entidade.

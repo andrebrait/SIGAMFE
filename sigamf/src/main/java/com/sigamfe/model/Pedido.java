@@ -1,7 +1,7 @@
 package com.sigamfe.model;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.AttributeOverride;
@@ -16,11 +16,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.sigamfe.model.base.AuditableBaseEntity;
+import com.sigamfe.model.converter.LocalDateTimeConverter;
 import com.sigamfe.model.enums.EntregaPedido;
 import com.sigamfe.model.enums.FormaPagamento;
 import com.sigamfe.model.enums.IndicadorSN;
@@ -80,9 +82,9 @@ public class Pedido extends AuditableBaseEntity<Integer> {
 	@Column(name = "TURNOENTREGA", nullable = false, length = 1)
 	private EntregaPedido turnoEntrega;
 
-	@Size(max = 200)
-	@Column(name = "ENDERECOENTREGA", nullable = true, length = 200)
-	private String enderecoEntrega;
+	@ManyToOne
+	@JoinColumn(name = "ENDERECOENTREGA", nullable = true)
+	private Endereco enderecoEntrega;
 
 	@Digits(fraction = 2, integer = 6)
 	@Column(name = "TAXAENTREGA", nullable = true, precision = 8, scale = 2)
@@ -93,12 +95,14 @@ public class Pedido extends AuditableBaseEntity<Integer> {
 	@Column(name = "TOTAL", nullable = false, precision = 8, scale = 2)
 	private BigDecimal total;
 
+	@Convert(converter = LocalDateTimeConverter.class)
 	@Column(name = "DATAENTREGA", nullable = true)
-	private Date dataEntrega;
+	private LocalDateTime dataEntrega;
 
 	@NotNull
+	@Convert(converter = LocalDateTimeConverter.class)
 	@Column(name = "DATADEVOLUCAO", nullable = false)
-	private Date dataDevolucao;
+	private LocalDateTime dataDevolucao;
 
 	@Size(max = 500)
 	@Column(name = "OBSERVACAO", nullable = true, length = 500)
@@ -113,6 +117,10 @@ public class Pedido extends AuditableBaseEntity<Integer> {
 	@ManyToOne
 	@JoinColumn(name = "USUARIOATUALIZACAO", nullable = false)
 	private Usuario usuarioAtualizacao;
+
+	@Version
+	@Column(name = "VERSION")
+	private Long version;
 
 	@OneToMany(mappedBy = "pedido")
 	private List<PedidoMaterial> materiaisPedido;

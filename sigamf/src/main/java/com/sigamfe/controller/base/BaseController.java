@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public interface BaseController extends Serializable {
 
-	FXMLDialog getDialog();
+	ViewStage getStage();
 
 	void initializeWindow();
 

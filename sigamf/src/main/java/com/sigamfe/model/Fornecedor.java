@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -58,6 +59,10 @@ public class Fornecedor extends AuditableBaseEntity<Integer> {
 	@ManyToOne
 	@JoinColumn(name = "USUARIOATUALIZACAO", nullable = false)
 	private Usuario usuarioAtualizacao;
+
+	@Version
+	@Column(name = "VERSION")
+	private Long version;
 
 	@OneToMany(mappedBy = "fornecedor")
 	private List<FornecedorMaterial> fornecedorMateriais;

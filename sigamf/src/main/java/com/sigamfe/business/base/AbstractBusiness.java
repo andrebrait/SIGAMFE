@@ -1,8 +1,8 @@
 package com.sigamfe.business.base;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,10 +10,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sigamfe.configuration.ApplicationConfiguration;
+import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.base.BaseEntity;
 
 @Transactional(propagation = Propagation.SUPPORTS)
-public abstract class AbstractBusiness<ID extends Serializable, E extends BaseEntity<ID>> implements BaseBusiness<ID, E> {
+public abstract class AbstractBusiness<ID extends Serializable, E extends BaseEntity<ID>>
+		implements BaseBusiness<ID, E> {
 
 	private static final long serialVersionUID = 7586458730414174725L;
 
@@ -23,28 +26,31 @@ public abstract class AbstractBusiness<ID extends Serializable, E extends BaseEn
 	}
 
 	@Override
+	@Transactional
 	public void delete(ID id) {
 		getRepository().delete(id);
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional
 	public void delete(List<E> entities) {
 		getRepository().delete(entities);
 	}
 
 	@Override
+	@Transactional
 	public void deleteAll() {
 		getRepository().deleteAll();
 	}
 
 	@Override
+	@Transactional
 	public void deleteAllInBatch() {
 		getRepository().deleteAllInBatch();
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional
 	public void deleteInBatch(List<E> entities) {
 		getRepository().deleteInBatch(entities);
 	}
@@ -75,11 +81,6 @@ public abstract class AbstractBusiness<ID extends Serializable, E extends BaseEn
 	}
 
 	@Override
-	public Optional<E> findById(ID id) {
-		return getRepository().findById(id);
-	}
-
-	@Override
 	public Page<E> findById(Iterable<ID> ids, Pageable pageable) {
 		return getRepository().findAllById(ids, pageable);
 	}
@@ -90,24 +91,39 @@ public abstract class AbstractBusiness<ID extends Serializable, E extends BaseEn
 	}
 
 	@Override
-	public E findOne(ID id) {
+	public E findById(ID id) {
 		return getRepository().findOne(id);
 	}
 
+	private void setAuditInfo(E entity, LocalDateTime dataAtual) {
+		if (entity instanceof AuditableBaseEntity) {
+			AuditableBaseEntity<ID> audit = (AuditableBaseEntity<ID>) entity;
+			if (audit.getUsuarioCriacao() == null) {
+				audit.setUsuarioCriacao(ApplicationConfiguration.usuarioLogado);
+			}
+			if (audit.getDataCriacao() == null) {
+				audit.setDataCriacao(dataAtual);
+			}
+			audit.setUsuarioAtualizacao(ApplicationConfiguration.usuarioLogado);
+			audit.setDataAtualizacao(dataAtual);
+		}
+	}
+
 	@Override
+	@Transactional
 	public E save(E entity) {
+		setAuditInfo(entity, LocalDateTime.now());
 		return getRepository().save(entity);
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional
 	public List<E> save(List<E> entities) {
+		LocalDateTime dataAtual = LocalDateTime.now();
+		for (E entity : entities) {
+			setAuditInfo(entity, dataAtual);
+		}
 		return getRepository().save(entities);
-	}
-
-	@Override
-	public E saveAndFlush(E entity) {
-		return getRepository().saveAndFlush(entity);
 	}
 
 }

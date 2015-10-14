@@ -6,6 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -37,6 +38,10 @@ public class ImagemMaterial implements BaseEntity<Integer> {
 	@NotEmpty
 	@Column(name = "IMAGEM", nullable = false, columnDefinition = "mediumblob")
 	private Byte[] imagem;
+
+	@Version
+	@Column(name = "VERSION")
+	private Long version;
 
 	/**
 	 * Atribui o material a esta entidade.
