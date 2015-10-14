@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import javafx.scene.image.*?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sigamfe.controller.CadastroControllerImpl">
    <children>
       <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
         <tabs>
@@ -17,7 +18,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <HBox layoutX="55.0" layoutY="45.0" prefHeight="342.0" prefWidth="694.0">
+                        <HBox layoutX="55.0" layoutY="45.0" prefHeight="523.0" prefWidth="694.0">
                            <children>
                               <VBox prefHeight="342.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
                                  <children>
@@ -55,7 +56,9 @@
                                        </font>
                                     </Label>
                                     <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
-                                    <Label prefHeight="17.0" prefWidth="100.0" text="E-mail" />
+                                    <Label prefHeight="17.0" prefWidth="100.0" text="e-mail" />
+                                    <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
+                                    <Label prefHeight="17.0" prefWidth="100.0" text="Telefones" />
                                  </children>
                               </VBox>
                               <VBox prefHeight="342.0" prefWidth="310.0" HBox.hgrow="ALWAYS">
@@ -64,11 +67,11 @@
                                        <children>
                                           <RadioButton mnemonicParsing="false" selected="true" text="Pessoa Física">
                                              <toggleGroup>
-                                                <ToggleGroup fx:id="a" />
+                                                <ToggleGroup fx:id="tipoPessoa" />
                                              </toggleGroup>
                                           </RadioButton>
                                           <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="30.0" visible="false" />
-                                          <RadioButton mnemonicParsing="false" text="Pessoa Jurídica" toggleGroup="$a" />
+                                          <RadioButton mnemonicParsing="false" text="Pessoa Jurídica" toggleGroup="$tipoPessoa" />
                                        </children>
                                     </HBox>
                                     <Separator prefHeight="15.0" prefWidth="200.0" visible="false" />
@@ -115,8 +118,57 @@
                                     <TextField prefWidth="300.0" />
                                     <Separator prefHeight="13.0" prefWidth="200.0" visible="false" />
                                     <TextField prefWidth="300.0" />
+                                    <Separator prefHeight="15.0" prefWidth="200.0" visible="false" />
+                                    <TableView prefHeight="200.0" prefWidth="200.0">
+                                      <columns>
+                                        <TableColumn minWidth="100.0" prefWidth="100.0" resizable="false" text="Número" />
+                                        <TableColumn minWidth="250.0" prefWidth="250.0" resizable="false" text="Observação" />
+                                          <TableColumn editable="false" prefWidth="50.0" sortable="false">
+                                             <graphic>
+                                                <Button mnemonicParsing="false" prefHeight="24.0" prefWidth="45.0" style="-fx-border-color: transparent; -fx-background-color: null;">
+                                                   <graphic>
+                                                      <FontAwesomeIconView glyphName="PLUS" />
+                                                   </graphic>
+                                                </Button>
+                                             </graphic></TableColumn>
+                                      </columns>
+                                    </TableView>
                                  </children></VBox>
-                              <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS" />
+                              <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                 <children>
+                                    <Separator prefHeight="184.0" prefWidth="191.0" visible="false" />
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox prefHeight="100.0" prefWidth="56.0">
+                                             <children>
+                                                <Label prefHeight="17.0" prefWidth="30.0" text="CEP">
+                                                   <VBox.margin>
+                                                      <Insets top="4.0" />
+                                                   </VBox.margin>
+                                                </Label>
+                                                <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
+                                                <Label prefHeight="17.0" prefWidth="30.0" text="UF" />
+                                             </children>
+                                             <padding>
+                                                <Insets left="30.0" />
+                                             </padding>
+                                          </VBox>
+                                          <VBox prefHeight="100.0" prefWidth="105.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <TextField maxWidth="130.0" prefHeight="25.0" prefWidth="120.0" />
+                                                <Separator prefHeight="13.0" prefWidth="200.0" visible="false" />
+                                                <TextField maxWidth="40.0" prefHeight="25.0" prefWidth="40.0" />
+                                             </children>
+                                          </VBox>
+                                          <Separator orientation="VERTICAL" visible="false" />
+                                          <Button mnemonicParsing="false">
+                                             <graphic>
+                                                <FontAwesomeIconView glyphName="MAP" size="13" />
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children></VBox>
                            </children>
                         </HBox>
                      </children>
