@@ -11,11 +11,11 @@ import lombok.Getter;
 public enum IndicadorUnidade implements PersistentEnum {
 
 	/** Unidade */
-	UNIDADE("UN", "Unidade"),
+	UNIDADE("UN", "Unidade", "un."),
 	/**
 	 * Dúzia
 	 */
-	DUZIA("DZ", "Dúzia");
+	DUZIA("DZ", "Dúzia", "dz.");
 
 	@Getter
 	private String codigo;
@@ -23,8 +23,12 @@ public enum IndicadorUnidade implements PersistentEnum {
 	@Getter
 	private String label;
 
-	private IndicadorUnidade(String codigo, String label) {
+	@Getter
+	private String abreviacao;
+
+	private IndicadorUnidade(String codigo, String label, String abreviacao) {
 		this.codigo = codigo;
 		this.label = label;
+		this.abreviacao = abreviacao;
 	}
 }

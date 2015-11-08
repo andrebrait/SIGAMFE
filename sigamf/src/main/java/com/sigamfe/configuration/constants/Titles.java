@@ -5,5 +5,6 @@ public class Titles {
 	public static final String MAIN_WINDOW_TITLE = "SIGAMFE";
 	public static final String LOGIN_WINDOW_TITLE = "Login no SIGAMFE";
 	public static final String ERROR_WINDOW_TITLE = "Erro";
+	public static final String CADASTRO_WINDOW_TITLE = "Cadastro";
 
 }

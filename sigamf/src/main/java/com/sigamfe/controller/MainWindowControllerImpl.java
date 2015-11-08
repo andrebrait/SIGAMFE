@@ -60,8 +60,7 @@ public class MainWindowControllerImpl implements MainWindowController {
 	@FXML
 	@Override
 	public void cadastroCadastrar() {
-		// TODO Auto-generated method stub
-
+		applicationContext.getBean(CadastroController.class);
 	}
 
 	@FXML
