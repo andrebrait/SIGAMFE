@@ -46,7 +46,7 @@
                                           <Label prefHeight="17.0" prefWidth="100.0" text="RG" />
                                           <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
                                           <Label prefHeight="17.0" prefWidth="100.0" text="CNH" />
-                                          <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
+                                          <Separator prefHeight="20.0" prefWidth="200.0" visible="false" />
                                           <Label prefHeight="17.0" prefWidth="100.0" text="Endereço*">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
@@ -130,13 +130,22 @@
                                              <children>
                                                 <VBox prefHeight="100.0" prefWidth="56.0">
                                                    <children>
-                                                      <Label prefHeight="17.0" prefWidth="30.0" text="CEP">
+                                                      <Label prefHeight="17.0" prefWidth="30.0" text="Nº">
                                                          <VBox.margin>
                                                             <Insets top="4.0" />
                                                          </VBox.margin>
                                                       </Label>
                                                       <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
-                                                      <Label prefHeight="17.0" prefWidth="30.0" text="UF" />
+                                                      <Label prefHeight="17.0" prefWidth="30.0" text="CEP">
+                                                         <VBox.margin>
+                                                            <Insets />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
+                                                      <Label prefHeight="17.0" prefWidth="30.0" text="UF*">
+                                                         <font>
+                                                            <Font name="System Bold" size="12.0" />
+                                                         </font></Label>
                                                    </children>
                                                    <padding>
                                                       <Insets left="30.0" />
@@ -144,6 +153,8 @@
                                                 </VBox>
                                                 <VBox prefHeight="100.0" prefWidth="105.0" HBox.hgrow="ALWAYS">
                                                    <children>
+                                                      <TextField fx:id="textClienteNumero" prefHeight="25.0" />
+                                                      <Separator prefHeight="13.0" prefWidth="200.0" visible="false" />
                                                       <HBox>
                                                          <children>
                                                             <TextField fx:id="textClienteCep" maxWidth="130.0" prefHeight="25.0" prefWidth="120.0" />
