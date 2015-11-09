@@ -46,7 +46,9 @@ public class CadastroControllerImpl implements CadastroController {
 	private MaskValidator CPF_VALIDATOR = new MaskValidator(MaskValidator.CPF_MASK);
 	private MaskValidator CNPJ_VALIDATOR = new MaskValidator(MaskValidator.CNPJ_MASK);
 	private MaskValidator CEP_VALIDATOR = new MaskValidator(MaskValidator.CEP_MASK);
-	private MaskValidator RG_VALIDATOR = new MaskValidator(MaskValidator.RG_MASK);
+	private MaskValidator RG_VALIDATOR_UMA = new MaskValidator(MaskValidator.RG_SHORT_MASK, true);
+	private MaskValidator RG_VALIDATOR_DUAS = new MaskValidator(MaskValidator.RG_LONG_MASK, true);
+	private MaskValidator CNH_VALIDATOR = new MaskValidator(MaskValidator.CNH_MASK);
 
 	private Cliente entityCliente;
 
@@ -168,21 +170,14 @@ public class CadastroControllerImpl implements CadastroController {
 	public void salvaCliente() {
 		if (entityCliente == null) {
 			entityCliente = isPessoaFisica() ? new ClientePF() : new ClientePJ();
-			if (isPessoaFisica()) {
-				entityCliente = new ClientePF();
-			} else {
-				entityCliente = new ClientePJ();
-			}
 		}
 		if (isPessoaFisica()) {
-			entityCliente = new ClientePF();
 			((ClientePF) entityCliente).setCpf(textClienteCpf.getText());
 			((ClientePF) entityCliente).setRg(textClienteRg.getText());
 			if (StringUtils.isNotBlank(textClienteCnh.getText())) {
 				((ClientePF) entityCliente).setCnh(Long.parseLong(textClienteCnh.getText()));
 			}
 		} else {
-			entityCliente = new ClientePJ();
 			((ClientePJ) entityCliente).setCnpj(textClienteCpf.getText());
 		}
 		Endereco end = new Endereco();
@@ -278,43 +273,20 @@ public class CadastroControllerImpl implements CadastroController {
 		comboMaterialUnidade.getItems().addAll(IndicadorUnidade.values());
 		comboMaterialUnidade.setConverter(new FxEnumConverter<>(IndicadorUnidade.class));
 
-		textClienteCpf.textProperty().addListener(new FilteredChangeListener(textClienteCpf) {
-
-			@Override
-			protected String getFiltered(String newValue, String oldValue) {
-				return TextFieldUtils.processMask(newValue, oldValue,
-						isPessoaFisica() ? CPF_VALIDATOR : CNPJ_VALIDATOR);
-			}
-		});
-		textClienteCep.textProperty().addListener(new FilteredChangeListener(textClienteCep) {
-
-			@Override
-			protected String getFiltered(String newValue, String oldValue) {
-				return TextFieldUtils.processMask(newValue, oldValue, CEP_VALIDATOR);
-			}
-		});
-		textClienteRg.textProperty().addListener(new FilteredChangeListener(textClienteRg) {
-
-			@Override
-			protected String getFiltered(String newValue, String oldValue) {
-				return TextFieldUtils.processMask(newValue, oldValue, RG_VALIDATOR);
-			}
-		});
-
-		textMaterialAluguel.textProperty().addListener(new FilteredChangeListener(textMaterialAluguel) {
-
-			@Override
-			protected String getFiltered(String newValue, String oldValue) {
-				return TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2);
-			}
-		});
-		textMaterialReposicao.textProperty().addListener(new FilteredChangeListener(textMaterialReposicao) {
-
-			@Override
-			protected String getFiltered(String newValue, String oldValue) {
-				return TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2);
-			}
-		});
+		textClienteCpf.textProperty()
+				.addListener(new FilteredChangeListener(textClienteCpf, (newValue, oldValue) -> TextFieldUtils
+						.processMask(newValue, oldValue, isPessoaFisica() ? CPF_VALIDATOR : CNPJ_VALIDATOR)));
+		textClienteCep.textProperty().addListener(new FilteredChangeListener(textClienteCep,
+				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, CEP_VALIDATOR)));
+		textClienteRg.textProperty()
+				.addListener(new FilteredChangeListener(textClienteRg, (newValue, oldValue) -> MaskValidator
+						.getVersionByInsertedChar(newValue, oldValue, RG_VALIDATOR_UMA, RG_VALIDATOR_DUAS)));
+		textClienteCnh.textProperty().addListener(new FilteredChangeListener(textClienteCnh,
+				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, CNH_VALIDATOR)));
+		textMaterialAluguel.textProperty().addListener(new FilteredChangeListener(textMaterialAluguel,
+				(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2)));
+		textMaterialReposicao.textProperty().addListener(new FilteredChangeListener(textMaterialReposicao,
+				(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2)));
 
 		stage.showAndWait();
 	}

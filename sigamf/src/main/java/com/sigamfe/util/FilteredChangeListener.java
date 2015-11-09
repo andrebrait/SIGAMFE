@@ -1,31 +1,33 @@
 package com.sigamfe.util;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
-public abstract class FilteredChangeListener implements ChangeListener<String> {
+public class FilteredChangeListener implements ChangeListener<String> {
 
-	private TextField textField;
+	public static interface Filter {
 
-	private boolean changed = false;
+		public String getFiltered(String newValue, String oldValue);
 
-	protected abstract String getFiltered(String newValue, String oldValue);
-
-	public FilteredChangeListener(TextField textField) {
-		this.textField = textField;
 	}
 
-	private boolean isChanged() {
-		changed = !changed;
-		return !changed;
+	private TextField textField;
+	private Filter filter;
+
+	public FilteredChangeListener(TextField textField, Filter filter) {
+		this.textField = textField;
+		this.filter = filter;
 	}
 
 	@Override
 	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		if (!isChanged()) {
-			textField.setText(getFiltered(newValue, oldValue));
-		}
+		Platform.runLater(() -> {
+			textField.setText(filter.getFiltered(newValue, oldValue));
+			textField.selectEnd();
+			textField.deselect();
+		});
 	}
 
 }
