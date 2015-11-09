@@ -5,4 +5,6 @@ import com.sigamfe.model.System;
 
 public interface SystemBusiness extends BaseBusiness<Byte, System> {
 
+	void about();
+
 }

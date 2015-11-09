@@ -105,6 +105,9 @@ public class PedidoPagamento extends AuditableBaseEntity<PedidoPagamentoPK> {
 	 */
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
+		if (this.id == null) {
+			this.id = new PedidoPagamentoPK();
+		}
 		this.getId().setIdPedido(pedido == null ? null : pedido.getId());
 	}
 }

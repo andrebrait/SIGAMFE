@@ -10,9 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
 
 import com.sigamfe.model.base.BaseEntity;
@@ -35,11 +36,12 @@ public class Endereco implements BaseEntity<Long> {
 	@Column(name = "ID")
 	private Long id;
 
-	@NotEmpty
+	@NotBlank
 	@Size(max = 200)
 	@Column(name = "LOGRADOURO", nullable = false, length = 200)
 	private String logradouro;
 
+	@NotNull
 	@Digits(integer = 5, fraction = 0)
 	@Range(min = 0, max = 99999)
 	@Column(name = "NUMERO", nullable = true, precision = 5, scale = 0)
@@ -47,14 +49,14 @@ public class Endereco implements BaseEntity<Long> {
 
 	@Size(min = 9, max = 9)
 	@Column(name = "CEP", nullable = true, length = 200)
-	private String CEP;
+	private String cep;
 
-	@NotEmpty
+	@NotBlank
 	@Size(max = 200)
 	@Column(name = "CIDADE", nullable = false, length = 200)
 	private String cidade;
 
-	@NotEmpty
+	@NotBlank
 	@Size(max = 2)
 	@Column(name = "UF", nullable = false, length = 2)
 	private String uf;

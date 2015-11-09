@@ -16,6 +16,7 @@ import javax.validation.constraints.Size;
 
 import com.sigamfe.model.TelefoneCliente.TelefoneClientePK;
 import com.sigamfe.model.base.BaseEntity;
+import com.sigamfe.util.TelefoneUtils;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -77,7 +78,17 @@ public class TelefoneCliente implements BaseEntity<TelefoneClientePK> {
 	 */
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+		if (this.id == null) {
+			this.id = new TelefoneClientePK();
+		}
 		this.getId().setIdCliente(cliente == null ? null : cliente.getId());
+	}
+
+	public void setTelefone(String telefone) {
+		if (this.getId() == null) {
+			this.id = new TelefoneClientePK();
+		}
+		this.getId().setTelefone(TelefoneUtils.getTelefoneAsLong(telefone));
 	}
 
 }

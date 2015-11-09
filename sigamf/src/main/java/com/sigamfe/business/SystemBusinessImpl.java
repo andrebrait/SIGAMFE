@@ -22,4 +22,9 @@ public class SystemBusinessImpl extends AbstractBusiness<Byte, System> implement
 	@Getter
 	@Autowired
 	private SystemRepository repository;
+
+	@Override
+	public void about() {
+		throw new RuntimeException("lol");
+	}
 }

@@ -7,6 +7,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 
+import com.sigamfe.business.SystemBusiness;
 import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.controller.base.ViewStage;
 
@@ -26,6 +27,9 @@ public class MainWindowControllerImpl implements MainWindowController {
 
 	@Autowired
 	public ConfigurableApplicationContext applicationContext;
+
+	@Autowired
+	public SystemBusiness systemBusiness;
 
 	@Override
 	@PostConstruct
@@ -108,7 +112,6 @@ public class MainWindowControllerImpl implements MainWindowController {
 	@FXML
 	@Override
 	public void ajudaSobre() {
-		// TODO Auto-generated method stub
-
+		systemBusiness.about();
 	}
 }

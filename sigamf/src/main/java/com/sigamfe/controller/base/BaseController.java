@@ -2,13 +2,20 @@ package com.sigamfe.controller.base;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
-
 public interface BaseController extends Serializable {
 
+	/**
+	 * Retorna o stage que controla a janela.
+	 *
+	 * @return the stage
+	 */
 	ViewStage getStage();
 
-	@PostConstruct
+	/**
+	 * Método de inicialização da janela, contendo os comandos necessários para
+	 * instanciar a janela apropriadamente. Deve ser anotado com
+	 * {@code @PostConstruct}
+	 */
 	void initializeWindow();
 
 }

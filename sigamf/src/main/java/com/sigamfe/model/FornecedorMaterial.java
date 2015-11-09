@@ -91,6 +91,9 @@ public class FornecedorMaterial implements BaseEntity<FornecedorMaterialPK> {
 	 */
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
+		if (this.id == null) {
+			this.id = new FornecedorMaterialPK();
+		}
 		this.getId().setIdFornecedor(fornecedor == null ? null : fornecedor.getId());
 	}
 
@@ -102,6 +105,9 @@ public class FornecedorMaterial implements BaseEntity<FornecedorMaterialPK> {
 	 */
 	public void setMaterial(Material material) {
 		this.material = material;
+		if (this.id == null) {
+			this.id = new FornecedorMaterialPK();
+		}
 		this.getId().setIdMaterial(material == null ? null : material.getId());
 	}
 

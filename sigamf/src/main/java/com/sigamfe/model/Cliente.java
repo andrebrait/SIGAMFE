@@ -21,7 +21,8 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.enums.IndicadorSN;
@@ -52,7 +53,7 @@ public abstract class Cliente extends AuditableBaseEntity<Integer> {
 	@Column(name = "ID")
 	private Integer id;
 
-	@NotEmpty
+	@NotBlank
 	@Size(max = 50)
 	@Column(name = "NOME", nullable = false, length = 50)
 	private String nome;
@@ -62,6 +63,8 @@ public abstract class Cliente extends AuditableBaseEntity<Integer> {
 	@JoinColumn(name = "ENDERECO", nullable = false)
 	private Endereco endereco;
 
+	@NotBlank
+	@Email
 	@Size(max = 200)
 	@Column(name = "EMAIL", nullable = true, length = 200)
 	private String email;

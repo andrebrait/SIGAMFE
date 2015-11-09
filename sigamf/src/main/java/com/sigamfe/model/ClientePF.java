@@ -7,6 +7,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
 import lombok.Data;
@@ -31,8 +32,9 @@ public class ClientePF extends Cliente {
 
 	private static final long serialVersionUID = -7903983878811741635L;
 
-	@Size(max = 15)
 	@CPF
+	@NotBlank
+	@Size(max = 15)
 	@Column(name = "CPF", nullable = true, unique = true, length = 15)
 	private String cpf;
 

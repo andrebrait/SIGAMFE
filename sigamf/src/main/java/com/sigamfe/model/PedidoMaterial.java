@@ -105,6 +105,9 @@ public class PedidoMaterial extends AuditableBaseEntity<PedidoMaterialPK> {
 	 */
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
+		if (this.id == null) {
+			this.id = new PedidoMaterialPK();
+		}
 		this.getId().setIdPedido(pedido == null ? null : pedido.getId());
 	}
 
@@ -116,6 +119,9 @@ public class PedidoMaterial extends AuditableBaseEntity<PedidoMaterialPK> {
 	 */
 	public void setMaterial(Material material) {
 		this.material = material;
+		if (this.id == null) {
+			this.id = new PedidoMaterialPK();
+		}
 		this.getId().setIdMaterial(material == null ? null : material.getId());
 	}
 

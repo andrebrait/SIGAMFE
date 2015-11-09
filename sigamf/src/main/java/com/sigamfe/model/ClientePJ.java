@@ -6,7 +6,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CNPJ;
 
 import lombok.Data;
@@ -26,8 +26,8 @@ public class ClientePJ extends Cliente {
 
 	private static final long serialVersionUID = 8965389116825072094L;
 
-	@NotEmpty
 	@CNPJ
+	@NotBlank
 	@Size(max = 16)
 	@Column(name = "CNPJ", nullable = false, unique = true, length = 16)
 	private String cnpj;

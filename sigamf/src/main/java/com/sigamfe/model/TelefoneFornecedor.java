@@ -77,6 +77,9 @@ public class TelefoneFornecedor implements BaseEntity<TelefoneFornecedorPK> {
 	 */
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
+		if (this.id == null) {
+			this.id = new TelefoneFornecedorPK();
+		}
 		this.getId().setIdFornecedor(fornecedor == null ? null : fornecedor.getId());
 	}
 
