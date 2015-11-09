@@ -36,4 +36,16 @@ public interface CadastroController extends BaseController {
 
 	void excluirMaterial();
 
+	void pesquisaUsuarioLogin();
+
+	void pesquisaUsuarioCPF();
+
+	void pesquisaUsuarioTelefone();
+
+	void pesquisaUsuarioPermissao();
+
+	void excluirUsuario();
+
+	void salvaUsuario();
+
 }
