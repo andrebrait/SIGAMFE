@@ -319,4 +319,53 @@ public class CadastroControllerImpl implements CadastroController {
 		stage.showAndWait();
 	}
 
+	/*
+	 * Usuário
+	 */
+
+	@FXML
+	private TextField textUsuarioCpf;
+
+	private TextField textUsuarioLogin;
+
+	private TextField textUsuarioSenha;
+
+	private TextField textUsuarioTelefone;
+
+	@Override
+	public void pesquisaUsuarioLogin() {
+
+	}
+
+	@Override
+	public void pesquisaUsuarioCPF() {
+
+	}
+
+	@Override
+	public void pesquisaUsuarioTelefone() {
+
+	}
+
+	@Override
+	public void pesquisaUsuarioPermissao() {
+
+	}
+
+	@Override
+	public void excluirUsuario() {
+
+	}
+
+	@Override
+	public void salvaUsuario() {
+		if (entityUsuario == null) {
+			entityUsuario = new Usuario();
+		}
+		entityUsuario.setCpf(textUsuarioCpf.getText());
+		entityUsuario.setLogin(textUsuarioLogin.getText());
+		entityUsuario.setSenha(textUsuarioSenha.getText());
+		entityUsuario.setTelefone(Long.parseLong(textUsuarioTelefone.getText()));
+	}
+
 }
