@@ -76,7 +76,7 @@ public class LoginControllerImpl implements LoginController {
 		stage = new ViewStage(this, mainWindowController.getStage());
 		stage.setOnCloseRequest(e -> Platform.exit());
 		stage.setResizable(false);
-		stage.setTitle(Titles.LOGIN_WINDOW_TITLE);
+		stage.setTitle(Titles.WINDOW_LOGIN);
 		updateLabelServidor();
 		stage.showAndWait();
 	}

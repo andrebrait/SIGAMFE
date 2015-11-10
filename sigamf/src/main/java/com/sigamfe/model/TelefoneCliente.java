@@ -91,4 +91,10 @@ public class TelefoneCliente implements BaseEntity<TelefoneClientePK> {
 		this.getId().setTelefone(TelefoneUtils.getTelefoneAsLong(telefone));
 	}
 
+	public String getTelefone(String telefone) {
+		if (this.getId() == null) {
+			return null;
+		}
+		return TelefoneUtils.getTelefoneAsString(this.getId().getTelefone());
+	}
 }

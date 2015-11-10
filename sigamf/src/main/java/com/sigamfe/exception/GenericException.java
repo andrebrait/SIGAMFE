@@ -1,11 +1,20 @@
 package com.sigamfe.exception;
 
+import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * The Class SIGAMFException.
  */
 public class GenericException extends RuntimeException {
 
 	private static final long serialVersionUID = 1096840692478003020L;
+
+	@Getter
+	@Setter
+	private List<GenericException> excecoesFilhas;
 
 	public GenericException() {
 		super();

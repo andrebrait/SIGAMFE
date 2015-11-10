@@ -187,10 +187,10 @@
                                           </VBox>
                                           <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="405.0" HBox.hgrow="ALWAYS">
                                              <children>
-                                                <TableView fx:id="tableClienteTelefones" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="405.0" VBox.vgrow="ALWAYS">
+                                                <TableView fx:id="tableClienteTelefones" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="405.0" VBox.vgrow="ALWAYS">
                                                    <columns>
-                                                      <TableColumn minWidth="100.0" prefWidth="100.0" resizable="false" text="Número" />
-                                                      <TableColumn maxWidth="305.0" minWidth="305.0" prefWidth="305.0" resizable="false" text="Observação" />
+                                                      <TableColumn editable="false" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" resizable="false" text="Número" />
+                                                      <TableColumn minWidth="305.0" prefWidth="305.0" text="Observação" />
                                                    </columns>
                                                 </TableView>
                                                 <Separator prefHeight="15.0" prefWidth="200.0" visible="false" />
@@ -418,7 +418,240 @@
           </Tab>
             <Tab text="Usuário">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="55.0" layoutY="45.0">
+                           <children>
+                              <HBox layoutX="55.0" layoutY="45.0" prefHeight="304.0" prefWidth="694.0">
+                                 <children>
+                                    <VBox prefHeight="342.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label prefHeight="17.0" prefWidth="100.0" text="Tipo*">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Separator prefHeight="21.0" prefWidth="200.0" visible="false" VBox.vgrow="ALWAYS" />
+                                          <Label fx:id="labelClienteTipoPessoa1" prefHeight="17.0" prefWidth="100.0" text="CPF*">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
+                                          <Label prefHeight="17.0" prefWidth="100.0" text="Nome*">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
+                                          <Label prefHeight="17.0" prefWidth="100.0" text="RG" />
+                                          <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
+                                          <Label prefHeight="17.0" prefWidth="100.0" text="CNH" />
+                                          <Separator prefHeight="20.0" prefWidth="200.0" visible="false" />
+                                          <Label prefHeight="17.0" prefWidth="100.0" text="Endereço*">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
+                                          <Label prefHeight="17.0" prefWidth="100.0" text="Cidade*">
+                                             <font>
+                                                <Font name="System Bold" size="12.0" />
+                                             </font>
+                                          </Label>
+                                          <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
+                                          <Label prefHeight="17.0" prefWidth="100.0" text="e-mail" />
+                                          <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="342.0" prefWidth="310.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <HBox>
+                                             <children>
+                                                <RadioButton fx:id="radioClientePessoaFisica1" mnemonicParsing="false" onAction="#onChangeTogglePessoaCliente" selected="true" text="Usuário">
+                                                   <toggleGroup>
+                                                      <ToggleGroup fx:id="tipoPessoa1" />
+                                                   </toggleGroup>
+                                                </RadioButton>
+                                                <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="30.0" visible="false" />
+                                                <RadioButton fx:id="radioClientePessoaJuridica1" mnemonicParsing="false" onAction="#onChangeTogglePessoaCliente" text="Administrador" toggleGroup="$tipoPessoa1" />
+                                             </children>
+                                          </HBox>
+                                          <Separator prefHeight="15.0" prefWidth="200.0" visible="false" />
+                                          <HBox>
+                                             <children>
+                                                <TextField fx:id="textClienteCpf1" maxWidth="130.0" prefWidth="130.0" />
+                                                <Separator orientation="VERTICAL" visible="false" />
+                                                <Button mnemonicParsing="false" onAction="#pesquisaClienteCpfCnpj">
+                                                   <graphic>
+                                                      <FontAwesomeIconView glyphName="SEARCH" />
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                          <Separator prefHeight="13.0" prefWidth="200.0" visible="false" />
+                                          <HBox>
+                                             <children>
+                                                <TextField fx:id="textClienteNome1" HBox.hgrow="ALWAYS" />
+                                                <Separator orientation="VERTICAL" visible="false" />
+                                                <Button mnemonicParsing="false" onAction="#pesquisaClienteNome">
+                                                   <graphic>
+                                                      <FontAwesomeIconView glyphName="SEARCH" />
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                          <Separator prefHeight="13.0" prefWidth="200.0" visible="false" />
+                                          <HBox>
+                                             <children>
+                                                <TextField fx:id="textClienteRg1" maxWidth="130.0" prefHeight="25.0" prefWidth="130.0" />
+                                                <Separator orientation="VERTICAL" visible="false" />
+                                                <Button mnemonicParsing="false" onAction="#pesquisaClienteRg">
+                                                   <graphic>
+                                                      <FontAwesomeIconView glyphName="SEARCH" />
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                          <Separator prefHeight="13.0" prefWidth="200.0" visible="false" />
+                                          <TextField fx:id="textClienteCnh1" maxWidth="130.0" prefHeight="25.0" prefWidth="130.0" />
+                                          <Separator prefHeight="13.0" prefWidth="200.0" visible="false" />
+                                          <TextField fx:id="textClienteEndereco1" prefWidth="300.0" />
+                                          <Separator prefHeight="13.0" prefWidth="200.0" visible="false" />
+                                          <TextField fx:id="textClienteCidade1" prefWidth="300.0" />
+                                          <Separator prefHeight="13.0" prefWidth="200.0" visible="false" />
+                                          <TextField fx:id="textClienteEmail1" prefWidth="300.0" />
+                                          <Separator prefHeight="15.0" prefWidth="200.0" visible="false" />
+                                       </children>
+                                    </VBox>
+                                    <VBox prefHeight="200.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Separator prefHeight="184.0" prefWidth="191.0" visible="false" />
+                                          <HBox prefHeight="100.0" prefWidth="200.0">
+                                             <children>
+                                                <VBox prefHeight="100.0" prefWidth="56.0">
+                                                   <children>
+                                                      <Label prefHeight="17.0" prefWidth="30.0" text="Nº">
+                                                         <VBox.margin>
+                                                            <Insets top="4.0" />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
+                                                      <Label prefHeight="17.0" prefWidth="30.0" text="CEP">
+                                                         <VBox.margin>
+                                                            <Insets />
+                                                         </VBox.margin>
+                                                      </Label>
+                                                      <Separator prefHeight="21.0" prefWidth="200.0" visible="false" />
+                                                      <Label prefHeight="17.0" prefWidth="30.0" text="UF*">
+                                                         <font>
+                                                            <Font name="System Bold" size="12.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="30.0" />
+                                                   </padding>
+                                                </VBox>
+                                                <VBox prefHeight="100.0" prefWidth="105.0" HBox.hgrow="ALWAYS">
+                                                   <children>
+                                                      <TextField fx:id="textClienteNumero1" prefHeight="25.0" />
+                                                      <Separator prefHeight="13.0" prefWidth="200.0" visible="false" />
+                                                      <HBox>
+                                                         <children>
+                                                            <TextField fx:id="textClienteCep1" maxWidth="130.0" prefHeight="25.0" prefWidth="120.0" />
+                                                            <Separator orientation="VERTICAL" visible="false" />
+                                                            <Button mnemonicParsing="false" onAction="#pesquisaClienteEnderecoCep">
+                                                               <graphic>
+                                                                  <FontAwesomeIconView glyphName="MAP" size="13" />
+                                                               </graphic>
+                                                            </Button>
+                                                         </children>
+                                                      </HBox>
+                                                      <Separator prefHeight="13.0" prefWidth="200.0" visible="false" />
+                                                      <TextField fx:id="textClienteUf1" maxWidth="40.0" prefHeight="25.0" prefWidth="40.0" />
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                              <VBox prefHeight="100.0" prefWidth="697.0">
+                                 <children>
+                                    <HBox minHeight="130.0" prefHeight="207.0" prefWidth="697.0">
+                                       <children>
+                                          <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="100.0">
+                                             <children>
+                                                <Label prefHeight="17.0" prefWidth="100.0" text="Telefones" />
+                                             </children>
+                                          </VBox>
+                                          <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="405.0" HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <TableView fx:id="tableClienteTelefones1" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="405.0" VBox.vgrow="ALWAYS">
+                                                   <columns>
+                                                      <TableColumn editable="false" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" resizable="false" text="Número" />
+                                                      <TableColumn minWidth="305.0" prefWidth="305.0" text="Observação" />
+                                                   </columns>
+                                                </TableView>
+                                                <Separator prefHeight="15.0" prefWidth="200.0" visible="false" />
+                                             </children>
+                                          </VBox>
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" prefWidth="13.0" visible="false" />
+                                          <VBox>
+                                             <children>
+                                                <Separator prefHeight="40.0" prefWidth="200.0" visible="false" />
+                                                <Button alignment="CENTER" mnemonicParsing="false" onAction="#adicionaClienteTelefone" prefHeight="25.0" prefWidth="90.0" text="Adicionar" VBox.vgrow="ALWAYS">
+                                                   <graphic>
+                                                      <FontAwesomeIconView glyphName="PLUS_CIRCLE" size="15" />
+                                                   </graphic>
+                                                </Button>
+                                                <Separator prefHeight="13.0" prefWidth="200.0" visible="false" />
+                                                <Button fx:id="buttonRemoverTelefone1" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#removeClienteTelefone" prefHeight="25.0" prefWidth="90.0" text="Remover" VBox.vgrow="ALWAYS">
+                                                   <graphic>
+                                                      <FontAwesomeIconView glyphName="MINUS_CIRCLE" size="15" />
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="92.0" prefWidth="697.0">
+                                 <children>
+                                    <HBox prefHeight="40.0" prefWidth="697.0">
+                                       <children>
+                                          <VBox prefHeight="200.0" prefWidth="100.0">
+                                             <children>
+                                                <Label prefHeight="17.0" prefWidth="100.0" text="Bloqueado" />
+                                             </children>
+                                          </VBox>
+                                          <RadioButton fx:id="radioClienteBloqueadoSim1" mnemonicParsing="false" text="Sim">
+                                             <toggleGroup>
+                                                <ToggleGroup fx:id="bloqueadoGroup1" />
+                                             </toggleGroup>
+                                          </RadioButton>
+                                          <Separator orientation="VERTICAL" prefHeight="40.0" prefWidth="80.0" visible="false" />
+                                          <RadioButton fx:id="radioClienteBloqueadoNao1" mnemonicParsing="false" selected="true" text="Não" toggleGroup="$bloqueadoGroup1" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER" prefHeight="52.0" prefWidth="697.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#salvaCliente" text="Salvar" />
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" prefWidth="30.0" visible="false" />
+                                          <Button mnemonicParsing="false" onAction="#excluiCliente" text="Excluir" />
+                                          <Separator orientation="VERTICAL" prefHeight="200.0" prefWidth="30.0" visible="false" />
+                                          <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
                </content>
             </Tab>
         </tabs>

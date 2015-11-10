@@ -1,3 +1,6 @@
+/*
+ *
+ */
 package com.sigamfe.util;
 
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +15,15 @@ public class MaskValidator {
 	public static final String RG_SHORT_MASK = "A-99.999.999";
 	public static final String RG_LONG_MASK = "AA-99.999.999";
 	public static final String CNH_MASK = "99999999999";
+
+	public static final MaskValidator CPF_VALIDATOR = new MaskValidator(CPF_MASK);
+	public static final MaskValidator CNPJ_VALIDATOR = new MaskValidator(CNPJ_MASK);
+	public static final MaskValidator CEP_VALIDATOR = new MaskValidator(CEP_MASK);
+	public static final MaskValidator RG_VALIDATOR_1_LETRA = new MaskValidator(RG_SHORT_MASK, true);
+	public static final MaskValidator RG_VALIDATOR_2_LETRAS = new MaskValidator(RG_LONG_MASK, true);
+	public static final MaskValidator CNH_VALIDATOR = new MaskValidator(CNH_MASK);
+	public static final MaskValidator TELEFONE_9_VALIDATOR = new MaskValidator(TELEFONE_9_DIGITOS_MASK);
+	public static final MaskValidator TELEFONE_8_VALIDATOR = new MaskValidator(TELEFONE_8_DIGITOS_MASK);
 
 	private static interface MaskValidatorCallback {
 

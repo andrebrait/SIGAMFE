@@ -1,5 +1,7 @@
 package com.sigamfe.controller;
 
+import java.util.Optional;
+
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
@@ -9,6 +11,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.sigamfe.configuration.constants.Labels;
 import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.controller.base.ViewStage;
 import com.sigamfe.model.Cliente;
@@ -29,9 +32,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import lombok.Getter;
@@ -42,13 +48,6 @@ import lombok.Getter;
 public class CadastroControllerImpl implements CadastroController {
 
 	private static final long serialVersionUID = -3277976711219254609L;
-
-	private MaskValidator CPF_VALIDATOR = new MaskValidator(MaskValidator.CPF_MASK);
-	private MaskValidator CNPJ_VALIDATOR = new MaskValidator(MaskValidator.CNPJ_MASK);
-	private MaskValidator CEP_VALIDATOR = new MaskValidator(MaskValidator.CEP_MASK);
-	private MaskValidator RG_VALIDATOR_UMA = new MaskValidator(MaskValidator.RG_SHORT_MASK, true);
-	private MaskValidator RG_VALIDATOR_DUAS = new MaskValidator(MaskValidator.RG_LONG_MASK, true);
-	private MaskValidator CNH_VALIDATOR = new MaskValidator(MaskValidator.CNH_MASK);
 
 	private Cliente entityCliente;
 
@@ -138,7 +137,8 @@ public class CadastroControllerImpl implements CadastroController {
 	@Override
 	@FXML
 	public void onChangeTogglePessoaCliente() {
-		labelClienteTipoPessoa.setText(isPessoaFisica() ? "CPF*" : "CNPJ*");
+		labelClienteTipoPessoa
+				.setText(isPessoaFisica() ? Labels.CPF + Labels.OBRIGATORIO : Labels.CNPJ + Labels.OBRIGATORIO);
 	}
 
 	@Override
@@ -156,13 +156,27 @@ public class CadastroControllerImpl implements CadastroController {
 	@Override
 	@FXML
 	public void adicionaClienteTelefone() {
-
+		TextInputDialog dialogNovoTelefone = new TextInputDialog();
+		dialogNovoTelefone.setTitle(Titles.DIALOG_NOVO_TELEFONE);
+		dialogNovoTelefone.setHeaderText("Por favor, insira o novo telefone.");
+		dialogNovoTelefone.setContentText(null);
+		dialogNovoTelefone.getEditor().textProperty()
+				.addListener(new FilteredChangeListener(dialogNovoTelefone.getEditor(),
+						(newValue, oldValue) -> MaskValidator.getVersionByLength(newValue, oldValue,
+								MaskValidator.TELEFONE_8_VALIDATOR, MaskValidator.TELEFONE_9_VALIDATOR)));
+		Optional<String> result = dialogNovoTelefone.showAndWait();
+		result.ifPresent((str) -> {
+			TelefoneCliente tc = new TelefoneCliente();
+			tc.setCliente(entityCliente);
+			tc.setTelefone(str);
+			tableClienteTelefones.getItems().add(tc);
+		});
 	}
 
 	@Override
 	@FXML
 	public void removeClienteTelefone() {
-
+		tableClienteTelefones.getItems().removeAll(tableClienteTelefones.getSelectionModel().getSelectedItems());
 	}
 
 	@Override
@@ -180,14 +194,21 @@ public class CadastroControllerImpl implements CadastroController {
 		} else {
 			((ClientePJ) entityCliente).setCnpj(textClienteCpf.getText());
 		}
-		Endereco end = new Endereco();
-		end.setCidade(textClienteCidade.getText());
 
-		// Atributos opcionais devem ser nulos se deixados em branco, por isso o
-		// uso do StringUtils.
-		end.setCep(StringUtils.defaultIfBlank(textClienteCep.getText(), null));
+		Endereco end = entityCliente.getEndereco();
+		if (end == null) {
+			end = new Endereco();
+		}
 		end.setCidade(textClienteCidade.getText());
+		end.setUf(textClienteUf.getText());
 		end.setLogradouro(textClienteEndereco.getText());
+		// Atributos opcionais devem ser nulos se deixados em branco, por isso o
+		// uso do getOptionalText.
+		end.setCep(getOptionalText(textClienteCep.getText()));
+		end.setNumero(getOptionalText(textClienteNumero.getText()));
+
+		entityCliente.setTelefones(tableClienteTelefones.getItems());
+
 	}
 
 	@Override
@@ -266,23 +287,33 @@ public class CadastroControllerImpl implements CadastroController {
 	@PostConstruct
 	public void initializeWindow() {
 		stage = new ViewStage(this, mainWindowController.getStage());
-		stage.setTitle(Titles.CADASTRO_WINDOW_TITLE);
+		stage.setTitle(Titles.WINDOW_CADASTRO);
 		stage.setResizable(false);
 
 		// Inicializando o combo de unidade de materiais
 		comboMaterialUnidade.getItems().addAll(IndicadorUnidade.values());
 		comboMaterialUnidade.setConverter(new FxEnumConverter<>(IndicadorUnidade.class));
 
+		tableClienteTelefones.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		tableClienteTelefones.getSelectionModel().selectedItemProperty().addListener(
+				(obs, oldSelection, newSelection) -> buttonRemoverTelefone.setDisable(newSelection == null));
+		tableClienteTelefones.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("telefone"));
+		tableClienteTelefones.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("observacoes"));
+		tableClienteTelefones.getColumns().get(1).textProperty()
+				.addListener((obs, oldValue, newValue) -> TextFieldUtils.processMaxChars(newValue, oldValue, 200));
+
 		textClienteCpf.textProperty()
-				.addListener(new FilteredChangeListener(textClienteCpf, (newValue, oldValue) -> TextFieldUtils
-						.processMask(newValue, oldValue, isPessoaFisica() ? CPF_VALIDATOR : CNPJ_VALIDATOR)));
+				.addListener(new FilteredChangeListener(textClienteCpf,
+						(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue,
+								isPessoaFisica() ? MaskValidator.CPF_VALIDATOR : MaskValidator.CNPJ_VALIDATOR)));
 		textClienteCep.textProperty().addListener(new FilteredChangeListener(textClienteCep,
-				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, CEP_VALIDATOR)));
+				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, MaskValidator.CEP_VALIDATOR)));
 		textClienteRg.textProperty()
-				.addListener(new FilteredChangeListener(textClienteRg, (newValue, oldValue) -> MaskValidator
-						.getVersionByInsertedChar(newValue, oldValue, RG_VALIDATOR_UMA, RG_VALIDATOR_DUAS)));
+				.addListener(new FilteredChangeListener(textClienteRg,
+						(newValue, oldValue) -> MaskValidator.getVersionByInsertedChar(newValue, oldValue,
+								MaskValidator.RG_VALIDATOR_1_LETRA, MaskValidator.RG_VALIDATOR_2_LETRAS)));
 		textClienteCnh.textProperty().addListener(new FilteredChangeListener(textClienteCnh,
-				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, CNH_VALIDATOR)));
+				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, MaskValidator.CNH_VALIDATOR)));
 		textMaterialAluguel.textProperty().addListener(new FilteredChangeListener(textMaterialAluguel,
 				(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2)));
 		textMaterialReposicao.textProperty().addListener(new FilteredChangeListener(textMaterialReposicao,

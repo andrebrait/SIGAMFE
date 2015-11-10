@@ -61,7 +61,8 @@ public class PersistenceConfiguration {
 	private static String PACKAGES_TO_SCAN = "com.sigamfe.model",
 			HIBERNATE_DIALECT = "org.hibernate.dialect.MySQL5InnoDBDialect",
 			HIBERNATE_EJB_NAMING_STRATEGY = "org.hibernate.cfg.ImprovedNamingStrategy", HIBERNATE_SHOW_SQL = "false",
-			HIBERNATE_FORMAT_SQL = "true", HIBERNATE_HBM2DDL_AUTO = "validate";
+			HIBERNATE_FORMAT_SQL = "true";
+	// , HIBERNATE_HBM2DDL_AUTO = "validate";
 
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
@@ -74,7 +75,8 @@ public class PersistenceConfiguration {
 		properties.setProperty("hibernate.ejb.naming_strategy", HIBERNATE_EJB_NAMING_STRATEGY);
 		properties.setProperty("hibernate.show_sql", HIBERNATE_SHOW_SQL);
 		properties.setProperty("hibernate.format_sql", HIBERNATE_FORMAT_SQL);
-		properties.setProperty("hibernate.hbm2ddl.auto", HIBERNATE_HBM2DDL_AUTO);
+		// properties.setProperty("hibernate.hbm2ddl.auto",
+		// HIBERNATE_HBM2DDL_AUTO);
 		entityManagerFactoryBean.setJpaProperties(properties);
 
 		return entityManagerFactoryBean;

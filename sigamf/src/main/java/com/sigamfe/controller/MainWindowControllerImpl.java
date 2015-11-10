@@ -37,7 +37,7 @@ public class MainWindowControllerImpl implements MainWindowController {
 		stage = new ViewStage(this, null, Modality.NONE);
 		stage.setMaximized(true);
 		stage.setOnCloseRequest(e -> Platform.exit());
-		stage.setTitle(Titles.MAIN_WINDOW_TITLE);
+		stage.setTitle(Titles.WINDOW_MAIN);
 	}
 
 	@FXML

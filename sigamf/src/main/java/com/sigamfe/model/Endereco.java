@@ -8,13 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.Range;
 
 import com.sigamfe.model.base.BaseEntity;
 
@@ -41,11 +39,9 @@ public class Endereco implements BaseEntity<Long> {
 	@Column(name = "LOGRADOURO", nullable = false, length = 200)
 	private String logradouro;
 
-	@NotNull
-	@Digits(integer = 5, fraction = 0)
-	@Range(min = 0, max = 99999)
-	@Column(name = "NUMERO", nullable = true, precision = 5, scale = 0)
-	private Short numero;
+	@Size(max = 30)
+	@Column(name = "NUMERO", nullable = true, length = 30)
+	private String numero;
 
 	@Size(min = 9, max = 9)
 	@Column(name = "CEP", nullable = true, length = 200)
@@ -61,8 +57,8 @@ public class Endereco implements BaseEntity<Long> {
 	@Column(name = "UF", nullable = false, length = 2)
 	private String uf;
 
-	@OneToMany(mappedBy = "endereco")
-	private List<Cliente> clientes;
+	@OneToOne(mappedBy = "endereco")
+	private Cliente cliente;
 
 	@OneToMany(mappedBy = "enderecoEntrega")
 	private List<Pedido> pedidos;

@@ -2,6 +2,8 @@ package com.sigamfe.controller.base;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang3.StringUtils;
+
 public interface BaseController extends Serializable {
 
 	/**
@@ -17,5 +19,9 @@ public interface BaseController extends Serializable {
 	 * {@code @PostConstruct}
 	 */
 	void initializeWindow();
+
+	default String getOptionalText(String text) {
+		return StringUtils.defaultIfBlank(text, null);
+	}
 
 }
