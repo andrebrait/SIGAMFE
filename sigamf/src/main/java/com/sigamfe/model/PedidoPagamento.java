@@ -18,6 +18,8 @@ import javax.persistence.Version;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.factory.annotation.Configurable;
+
 import com.sigamfe.model.PedidoPagamento.PedidoPagamentoPK;
 import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.converter.LocalDateTimeConverter;
@@ -27,6 +29,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
 
 @Entity
 @Table(name = "pedidopagamento")

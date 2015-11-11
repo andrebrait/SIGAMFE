@@ -5,13 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.EnableLoadTimeWeaving;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.LoadTimeWeavingConfigurer;
+import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
+import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
+import org.springframework.instrument.classloading.LoadTimeWeaver;
 
 import com.sigamfe.business.UsuarioBusiness;
 import com.sigamfe.configuration.PersistenceConfiguration;
 import com.sigamfe.controller.LoginController;
-import com.sigamfe.controller.MainWindowController;
 import com.sigamfe.model.Usuario;
 import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.model.enums.PermissaoUsuario;
@@ -22,16 +25,14 @@ import javafx.stage.Stage;
 
 @Lazy
 @SpringBootApplication
-@EnableAspectJAutoProxy
-public class SigamfeApp extends Application {
+@EnableLoadTimeWeaving
+@EnableSpringConfigured
+public class SigamfeApp extends Application implements LoadTimeWeavingConfigurer {
 
 	@Autowired
 	private UsuarioBusiness usuarioBusiness;
 
 	public static ConfigurableApplicationContext applicationContext;
-
-	@Autowired
-	public MainWindowController mainWindowController;
 
 	@Override
 	public void init() throws Exception {
@@ -48,7 +49,6 @@ public class SigamfeApp extends Application {
 	public void start(Stage stage) throws Exception {
 
 		notifyPreloader(new Preloader.StateChangeNotification(Preloader.StateChangeNotification.Type.BEFORE_START));
-
 		applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
 
 		if (usuarioBusiness.count() == 0) {
@@ -62,7 +62,7 @@ public class SigamfeApp extends Application {
 			usuarioBusiness.save(usuario);
 		}
 
-		applicationContext.getBean(LoginController.class);
+		new LoginController();
 
 	}
 
@@ -72,5 +72,10 @@ public class SigamfeApp extends Application {
 		PersistenceConfiguration.setDB_PORT("52000");
 
 		launch(args);
+	}
+
+	@Override
+	public LoadTimeWeaver getLoadTimeWeaver() {
+		return new InstrumentationLoadTimeWeaver();
 	}
 }

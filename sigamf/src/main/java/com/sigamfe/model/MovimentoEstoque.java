@@ -16,6 +16,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.sigamfe.model.base.BaseEntity;
@@ -26,6 +27,7 @@ import com.sigamfe.model.enums.converter.TipoMovimentoEstoqueConverter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
 
 @Entity
 @Table(name = "movimentoestoque")

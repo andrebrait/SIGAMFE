@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sigamfe.model.base.AuditableBaseEntity;
 
@@ -28,6 +29,7 @@ import lombok.ToString;
 /**
  * Classe Fornecedor. Representa um fornecedor de materiais.
  */
+
 @Entity
 @Table(name = "fornecedor")
 @Data

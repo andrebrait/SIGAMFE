@@ -7,7 +7,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
 import com.sigamfe.configuration.constants.Titles;
@@ -26,17 +25,12 @@ import javafx.scene.layout.Priority;
 @Aspect
 public class ExceptionHandler {
 
-	@Pointcut("execution(public * com.sigamfe.business.*.*(..))")
-	public void businessMethods() {
-
-	}
-
-	@AfterThrowing(pointcut = "businessMethods()", throwing = "ex")
+	@AfterThrowing(pointcut = "execution(public * com.sigamfe.business.*.*(..))", throwing = "ex")
 	public void handler(Throwable ex) {
 		showErrorAlert(ex);
 	}
 
-	private void showErrorAlert(Throwable ex) {
+	private static void showErrorAlert(Throwable ex) {
 
 		Alert alert = new Alert(AlertType.ERROR);
 

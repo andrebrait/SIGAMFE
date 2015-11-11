@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<VBox alignment="TOP_CENTER" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sigamfe.controller.MainWindowControllerImpl">
+<VBox alignment="TOP_CENTER" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sigamfe.controller.MainWindowController">
    <children>
       <MenuBar fx:id="mainWindowMenuBar" maxHeight="25.0" minHeight="25.0" minWidth="800.0" prefHeight="25.0" prefWidth="800.0">
          <menus>

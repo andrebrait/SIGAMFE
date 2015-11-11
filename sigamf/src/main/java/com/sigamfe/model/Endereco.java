@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sigamfe.model.base.BaseEntity;
 
@@ -20,10 +21,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+
 @Entity
 @Table(name = "endereco")
 @Data
-@ToString(callSuper = false, exclude = { "clientes", "pedidos" })
+@ToString(callSuper = false, exclude = { "cliente", "pedidos" })
 @EqualsAndHashCode(callSuper = false, of = "id")
 public class Endereco implements BaseEntity<Long> {
 

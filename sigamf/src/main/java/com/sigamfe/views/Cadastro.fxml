@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sigamfe.controller.CadastroControllerImpl">
+<VBox alignment="CENTER" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.sigamfe.controller.CadastroController">
    <children>
       <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
         <tabs>
@@ -67,13 +67,13 @@
                                        <children>
                                           <HBox>
                                              <children>
-                                                <RadioButton fx:id="radioClientePessoaFisica" mnemonicParsing="false" onAction="#onChangeTogglePessoaCliente" selected="true" text="Pessoa Física">
+                                                <RadioButton fx:id="radioClientePessoaFisica" mnemonicParsing="false" selected="true" text="Pessoa Física">
                                                    <toggleGroup>
                                                       <ToggleGroup fx:id="tipoPessoa" />
                                                    </toggleGroup>
                                                 </RadioButton>
                                                 <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="30.0" visible="false" />
-                                                <RadioButton fx:id="radioClientePessoaJuridica" mnemonicParsing="false" onAction="#onChangeTogglePessoaCliente" text="Pessoa Jurídica" toggleGroup="$tipoPessoa" />
+                                                <RadioButton fx:id="radioClientePessoaJuridica" mnemonicParsing="false" text="Pessoa Jurídica" toggleGroup="$tipoPessoa" />
                                              </children>
                                           </HBox>
                                           <Separator prefHeight="15.0" prefWidth="200.0" visible="false" />
@@ -105,7 +105,7 @@
                                              <children>
                                                 <TextField fx:id="textClienteRg" maxWidth="130.0" prefHeight="25.0" prefWidth="130.0" />
                                                 <Separator orientation="VERTICAL" visible="false" />
-                                                <Button mnemonicParsing="false" onAction="#pesquisaClienteRg">
+                                                <Button fx:id="buttonPesquisaClienteRg" mnemonicParsing="false" onAction="#pesquisaClienteRg">
                                                    <graphic>
                                                       <FontAwesomeIconView glyphName="SEARCH" />
                                                    </graphic>
@@ -190,7 +190,7 @@
                                                 <TableView fx:id="tableClienteTelefones" editable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="120.0" prefWidth="405.0" VBox.vgrow="ALWAYS">
                                                    <columns>
                                                       <TableColumn editable="false" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" resizable="false" text="Número" />
-                                                      <TableColumn minWidth="305.0" prefWidth="305.0" text="Observação" />
+                                                      <TableColumn fx:id="tableColumnClienteObservacoes" minWidth="295.0" prefWidth="295.0" text="Observação" />
                                                    </columns>
                                                 </TableView>
                                                 <Separator prefHeight="15.0" prefWidth="200.0" visible="false" />
@@ -468,13 +468,13 @@
                                        <children>
                                           <HBox>
                                              <children>
-                                                <RadioButton fx:id="radioClientePessoaFisica1" mnemonicParsing="false" onAction="#onChangeTogglePessoaCliente" selected="true" text="Usuário">
+                                                <RadioButton fx:id="radioClientePessoaFisica1" mnemonicParsing="false" selected="true" text="Usuário">
                                                    <toggleGroup>
                                                       <ToggleGroup fx:id="tipoPessoa1" />
                                                    </toggleGroup>
                                                 </RadioButton>
                                                 <Separator orientation="VERTICAL" prefHeight="0.0" prefWidth="30.0" visible="false" />
-                                                <RadioButton fx:id="radioClientePessoaJuridica1" mnemonicParsing="false" onAction="#onChangeTogglePessoaCliente" text="Administrador" toggleGroup="$tipoPessoa1" />
+                                                <RadioButton fx:id="radioClientePessoaJuridica1" mnemonicParsing="false" text="Administrador" toggleGroup="$tipoPessoa1" />
                                              </children>
                                           </HBox>
                                           <Separator prefHeight="15.0" prefWidth="200.0" visible="false" />
@@ -482,7 +482,7 @@
                                              <children>
                                                 <TextField fx:id="textClienteCpf1" maxWidth="130.0" prefWidth="130.0" />
                                                 <Separator orientation="VERTICAL" visible="false" />
-                                                <Button mnemonicParsing="false" onAction="#pesquisaClienteCpfCnpj">
+                                                <Button mnemonicParsing="false">
                                                    <graphic>
                                                       <FontAwesomeIconView glyphName="SEARCH" />
                                                    </graphic>
@@ -494,7 +494,7 @@
                                              <children>
                                                 <TextField fx:id="textClienteNome1" HBox.hgrow="ALWAYS" />
                                                 <Separator orientation="VERTICAL" visible="false" />
-                                                <Button mnemonicParsing="false" onAction="#pesquisaClienteNome">
+                                                <Button mnemonicParsing="false">
                                                    <graphic>
                                                       <FontAwesomeIconView glyphName="SEARCH" />
                                                    </graphic>
@@ -506,7 +506,7 @@
                                              <children>
                                                 <TextField fx:id="textClienteRg1" maxWidth="130.0" prefHeight="25.0" prefWidth="130.0" />
                                                 <Separator orientation="VERTICAL" visible="false" />
-                                                <Button mnemonicParsing="false" onAction="#pesquisaClienteRg">
+                                                <Button mnemonicParsing="false">
                                                    <graphic>
                                                       <FontAwesomeIconView glyphName="SEARCH" />
                                                    </graphic>
@@ -561,7 +561,7 @@
                                                          <children>
                                                             <TextField fx:id="textClienteCep1" maxWidth="130.0" prefHeight="25.0" prefWidth="120.0" />
                                                             <Separator orientation="VERTICAL" visible="false" />
-                                                            <Button mnemonicParsing="false" onAction="#pesquisaClienteEnderecoCep">
+                                                            <Button mnemonicParsing="false">
                                                                <graphic>
                                                                   <FontAwesomeIconView glyphName="MAP" size="13" />
                                                                </graphic>
@@ -602,13 +602,13 @@
                                           <VBox>
                                              <children>
                                                 <Separator prefHeight="40.0" prefWidth="200.0" visible="false" />
-                                                <Button alignment="CENTER" mnemonicParsing="false" onAction="#adicionaClienteTelefone" prefHeight="25.0" prefWidth="90.0" text="Adicionar" VBox.vgrow="ALWAYS">
+                                                <Button alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Adicionar" VBox.vgrow="ALWAYS">
                                                    <graphic>
                                                       <FontAwesomeIconView glyphName="PLUS_CIRCLE" size="15" />
                                                    </graphic>
                                                 </Button>
                                                 <Separator prefHeight="13.0" prefWidth="200.0" visible="false" />
-                                                <Button fx:id="buttonRemoverTelefone1" alignment="CENTER" disable="true" mnemonicParsing="false" onAction="#removeClienteTelefone" prefHeight="25.0" prefWidth="90.0" text="Remover" VBox.vgrow="ALWAYS">
+                                                <Button fx:id="buttonRemoverTelefone1" alignment="CENTER" disable="true" mnemonicParsing="false" prefHeight="25.0" prefWidth="90.0" text="Remover" VBox.vgrow="ALWAYS">
                                                    <graphic>
                                                       <FontAwesomeIconView glyphName="MINUS_CIRCLE" size="15" />
                                                    </graphic>
@@ -639,11 +639,11 @@
                                     </HBox>
                                     <HBox alignment="CENTER" prefHeight="52.0" prefWidth="697.0">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#salvaCliente" text="Salvar" />
+                                          <Button mnemonicParsing="false" text="Salvar" />
                                           <Separator orientation="VERTICAL" prefHeight="200.0" prefWidth="30.0" visible="false" />
-                                          <Button mnemonicParsing="false" onAction="#excluiCliente" text="Excluir" />
+                                          <Button mnemonicParsing="false" text="Excluir" />
                                           <Separator orientation="VERTICAL" prefHeight="200.0" prefWidth="30.0" visible="false" />
-                                          <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
+                                          <Button cancelButton="true" mnemonicParsing="false" text="Cancelar" />
                                        </children>
                                     </HBox>
                                  </children>

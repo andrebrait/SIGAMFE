@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.net.URL;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.ResourceUtils;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,9 +17,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import lombok.Getter;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.util.ResourceUtils;
 
 public class ViewStage extends Stage implements Serializable {
 
@@ -29,7 +29,8 @@ public class ViewStage extends Stage implements Serializable {
 
 	private URL getPathByController(Class<? extends BaseController> controller) {
 		try {
-			return ResourceUtils.getURL(VIEW_PATH + StringUtils.removeEndIgnoreCase(controller.getSimpleName(), "ControllerImpl") + ".fxml");
+			return ResourceUtils.getURL(
+					VIEW_PATH + StringUtils.removeEndIgnoreCase(controller.getSimpleName(), "Controller") + ".fxml");
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}

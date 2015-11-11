@@ -9,10 +9,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sigamfe.model.TelefoneCliente.TelefoneClientePK;
 import com.sigamfe.model.base.BaseEntity;
@@ -23,6 +26,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
 
 @Entity
 @Table(name = "telefonecliente")
@@ -70,6 +74,9 @@ public class TelefoneCliente implements BaseEntity<TelefoneClientePK> {
 	@Column(name = "VERSION")
 	private Long version;
 
+	@Transient
+	private String telefone;
+
 	/**
 	 * Atribui o cliente a esta entidade
 	 *
@@ -88,12 +95,13 @@ public class TelefoneCliente implements BaseEntity<TelefoneClientePK> {
 		if (this.getId() == null) {
 			this.id = new TelefoneClientePK();
 		}
+		this.telefone = telefone;
 		this.getId().setTelefone(TelefoneUtils.getTelefoneAsLong(telefone));
 	}
 
-	public String getTelefone(String telefone) {
-		if (this.getId() == null) {
-			return null;
+	public String getTelefone() {
+		if (this.getId() == null || this.telefone != null) {
+			return this.telefone;
 		}
 		return TelefoneUtils.getTelefoneAsString(this.getId().getTelefone());
 	}

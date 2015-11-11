@@ -7,6 +7,7 @@ import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -23,6 +24,7 @@ import lombok.ToString;
  * @param <I>
  *            O tipo do ID da entidade
  */
+
 @Data
 @ToString(callSuper = false, of = { "dataAtualizacao", "dataCriacao" })
 @MappedSuperclass

@@ -1,29 +1,104 @@
 package com.sigamfe.controller;
 
+import com.sigamfe.business.SystemBusiness;
+import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.controller.base.BaseController;
+import com.sigamfe.controller.base.ViewStage;
+import com.sigamfe.model.base.BaseEntity;
 
-public interface MainWindowController extends BaseController {
+import javafx.application.Platform;
+import javafx.fxml.FXML;
+import javafx.stage.Modality;
+import lombok.Getter;
 
-	void pedidoAbrir();
+public class MainWindowController implements BaseController {
 
-	void pedidoPesquisar();
+	private static final long serialVersionUID = 2706241759123410314L;
 
-	void pedidoFechar();
+	public MainWindowController() {
+		initializeWindow();
+	}
 
-	void cadastroCadastrar();
+	@Getter
+	private ViewStage stage;
 
-	void cadastroPesquisar();
+	public SystemBusiness systemBusiness = context().getBean(SystemBusiness.class);
 
-	void relatorioGerar();
+	@Override
+	public void initializeWindow() {
+		stage = new ViewStage(this, null, Modality.NONE);
+		stage.setMaximized(true);
+		stage.setOnCloseRequest(e -> Platform.exit());
+		stage.setTitle(Titles.WINDOW_MAIN);
+	}
 
-	void relatorioPesquisar();
+	@FXML
+	public void pedidoAbrir() {
+		// TODO Auto-generated method stub
 
-	void estoqueDisponibilidade();
+	}
 
-	void estoqueInserir();
+	@FXML
+	public void pedidoPesquisar() {
+		// TODO Auto-generated method stub
 
-	void estoqueConsultaTotal();
+	}
 
-	void ajudaSobre();
+	@FXML
+	public void pedidoFechar() {
+		// TODO Auto-generated method stub
 
+	}
+
+	@FXML
+	public void cadastroCadastrar() {
+		new CadastroController();
+	}
+
+	@FXML
+	public void cadastroPesquisar() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@FXML
+	public void relatorioGerar() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@FXML
+	public void relatorioPesquisar() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@FXML
+	public void estoqueDisponibilidade() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@FXML
+	public void estoqueInserir() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@FXML
+	public void estoqueConsultaTotal() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@FXML
+	public void ajudaSobre() {
+		systemBusiness.about();
+	}
+
+	@Override
+	public void loadEntity(BaseEntity<?> entity) {
+		// TODO Auto-generated method stub
+
+	}
 }

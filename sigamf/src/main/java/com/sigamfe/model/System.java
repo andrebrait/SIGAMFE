@@ -8,11 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Configurable;
+
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.model.converter.LocalDateTimeConverter;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 
 @Entity
 @Data

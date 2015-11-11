@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.sigamfe.model.base.BaseEntity;
@@ -23,6 +24,7 @@ import com.sigamfe.model.enums.converter.EstadoPedidoConverter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
 
 @Entity
 @Table(name = "pedidoestado")

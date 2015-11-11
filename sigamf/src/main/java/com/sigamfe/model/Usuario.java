@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.br.CPF;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.enums.IndicadorSN;
@@ -33,6 +34,7 @@ import lombok.ToString;
 /**
  * Classe Usuario. Representa um usuário do sistema.
  */
+
 @Entity
 @Table(name = "usuario")
 @Data
@@ -51,8 +53,8 @@ public class Usuario extends AuditableBaseEntity<Integer> {
 	private Integer id;
 
 	@NotEmpty
-	@Size(min = 6, max = 50)
-	@Column(name = "LOGIN", length = 50, nullable = false, unique = true)
+	@Size(min = 6, max = 20)
+	@Column(name = "LOGIN", length = 20, nullable = false, unique = true)
 	private String login;
 
 	@NotEmpty

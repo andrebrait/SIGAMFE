@@ -18,12 +18,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.enums.IndicadorSN;
@@ -36,6 +38,7 @@ import lombok.ToString;
 /**
  * Classe cliente. Representa um cliente no sistema, seja PJ ou PF.
  */
+
 @Entity
 @Table(name = "cliente")
 @Data
@@ -55,8 +58,8 @@ public abstract class Cliente extends AuditableBaseEntity<Integer> {
 	private Integer id;
 
 	@NotBlank
-	@Size(max = 50)
-	@Column(name = "NOME", nullable = false, length = 50)
+	@Size(max = 100)
+	@Column(name = "NOME", nullable = false, length = 100)
 	private String nome;
 
 	@NotNull
@@ -99,5 +102,47 @@ public abstract class Cliente extends AuditableBaseEntity<Integer> {
 
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
 	private List<TelefoneCliente> telefones;
+
+	@Transient
+	private String cp;
+
+	@Transient
+	private Long cnh;
+
+	@Transient
+	private String rg;
+
+	/**
+	 * Seta o CPF se for pessoa física ou CNPJ se for pessoa jurídica.
+	 *
+	 * @param cp
+	 *            the new cp
+	 */
+	public void setCp(String cp) {
+		if (this instanceof ClientePF) {
+			((ClientePF) this).setCpf(cp);
+		} else if (this instanceof ClientePJ) {
+			((ClientePJ) this).setCnpj(cp);
+		} else {
+			this.cp = cp;
+		}
+	}
+
+	/**
+	 * Retorna o CPF se for pessoa física ou CNPJ se for jurídica.
+	 *
+	 * @param cp
+	 *            the cp
+	 * @return the cp
+	 */
+	public String getCp(String cp) {
+		if (this instanceof ClientePF) {
+			return ((ClientePF) this).getCpf();
+		} else if (this instanceof ClientePJ) {
+			return ((ClientePJ) this).getCnpj();
+		} else {
+			return this.cp;
+		}
+	}
 
 }

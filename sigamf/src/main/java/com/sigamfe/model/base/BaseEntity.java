@@ -1,6 +1,9 @@
 package com.sigamfe.model.base;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 /**
  * A Interface BaseEntity. Todas as entidades do sistema DEVEM implementar esta
@@ -40,5 +43,19 @@ public interface BaseEntity<ID extends Serializable> extends Serializable {
 	 *            a nova versão
 	 */
 	public abstract void setVersion(Long version);
+
+	/**
+	 * Copy properties.
+	 *
+	 * @param destination
+	 *            the destination
+	 */
+	default void copyProperties(BaseEntity<?> destination) {
+		try {
+			PropertyUtils.copyProperties(destination, this);
+		} catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+			throw new RuntimeException(e);
+		}
+	}
 
 }

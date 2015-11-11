@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CNPJ;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,6 +17,7 @@ import lombok.ToString;
 /**
  * Classe ClientePJ. Representa um cliente pessoa jurídica.
  */
+
 @Entity
 @Table(name = "clientepj")
 @Data

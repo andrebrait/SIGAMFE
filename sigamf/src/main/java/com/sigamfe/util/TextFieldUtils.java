@@ -16,9 +16,12 @@ public class TextFieldUtils {
 		return returnStr;
 	}
 
-	public static String processMaxChars(String newValue, String oldValue, int max) {
-		if (!newValue.equals(oldValue) && StringUtils.length(newValue) > max) {
-			return oldValue;
+	public static String processMaxChars(String newValue, int max) {
+		if (newValue == null) {
+			return null;
+		}
+		while (newValue.length() > max) {
+			newValue = StringUtils.chop(newValue);
 		}
 		return newValue;
 	}
@@ -39,7 +42,8 @@ public class TextFieldUtils {
 			int fractionDigits) {
 		if (StringUtils.isNotBlank(newValue) && !newValue.equals(oldValue)) {
 			String toLongNum = StringUtils.remove(StringUtils.remove(newValue, ","), ".");
-			if (!StringUtils.isNumeric(toLongNum) || toLongNum.length() > maxIntegerDigits + fractionDigits) {
+			toLongNum = processMaxChars(toLongNum, maxIntegerDigits + fractionDigits);
+			if (!StringUtils.isNumeric(toLongNum)) {
 				return oldValue;
 			}
 			BigDecimal num = new BigDecimal(toLongNum);

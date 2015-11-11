@@ -21,6 +21,8 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.beans.factory.annotation.Configurable;
+
 import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.converter.LocalDateTimeConverter;
 import com.sigamfe.model.enums.EntregaPedido;
@@ -33,6 +35,7 @@ import com.sigamfe.model.enums.converter.IndicadorSNConverter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
 
 @Entity
 @Table(name = "pedido")

@@ -10,12 +10,14 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sigamfe.model.base.BaseEntity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+
 
 @Entity
 @Table(name = "materialimagem")

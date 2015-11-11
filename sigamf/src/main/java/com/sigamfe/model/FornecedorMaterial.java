@@ -15,6 +15,8 @@ import javax.persistence.Version;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.factory.annotation.Configurable;
+
 import com.sigamfe.model.FornecedorMaterial.FornecedorMaterialPK;
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.model.enums.IndicadorUnidade;
@@ -25,6 +27,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
 
 @Entity
 @Table(name = "fornecedormaterial")
