@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.EnableLoadTimeWeaving;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.LoadTimeWeavingConfigurer;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
@@ -23,7 +22,6 @@ import javafx.application.Application;
 import javafx.application.Preloader;
 import javafx.stage.Stage;
 
-@Lazy
 @SpringBootApplication
 @EnableLoadTimeWeaving
 @EnableSpringConfigured
