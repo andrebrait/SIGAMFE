@@ -4,12 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.beans.factory.annotation.Configurable;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -40,12 +38,12 @@ public class ClientePF extends Cliente {
 	@Column(name = "CPF", nullable = true, unique = true, length = 15)
 	private String cpf;
 
-	@Digits(fraction = 0, integer = 11)
-	@Column(name = "CNH", nullable = true, unique = true)
-	private Long cnh;
+	@Size(max = 11)
+	@Column(name = "CNH", nullable = true, unique = true, length = 11)
+	private String cnh;
 
-	@Size(min = 7, max = 10)
-	@Column(name = "RG", nullable = true, unique = true)
+	@Size(max = 10)
+	@Column(name = "RG", nullable = true, unique = true, length = 10)
 	private String rg;
 
 }

@@ -7,7 +7,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.exception.BusinessException;
@@ -21,7 +21,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 
-@Component
+@Configuration
 @Aspect
 public class ExceptionHandler {
 
@@ -71,16 +71,14 @@ public class ExceptionHandler {
 		if (ex instanceof javax.validation.ValidationException) {
 			alert.setTitle(Titles.DIALOG_ERROR_VALIDATION);
 			alert.setHeaderText("A seguinte validação falhou:");
-			alert.setContentText(StringUtils.defaultIfBlank(ex.getLocalizedMessage(), ex.getMessage()));
-			alert.showAndWait();
-			return;
+			alert.setContentText(ex.getMessage());
+		} else {
+			// Se não for nenhuma das exceções acima, exibe o diálogo de exceção
+			// desconhecida.
+			alert.setTitle(Titles.DIALOG_ERROR);
+			alert.setHeaderText("Ocorreu um erro desconhecido!");
+			alert.setContentText(ex.getMessage());
 		}
-
-		// Se não for nenhuma das exceções acima, exibe o diálogo de exceção
-		// desconhecida.
-		alert.setTitle(Titles.DIALOG_ERROR);
-		alert.setHeaderText("Ocorreu um erro desconhecido!");
-		alert.setContentText(ex.getMessage());
 
 		// Create expandable Exception.
 		StringWriter sw = new StringWriter();

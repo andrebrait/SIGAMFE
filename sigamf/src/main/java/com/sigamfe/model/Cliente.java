@@ -25,7 +25,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.enums.IndicadorSN;
@@ -38,7 +37,6 @@ import lombok.ToString;
 /**
  * Classe cliente. Representa um cliente no sistema, seja PJ ou PF.
  */
-
 @Entity
 @Table(name = "cliente")
 @Data
@@ -67,7 +65,6 @@ public abstract class Cliente extends AuditableBaseEntity<Integer> {
 	@JoinColumn(name = "ENDERECO", nullable = false)
 	private Endereco endereco;
 
-	@NotBlank
 	@Email
 	@Size(max = 200)
 	@Column(name = "EMAIL", nullable = true, length = 200)
@@ -107,7 +104,7 @@ public abstract class Cliente extends AuditableBaseEntity<Integer> {
 	private String cp;
 
 	@Transient
-	private Long cnh;
+	private String cnh;
 
 	@Transient
 	private String rg;

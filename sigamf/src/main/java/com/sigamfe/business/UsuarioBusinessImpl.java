@@ -43,4 +43,9 @@ public class UsuarioBusinessImpl extends AbstractBusiness<Integer, Usuario> impl
 		}
 	}
 
+	@Override
+	public Usuario findByLogin(String login) {
+		return repository.findByLogin(login);
+	}
+
 }

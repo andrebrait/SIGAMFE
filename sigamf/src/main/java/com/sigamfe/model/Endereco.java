@@ -13,14 +13,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sigamfe.model.base.BaseEntity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-
 
 @Entity
 @Table(name = "endereco")

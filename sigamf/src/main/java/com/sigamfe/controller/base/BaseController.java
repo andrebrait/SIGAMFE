@@ -52,7 +52,7 @@ public interface BaseController extends Serializable {
 	 */
 	default JavaBeanStringProperty generateStringProperty(Object bean, String name) {
 		try {
-			return new JavaBeanStringPropertyBuilder().bean(bean).name("cp").build();
+			return new JavaBeanStringPropertyBuilder().bean(bean).name(name).build();
 		} catch (NoSuchMethodException e) {
 			throw new RuntimeException(e);
 		}
@@ -71,7 +71,7 @@ public interface BaseController extends Serializable {
 	 */
 	default JavaBeanObjectProperty<?> generateObjectProperty(Object bean, String name) {
 		try {
-			return new JavaBeanObjectPropertyBuilder<Object>().bean(bean).name("cp").build();
+			return new JavaBeanObjectPropertyBuilder<Object>().bean(bean).name(name).build();
 		} catch (NoSuchMethodException e) {
 			throw new RuntimeException(e);
 		}

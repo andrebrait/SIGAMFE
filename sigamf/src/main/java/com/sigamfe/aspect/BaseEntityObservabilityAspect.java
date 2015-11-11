@@ -7,13 +7,13 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.DeclareMixin;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.model.base.ChangeSupport;
 import com.sigamfe.model.base.ChangeSupportImpl;
 
-@Component
+@Configuration
 @Aspect
 public class BaseEntityObservabilityAspect {
 
@@ -24,7 +24,7 @@ public class BaseEntityObservabilityAspect {
 
 	// Intercept setters in all BaseEntity objects in order to notify about
 	// property change
-	@Around("execution(public void set*(*)) && this(baseEntity)")
+	@Around("execution(public void set*(..)) && this(baseEntity)")
 	public void firePropertyChange(final ProceedingJoinPoint joinPoint, final BaseEntity baseEntity) throws Throwable {
 		// Get property name from method name
 		final String setterName = joinPoint.getSignature().getName();

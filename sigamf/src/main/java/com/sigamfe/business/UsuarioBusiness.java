@@ -7,4 +7,6 @@ public interface UsuarioBusiness extends BaseBusiness<Integer, Usuario> {
 
 	boolean login(String username, String password);
 
+	Usuario findByLogin(String login);
+
 }

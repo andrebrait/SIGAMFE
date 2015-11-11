@@ -6,6 +6,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -19,6 +20,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
+@ComponentScan(basePackages = "com.sigamfe")
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.sigamfe.repository")
 public class TestConfiguration {
@@ -30,7 +32,7 @@ public class TestConfiguration {
 		HikariConfig hikariConfig = new HikariConfig();
 		hikariConfig.setDriverClassName("org.h2.Driver");
 		hikariConfig.setUsername("sa");
-		hikariConfig.setJdbcUrl("jdbc:h2:mem:datajpa");
+		hikariConfig.setJdbcUrl("jdbc:h2:mem:datajpa;DB_CLOSE_ON_EXIT=FALSE");
 		hikariConfig.setAutoCommit(AUTO_COMMIT);
 		return new HikariDataSource(hikariConfig);
 	}

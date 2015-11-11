@@ -51,6 +51,7 @@ public class LoginController implements BaseController {
 		if (usuarioBusiness.login(username.getText(), password.getText())) {
 			ApplicationConfiguration.mainWindowController = new MainWindowController();
 			ApplicationConfiguration.mainWindowController.getStage().show();
+			ApplicationConfiguration.usuarioLogado = usuarioBusiness.findByLogin(username.getText());
 			stage.close();
 		} else {
 			labelErro.setVisible(true);

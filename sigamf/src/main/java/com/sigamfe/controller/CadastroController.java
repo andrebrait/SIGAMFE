@@ -1,8 +1,11 @@
 package com.sigamfe.controller;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.sigamfe.business.ClientePFBusiness;
 import com.sigamfe.business.ClientePJBusiness;
@@ -205,24 +208,20 @@ public class CadastroController implements BaseController {
 	public void salvaCliente() {
 		Cliente toSave = isPessoaFisica() ? new ClientePF() : new ClientePJ();
 		entityCliente.copyProperties(toSave);
-		Endereco end = entityCliente.getEndereco();
+		Endereco end = new Endereco();
+		endereco.copyProperties(end);
+		toSave.setEndereco(end);
+		toSave.setTelefones(tableClienteTelefones.getItems());
 
-		if (end == null)
-
-		{
-			end = new Endereco();
+		if (toSave instanceof ClientePF) {
+			clientePFBusiness.save((ClientePF) toSave);
+		} else {
+			clientePJBusiness.save((ClientePJ) toSave);
 		}
-		end.setCidade(textClienteCidade.getText());
-		end.setUf(textClienteUf.getText());
-		end.setLogradouro(textClienteEndereco.getText());
-		// Atributos opcionais devem ser nulos se deixados em branco, por isso o
-		// uso do getOptionalText.
-		end.setCep(
 
-				getOptionalText(textClienteCep.getText()));
-		end.setNumero(getOptionalText(textClienteNumero.getText()));
-
-		entityCliente.setTelefones(tableClienteTelefones.getItems());
+		showInformation("Sucesso", "Cliente cadastrado com sucesso!");
+		toSave.copyProperties(entityCliente);
+		toSave.getEndereco().copyProperties(endereco);
 
 	}
 
@@ -309,6 +308,8 @@ public class CadastroController implements BaseController {
 			private static final long serialVersionUID = -8479948750805801165L;
 
 		};
+		entityCliente.setBloqueado(IndicadorSN.NAO);
+		entityCliente.setJaFoiBloqueado(IndicadorSN.NAO);
 		entityMaterial = new Material();
 		entityUsuario = new Usuario();
 		endereco = new Endereco();
@@ -353,29 +354,47 @@ public class CadastroController implements BaseController {
 
 		textClienteCep.textProperty().addListener(new FilteredChangeListener(textClienteCep,
 				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, MaskValidator.CEP_VALIDATOR)));
+		textClienteCep.textProperty().bindBidirectional(generateStringProperty(endereco, "cep"));
+
 		textClienteRg.textProperty()
 				.addListener(new FilteredChangeListener(textClienteRg,
 						(newValue, oldValue) -> MaskValidator.getVersionByInsertedChar(newValue, oldValue,
 								MaskValidator.RG_VALIDATOR_1_LETRA, MaskValidator.RG_VALIDATOR_2_LETRAS)));
+		textClienteRg.textProperty().bindBidirectional(generateStringProperty(entityCliente, "rg"));
+
 		textClienteCnh.textProperty().addListener(new FilteredChangeListener(textClienteCnh,
 				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, MaskValidator.CNH_VALIDATOR)));
+		textClienteCnh.textProperty().bindBidirectional(generateStringProperty(entityCliente, "cnh"));
+
 		textMaterialAluguel.textProperty().addListener(new FilteredChangeListener(textMaterialAluguel,
 				(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2)));
+		textMaterialAluguel.textProperty().addListener((obs, oldValue, newValue) -> entityMaterial
+				.setValorAluguel(StringUtils.isBlank(newValue) ? null : new BigDecimal(newValue)));
+
 		textMaterialReposicao.textProperty().addListener(new FilteredChangeListener(textMaterialReposicao,
 				(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2)));
+		textMaterialReposicao.textProperty().addListener((obs, oldValue, newValue) -> entityMaterial
+				.setValorReposicao(StringUtils.isBlank(newValue) ? null : new BigDecimal(newValue)));
 
 		textClienteNome.textProperty().addListener(new FilteredChangeListener(textClienteNome,
 				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 100)));
+		textClienteNome.textProperty().bindBidirectional(generateStringProperty(entityCliente, "nome"));
 		textClienteCidade.textProperty().addListener(new FilteredChangeListener(textClienteCidade,
 				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 200)));
+		textClienteCidade.textProperty().bindBidirectional(generateStringProperty(endereco, "cidade"));
 		textClienteUf.textProperty().addListener(new FilteredChangeListener(textClienteUf,
 				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, MaskValidator.UF_VALIDATOR)));
+		textClienteUf.textProperty().bindBidirectional(generateStringProperty(endereco, "uf"));
 		textClienteNumero.textProperty().addListener(new FilteredChangeListener(textClienteNumero,
 				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 30)));
+		textClienteNumero.textProperty().bindBidirectional(generateStringProperty(endereco, "numero"));
 		textClienteEndereco.textProperty().addListener(new FilteredChangeListener(textClienteEndereco,
 				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 200)));
+		textClienteEndereco.textProperty().bindBidirectional(generateStringProperty(endereco, "logradouro"));
+
 		textClienteEmail.textProperty().addListener(new FilteredChangeListener(textClienteEmail,
 				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 200)));
+		textClienteEmail.textProperty().bindBidirectional(generateStringProperty(entityCliente, "email"));
 
 		stage.showAndWait();
 	}

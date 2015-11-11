@@ -5,11 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.EnableLoadTimeWeaving;
-import org.springframework.context.annotation.LoadTimeWeavingConfigurer;
-import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
-import org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver;
-import org.springframework.instrument.classloading.LoadTimeWeaver;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import com.sigamfe.business.UsuarioBusiness;
 import com.sigamfe.configuration.PersistenceConfiguration;
@@ -23,9 +19,8 @@ import javafx.application.Preloader;
 import javafx.stage.Stage;
 
 @SpringBootApplication
-@EnableLoadTimeWeaving
-@EnableSpringConfigured
-public class SigamfeApp extends Application implements LoadTimeWeavingConfigurer {
+@EnableAspectJAutoProxy
+public class SigamfeApp extends Application {
 
 	@Autowired
 	private UsuarioBusiness usuarioBusiness;
@@ -72,8 +67,4 @@ public class SigamfeApp extends Application implements LoadTimeWeavingConfigurer
 		launch(args);
 	}
 
-	@Override
-	public LoadTimeWeaver getLoadTimeWeaver() {
-		return new InstrumentationLoadTimeWeaver();
-	}
 }
