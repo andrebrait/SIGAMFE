@@ -16,7 +16,7 @@ import com.sigamfe.model.converter.LocalDateTimeConverter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-
+@Configurable
 @Entity
 @Data
 @Table(name = "system")

@@ -25,6 +25,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.enums.IndicadorSN;
@@ -37,6 +38,7 @@ import lombok.ToString;
 /**
  * Classe cliente. Representa um cliente no sistema, seja PJ ou PF.
  */
+@Configurable
 @Entity
 @Table(name = "cliente")
 @Data

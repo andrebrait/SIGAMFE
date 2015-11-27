@@ -3,8 +3,8 @@ package com.sigamfe.controller;
 import com.sigamfe.business.SystemBusiness;
 import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.controller.base.BaseController;
-import com.sigamfe.controller.base.ViewStage;
 import com.sigamfe.model.base.BaseEntity;
+import com.sigamfe.views.classes.base.ViewStage;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;

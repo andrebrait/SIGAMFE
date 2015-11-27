@@ -6,14 +6,14 @@ import java.util.Optional;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import com.sigamfe.business.ClientePFBusiness;
 import com.sigamfe.business.ClientePJBusiness;
-import com.sigamfe.configuration.ApplicationConfiguration;
+import com.sigamfe.configuration.SigamfeContext;
 import com.sigamfe.configuration.constants.Messages;
 import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.controller.base.BaseController;
-import com.sigamfe.controller.base.ViewStage;
 import com.sigamfe.model.Cliente;
 import com.sigamfe.model.ClientePF;
 import com.sigamfe.model.ClientePJ;
@@ -29,6 +29,7 @@ import com.sigamfe.util.FilteredChangeListener;
 import com.sigamfe.util.MaskValidator;
 import com.sigamfe.util.TelefoneUtils;
 import com.sigamfe.util.TextFieldUtils;
+import com.sigamfe.views.classes.base.ViewStage;
 
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
@@ -48,13 +49,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import lombok.Getter;
 
+@Component
 public class CadastroController implements BaseController {
 
 	private static final long serialVersionUID = -3277976711219254609L;
-
-	public CadastroController() {
-		initializeWindow();
-	}
 
 	private Cliente entityCliente;
 
@@ -314,7 +312,7 @@ public class CadastroController implements BaseController {
 		entityUsuario = new Usuario();
 		endereco = new Endereco();
 
-		stage = new ViewStage(this, ApplicationConfiguration.mainWindowController.getStage());
+		stage = new ViewStage(this, SigamfeContext.mainWindowController.getStage());
 		stage.setTitle(Titles.WINDOW_CADASTRO);
 		stage.setResizable(false);
 

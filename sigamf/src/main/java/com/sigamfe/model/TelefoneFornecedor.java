@@ -25,7 +25,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-
+@Configurable
 @Entity
 @Table(name = "telefonefornecedor")
 @Data

@@ -3,15 +3,15 @@ package com.sigamfe.controller;
 import javax.annotation.PostConstruct;
 
 import com.sigamfe.business.UsuarioBusiness;
-import com.sigamfe.configuration.ApplicationConfiguration;
+import com.sigamfe.configuration.SigamfeContext;
 import com.sigamfe.configuration.PersistenceConfiguration;
 import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.controller.base.BaseController;
-import com.sigamfe.controller.base.ViewStage;
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.util.FilteredChangeListener;
 import com.sigamfe.util.MaskValidator;
 import com.sigamfe.util.TextFieldUtils;
+import com.sigamfe.views.classes.base.ViewStage;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -49,9 +49,9 @@ public class LoginController implements BaseController {
 	@FXML
 	public void login() {
 		if (usuarioBusiness.login(username.getText(), password.getText())) {
-			ApplicationConfiguration.mainWindowController = new MainWindowController();
-			ApplicationConfiguration.mainWindowController.getStage().show();
-			ApplicationConfiguration.usuarioLogado = usuarioBusiness.findByLogin(username.getText());
+			SigamfeContext.mainWindowController = new MainWindowController();
+			SigamfeContext.mainWindowController.getStage().show();
+			SigamfeContext.usuarioLogado = usuarioBusiness.findByLogin(username.getText());
 			stage.close();
 		} else {
 			labelErro.setVisible(true);

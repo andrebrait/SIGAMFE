@@ -10,7 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.sigamfe.configuration.ApplicationConfiguration;
+import com.sigamfe.configuration.SigamfeContext;
 import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.base.BaseEntity;
 
@@ -99,12 +99,12 @@ public abstract class AbstractBusiness<ID extends Serializable, E extends BaseEn
 		if (entity instanceof AuditableBaseEntity) {
 			AuditableBaseEntity<ID> audit = (AuditableBaseEntity<ID>) entity;
 			if (audit.getUsuarioCriacao() == null) {
-				audit.setUsuarioCriacao(ApplicationConfiguration.usuarioLogado);
+				audit.setUsuarioCriacao(SigamfeContext.usuarioLogado);
 			}
 			if (audit.getDataCriacao() == null) {
 				audit.setDataCriacao(dataAtual);
 			}
-			audit.setUsuarioAtualizacao(ApplicationConfiguration.usuarioLogado);
+			audit.setUsuarioAtualizacao(SigamfeContext.usuarioLogado);
 			audit.setDataAtualizacao(dataAtual);
 		}
 	}

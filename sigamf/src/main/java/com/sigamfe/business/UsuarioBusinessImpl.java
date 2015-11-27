@@ -1,5 +1,6 @@
 package com.sigamfe.business;
 
+import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Lazy;
@@ -23,6 +24,10 @@ import lombok.Getter;
 public class UsuarioBusinessImpl extends AbstractBusiness<Integer, Usuario> implements UsuarioBusiness {
 
 	private static final long serialVersionUID = -5963967420211221748L;
+
+	@Getter
+	@Autowired
+	private PooledPBEStringEncryptor encryptor;
 
 	@Getter
 	@Autowired

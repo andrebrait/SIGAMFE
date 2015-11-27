@@ -30,6 +30,7 @@ import lombok.ToString;
  * Classe Fornecedor. Representa um fornecedor de materiais.
  */
 
+@Configurable
 @Entity
 @Table(name = "fornecedor")
 @Data

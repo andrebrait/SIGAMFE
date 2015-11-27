@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.context.ConfigurableApplicationContext;
 
-import com.sigamfe.SigamfeApp;
 import com.sigamfe.model.base.BaseEntity;
 
 import javafx.beans.property.adapter.JavaBeanObjectProperty;
@@ -21,25 +19,10 @@ import javafx.scene.control.TextInputControl;
 public interface BaseController extends Serializable {
 
 	/**
-	 * Retorna o stage que controla a janela.
-	 *
-	 * @return the stage
-	 */
-	ViewStage getStage();
-
-	/**
 	 * Método de inicialização da janela, contendo os comandos necessários para
-	 * instanciar a janela apropriadamente. Deve ser anotado com
-	 * {@code @PostConstruct}
+	 * instanciar a janela apropriadamente. Deve ser anotado com {@code @FXML}
 	 */
-	void initializeWindow();
-
-	/**
-	 * Autowire.
-	 */
-	default ConfigurableApplicationContext context() {
-		return SigamfeApp.applicationContext;
-	}
+	void initialize();
 
 	/**
 	 * Generate string property.

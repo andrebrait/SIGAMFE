@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +17,7 @@ import lombok.ToString;
 /**
  * Classe ClientePF. Representa um cliente pessoa física.
  */
-
+@Configurable
 @Entity
 @Table(name = "clientepf")
 @Data
