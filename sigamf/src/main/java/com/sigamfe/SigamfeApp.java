@@ -10,7 +10,6 @@ import com.sigamfe.configuration.PersistenceConfiguration;
 import com.sigamfe.model.Usuario;
 import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.model.enums.PermissaoUsuario;
-import com.sigamfe.views.classes.LoginView;
 
 import javafx.application.Preloader;
 import javafx.stage.Stage;
