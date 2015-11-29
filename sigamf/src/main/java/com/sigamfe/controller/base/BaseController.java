@@ -11,10 +11,12 @@ import javafx.beans.property.adapter.JavaBeanObjectProperty;
 import javafx.beans.property.adapter.JavaBeanObjectPropertyBuilder;
 import javafx.beans.property.adapter.JavaBeanStringProperty;
 import javafx.beans.property.adapter.JavaBeanStringPropertyBuilder;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputControl;
+import javafx.stage.Stage;
 
 public interface BaseController extends Serializable {
 
@@ -22,7 +24,20 @@ public interface BaseController extends Serializable {
 	 * Método de inicialização da janela, contendo os comandos necessários para
 	 * instanciar a janela apropriadamente. Deve ser anotado com {@code @FXML}
 	 */
-	void initialize();
+	void initializeWindow();
+
+	/**
+	 * Gets the parent stage.
+	 *
+	 * @param <T>
+	 *            the generic type
+	 * @param component
+	 *            the component
+	 * @return the parent stage
+	 */
+	default <T extends Node> Stage getParentStage(T component) {
+		return (Stage) component.getScene().getWindow();
+	}
 
 	/**
 	 * Generate string property.

@@ -1,38 +1,39 @@
 package com.sigamfe.controller;
 
-import javax.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.sigamfe.business.UsuarioBusiness;
-import com.sigamfe.configuration.SigamfeContext;
 import com.sigamfe.configuration.PersistenceConfiguration;
-import com.sigamfe.configuration.constants.Titles;
+import com.sigamfe.configuration.SigamfeContext;
 import com.sigamfe.controller.base.BaseController;
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.util.FilteredChangeListener;
 import com.sigamfe.util.MaskValidator;
 import com.sigamfe.util.TextFieldUtils;
-import com.sigamfe.views.classes.base.ViewStage;
+import com.sigamfe.views.classes.MainWindowView;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import lombok.Getter;
 
+@Component
+@Lazy
+@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class LoginController implements BaseController {
 
 	private static final long serialVersionUID = -7412951282356817346L;
 
-	public LoginController() {
-		initializeWindow();
-	}
+	@Autowired
+	private UsuarioBusiness usuarioBusiness;
 
-	private UsuarioBusiness usuarioBusiness = context().getBean(UsuarioBusiness.class);
-
-	@Getter
-	private ViewStage stage;
+	@Autowired
+	private MainWindowView mainWindowView;
 
 	@FXML
 	private Label labelErro;
@@ -46,13 +47,22 @@ public class LoginController implements BaseController {
 	@FXML
 	private Text textServidor;
 
+	@Override
+	public void initializeWindow() {
+		updateLabelServidor();
+		username.textProperty().addListener(new FilteredChangeListener(username, (newValue, oldValue) -> TextFieldUtils
+				.processMask(newValue, oldValue, MaskValidator.USERNAME_PW_VALIDATOR)));
+		password.textProperty().addListener(new FilteredChangeListener(password, (newValue, oldValue) -> TextFieldUtils
+				.processMask(newValue, oldValue, MaskValidator.USERNAME_PW_VALIDATOR)));
+	}
+
 	@FXML
 	public void login() {
 		if (usuarioBusiness.login(username.getText(), password.getText())) {
-			SigamfeContext.mainWindowController = new MainWindowController();
-			SigamfeContext.mainWindowController.getStage().show();
 			SigamfeContext.usuarioLogado = usuarioBusiness.findByLogin(username.getText());
-			stage.close();
+			mainWindowView.newStage();
+			mainWindowView.getCurrentStage().show();
+			getParentStage(username).close();
 		} else {
 			labelErro.setVisible(true);
 		}
@@ -65,21 +75,6 @@ public class LoginController implements BaseController {
 
 	private void updateLabelServidor() {
 		textServidor.setText(PersistenceConfiguration.getDB_HOSTNAME() + ":" + PersistenceConfiguration.getDB_PORT());
-	}
-
-	@Override
-	@PostConstruct
-	public void initializeWindow() {
-		stage = new ViewStage(this);
-		stage.setOnCloseRequest(e -> Platform.exit());
-		stage.setResizable(false);
-		stage.setTitle(Titles.WINDOW_LOGIN);
-		updateLabelServidor();
-		username.textProperty().addListener(new FilteredChangeListener(username, (newValue, oldValue) -> TextFieldUtils
-				.processMask(newValue, oldValue, MaskValidator.USERNAME_PW_VALIDATOR)));
-		password.textProperty().addListener(new FilteredChangeListener(password, (newValue, oldValue) -> TextFieldUtils
-				.processMask(newValue, oldValue, MaskValidator.USERNAME_PW_VALIDATOR)));
-		stage.showAndWait();
 	}
 
 	@Override

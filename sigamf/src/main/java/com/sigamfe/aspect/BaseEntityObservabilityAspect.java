@@ -18,14 +18,15 @@ import com.sigamfe.model.base.ChangeSupportImpl;
 public class BaseEntityObservabilityAspect {
 
 	@DeclareMixin("com.sigamfe.model.base.BaseEntity")
-	public static ChangeSupport createChangeSupportImplementation(final BaseEntity baseEntity) {
+	public static ChangeSupport createChangeSupportImplementation(final BaseEntity<?> baseEntity) {
 		return new ChangeSupportImpl(baseEntity);
 	}
 
 	// Intercept setters in all BaseEntity objects in order to notify about
 	// property change
 	@Around("execution(public void set*(..)) && this(baseEntity)")
-	public void firePropertyChange(final ProceedingJoinPoint joinPoint, final BaseEntity baseEntity) throws Throwable {
+	public void firePropertyChange(final ProceedingJoinPoint joinPoint, final BaseEntity<?> baseEntity)
+			throws Throwable {
 		// Get property name from method name
 		final String setterName = joinPoint.getSignature().getName();
 		final String property = setterName.substring(3, 4).toLowerCase() + setterName.substring(4);
