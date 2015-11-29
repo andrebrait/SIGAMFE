@@ -411,6 +411,14 @@ public class CadastroController implements BaseController {
 	@Autowired
 	private UsuarioBusiness usuarioBusiness;
 
+	private void resetScreenUsuario() {
+		new Usuario() {
+
+			private static final long serialVersionUID = 2045255415966887190L;
+
+		}.copyProperties(entityUsuario);
+	}
+
 	@FXML
 	public void pesquisaUsuarioLogin() {
 
@@ -438,7 +446,7 @@ public class CadastroController implements BaseController {
 				usuarioBusiness.delete(entityUsuario.getId());
 			}
 		} else {
-			resetScreen();
+			resetScreenUsuario();
 		}
 	}
 
