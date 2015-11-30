@@ -27,6 +27,7 @@ import com.sigamfe.model.Usuario;
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.model.enums.IndicadorUnidade;
+import com.sigamfe.model.enums.PermissaoUsuario;
 import com.sigamfe.model.enums.converter.javafx.FxEnumConverter;
 import com.sigamfe.util.FilteredChangeListener;
 import com.sigamfe.util.MaskValidator;
@@ -408,7 +409,7 @@ public class CadastroController implements BaseController {
 	private TextField textUsuarioLogin;
 
 	@FXML
-	private ComboBox comboUsuarioPermissao;
+	private ComboBox<PermissaoUsuario> comboUsuarioPermissao;
 
 	@FXML
 	private TextField textUsuarioSenha;
