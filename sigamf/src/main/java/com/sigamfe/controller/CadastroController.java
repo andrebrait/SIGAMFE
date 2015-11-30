@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 
 import com.sigamfe.business.ClientePFBusiness;
 import com.sigamfe.business.ClientePJBusiness;
-import com.sigamfe.configuration.constants.Labels;
 import com.sigamfe.business.UsuarioBusiness;
+import com.sigamfe.configuration.constants.Labels;
 import com.sigamfe.configuration.constants.Messages;
 import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.controller.base.BaseController;
@@ -33,7 +33,6 @@ import com.sigamfe.util.MaskValidator;
 import com.sigamfe.util.TelefoneUtils;
 import com.sigamfe.util.TextFieldUtils;
 
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -151,7 +150,7 @@ public class CadastroController implements BaseController {
 		// Inicializando o combo de unidade de materiais
 		comboMaterialUnidade.getItems().addAll(IndicadorUnidade.values());
 		comboMaterialUnidade.setConverter(new FxEnumConverter<>(IndicadorUnidade.class));
-		comboMaterialUnidade.valueProperty().bindBidirectional(new SimpleObjectProperty<>(entityMaterial, "unidade"));
+		comboMaterialUnidade.valueProperty().bindBidirectional(retrieveProperty(entityMaterial, "unidade"));
 
 		tipoPessoa.selectedToggleProperty().addListener((obs, oldValue, newValue) -> {
 			boolean pf = newValue.equals(radioClientePessoaFisica);
@@ -418,11 +417,7 @@ public class CadastroController implements BaseController {
 	private UsuarioBusiness usuarioBusiness;
 
 	private void resetScreenUsuario() {
-		new Usuario() {
-
-			private static final long serialVersionUID = 2045255415966887190L;
-
-		}.copyProperties(entityUsuario);
+		new Usuario().copyProperties(entityUsuario);
 	}
 
 	@FXML
