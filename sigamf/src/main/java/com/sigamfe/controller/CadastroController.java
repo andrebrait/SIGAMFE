@@ -408,6 +408,9 @@ public class CadastroController implements BaseController {
 	private TextField textUsuarioLogin;
 
 	@FXML
+	private ComboBox comboUsuarioPermissao;
+
+	@FXML
 	private TextField textUsuarioSenha;
 
 	@FXML
