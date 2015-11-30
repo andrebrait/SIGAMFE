@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import com.sigamfe.business.ClientePFBusiness;
 import com.sigamfe.business.ClientePJBusiness;
 import com.sigamfe.configuration.constants.Labels;
+import com.sigamfe.business.UsuarioBusiness;
 import com.sigamfe.configuration.constants.Messages;
 import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.controller.base.BaseController;
@@ -404,32 +405,58 @@ public class CadastroController implements BaseController {
 	@FXML
 	private TextField textUsuarioCpf;
 
+	@FXML
 	private TextField textUsuarioLogin;
 
+	@FXML
 	private TextField textUsuarioSenha;
 
+	@FXML
 	private TextField textUsuarioTelefone;
 
+	@Autowired
+	private UsuarioBusiness usuarioBusiness;
+
+	private void resetScreenUsuario() {
+		new Usuario() {
+
+			private static final long serialVersionUID = 2045255415966887190L;
+
+		}.copyProperties(entityUsuario);
+	}
+
+	@FXML
 	public void pesquisaUsuarioLogin() {
 
 	}
 
+	@FXML
 	public void pesquisaUsuarioCPF() {
 
 	}
 
+	@FXML
 	public void pesquisaUsuarioTelefone() {
 
 	}
 
+	@FXML
 	public void pesquisaUsuarioPermissao() {
 
 	}
 
+	@FXML
 	public void excluirUsuario() {
-
+		if (entityUsuario.getId() != null) {
+			if (showConfirmation("Excluir Usuário", Messages.CONFIRM_EXCLUSAO)) {
+				usuarioBusiness.delete(entityUsuario.getId());
+			}
+		} else {
+			resetScreenUsuario();
+		}
 	}
 
+	@FXML
 	public void salvaUsuario() {
 		if (entityUsuario == null) {
 			entityUsuario = new Usuario();
