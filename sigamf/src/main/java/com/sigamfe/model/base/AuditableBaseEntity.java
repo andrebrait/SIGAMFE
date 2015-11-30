@@ -7,7 +7,6 @@ import javax.persistence.Convert;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -15,6 +14,7 @@ import com.sigamfe.model.Usuario;
 import com.sigamfe.model.converter.LocalDateTimeConverter;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
@@ -26,11 +26,12 @@ import lombok.ToString;
  */
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @ToString(callSuper = false, of = { "dataAtualizacao", "dataCriacao" })
 @MappedSuperclass
-public abstract class AuditableBaseEntity<ID extends Serializable> implements BaseEntity<ID> {
+public abstract class AuditableBaseEntity<ID extends Serializable> extends BaseEntity<ID> {
 
-	private static final long serialVersionUID = -5479406946881675009L;
+	private static final long serialVersionUID = -1L;
 
 	@NotNull
 	@LastModifiedDate

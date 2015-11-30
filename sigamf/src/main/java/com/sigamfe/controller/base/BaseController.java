@@ -7,10 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.sigamfe.model.base.BaseEntity;
 
-import javafx.beans.property.adapter.JavaBeanObjectProperty;
-import javafx.beans.property.adapter.JavaBeanObjectPropertyBuilder;
-import javafx.beans.property.adapter.JavaBeanStringProperty;
-import javafx.beans.property.adapter.JavaBeanStringPropertyBuilder;
+import javafx.beans.property.Property;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -40,23 +37,6 @@ public interface BaseController extends Serializable {
 	}
 
 	/**
-	 * Generate string property.
-	 *
-	 * @param bean
-	 *            the bean
-	 * @param name
-	 *            the name
-	 * @return the property
-	 */
-	default JavaBeanStringProperty generateStringProperty(Object bean, String name) {
-		try {
-			return new JavaBeanStringPropertyBuilder().bean(bean).name(name).build();
-		} catch (NoSuchMethodException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	/**
 	 * Generate object property.
 	 *
 	 * @param <T>
@@ -67,12 +47,11 @@ public interface BaseController extends Serializable {
 	 *            the name
 	 * @return the property
 	 */
-	default JavaBeanObjectProperty<?> generateObjectProperty(Object bean, String name) {
-		try {
-			return new JavaBeanObjectPropertyBuilder<Object>().bean(bean).name(name).build();
-		} catch (NoSuchMethodException e) {
-			throw new RuntimeException(e);
+	default <T> Property<T> retrieveProperty(Object bean, String name) {
+		if (bean instanceof BaseEntity<?>) {
+			return ((BaseEntity<?>) bean).getPropertyByName(name);
 		}
+		return null;
 	}
 
 	default String getOptionalText(String text) {

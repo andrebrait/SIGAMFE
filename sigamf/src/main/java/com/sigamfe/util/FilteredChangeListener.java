@@ -1,6 +1,5 @@
 package com.sigamfe.util;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
@@ -23,11 +22,11 @@ public class FilteredChangeListener implements ChangeListener<String> {
 
 	@Override
 	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-		Platform.runLater(() -> {
-			textField.setText(filter.getFiltered(newValue, oldValue));
-			textField.selectEnd();
-			textField.deselect();
-		});
+		textField.textProperty().removeListener(this);
+		textField.textProperty().set(filter.getFiltered(newValue, oldValue));
+		textField.selectEnd();
+		textField.deselect();
+		textField.textProperty().addListener(this);
 	}
 
 }

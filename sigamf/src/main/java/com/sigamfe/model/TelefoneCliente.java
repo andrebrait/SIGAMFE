@@ -27,13 +27,13 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Configurable
+
 @Entity
 @Table(name = "telefonecliente")
 @Data
 @ToString(callSuper = false, exclude = "cliente")
 @EqualsAndHashCode(callSuper = false, of = "id")
-public class TelefoneCliente implements BaseEntity<TelefoneClientePK> {
+public class TelefoneCliente extends BaseEntity<TelefoneClientePK> {
 
 	private static final long serialVersionUID = -6897413676120195334L;
 

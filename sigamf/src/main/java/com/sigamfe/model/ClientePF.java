@@ -8,16 +8,17 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
-import org.springframework.beans.factory.annotation.Configurable;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
  * Classe ClientePF. Representa um cliente pessoa física.
  */
-@Configurable
+
 @Entity
 @Table(name = "clientepf")
 @Data
@@ -40,11 +41,18 @@ public class ClientePF extends Cliente {
 	private String cpf;
 
 	@Size(max = 11)
+	@Setter(AccessLevel.NONE)
 	@Column(name = "CNH", nullable = true, unique = true, length = 11)
 	private String cnh;
 
 	@Size(max = 10)
+	@Setter(AccessLevel.NONE)
 	@Column(name = "RG", nullable = true, unique = true, length = 10)
 	private String rg;
+
+	@Override
+	public void setCnhValue(String cnh) {
+		this.cnh = cnh;
+	}
 
 }

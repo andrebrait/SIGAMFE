@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.sigamfe.business.ClientePFBusiness;
 import com.sigamfe.business.ClientePJBusiness;
+import com.sigamfe.configuration.constants.Labels;
 import com.sigamfe.configuration.constants.Messages;
 import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.controller.base.BaseController;
@@ -155,10 +156,15 @@ public class CadastroController implements BaseController {
 			boolean pf = newValue.equals(radioClientePessoaFisica);
 			textClienteRg.setDisable(!pf);
 			textClienteCnh.setDisable(!pf);
+			// O Espaço no final serve para forçar o refresh do campo
+			textClienteCpf.setText(textClienteCpf.getText() + " ");
 			buttonPesquisaClienteRg.setDisable(!pf);
 			if (!pf) {
 				textClienteRg.clear();
 				textClienteCnh.clear();
+				labelClienteTipoPessoa.setText(Labels.CNPJ + Labels.OBRIGATORIO);
+			} else {
+				labelClienteTipoPessoa.setText(Labels.CNPJ + Labels.OBRIGATORIO);
 			}
 		});
 
@@ -178,21 +184,21 @@ public class CadastroController implements BaseController {
 				.addListener(new FilteredChangeListener(textClienteCpf,
 						(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue,
 								isPessoaFisica() ? MaskValidator.CPF_VALIDATOR : MaskValidator.CNPJ_VALIDATOR)));
-		textClienteCpf.textProperty().bindBidirectional(generateStringProperty(entityCliente, "cp"));
+		textClienteCpf.textProperty().bindBidirectional(retrieveProperty(entityCliente, "cp"));
 
 		textClienteCep.textProperty().addListener(new FilteredChangeListener(textClienteCep,
 				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, MaskValidator.CEP_VALIDATOR)));
-		textClienteCep.textProperty().bindBidirectional(generateStringProperty(endereco, "cep"));
+		textClienteCep.textProperty().bindBidirectional(retrieveProperty(endereco, "cep"));
 
 		textClienteRg.textProperty()
 				.addListener(new FilteredChangeListener(textClienteRg,
 						(newValue, oldValue) -> MaskValidator.getVersionByInsertedChar(newValue, oldValue,
 								MaskValidator.RG_VALIDATOR_1_LETRA, MaskValidator.RG_VALIDATOR_2_LETRAS)));
-		textClienteRg.textProperty().bindBidirectional(generateStringProperty(entityCliente, "rg"));
+		textClienteRg.textProperty().bindBidirectional(retrieveProperty(entityCliente, "rg"));
 
 		textClienteCnh.textProperty().addListener(new FilteredChangeListener(textClienteCnh,
 				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, MaskValidator.CNH_VALIDATOR)));
-		textClienteCnh.textProperty().bindBidirectional(generateStringProperty(entityCliente, "cnh"));
+		textClienteCnh.textProperty().bindBidirectional(retrieveProperty(entityCliente, "cnh"));
 
 		textMaterialAluguel.textProperty().addListener(new FilteredChangeListener(textMaterialAluguel,
 				(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2)));
@@ -206,23 +212,23 @@ public class CadastroController implements BaseController {
 
 		textClienteNome.textProperty().addListener(new FilteredChangeListener(textClienteNome,
 				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 100)));
-		textClienteNome.textProperty().bindBidirectional(generateStringProperty(entityCliente, "nome"));
+		textClienteNome.textProperty().bindBidirectional(retrieveProperty(entityCliente, "nome"));
 		textClienteCidade.textProperty().addListener(new FilteredChangeListener(textClienteCidade,
 				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 200)));
-		textClienteCidade.textProperty().bindBidirectional(generateStringProperty(endereco, "cidade"));
+		textClienteCidade.textProperty().bindBidirectional(retrieveProperty(endereco, "cidade"));
 		textClienteUf.textProperty().addListener(new FilteredChangeListener(textClienteUf,
 				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, MaskValidator.UF_VALIDATOR)));
-		textClienteUf.textProperty().bindBidirectional(generateStringProperty(endereco, "uf"));
+		textClienteUf.textProperty().bindBidirectional(retrieveProperty(endereco, "uf"));
 		textClienteNumero.textProperty().addListener(new FilteredChangeListener(textClienteNumero,
 				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 30)));
-		textClienteNumero.textProperty().bindBidirectional(generateStringProperty(endereco, "numero"));
+		textClienteNumero.textProperty().bindBidirectional(retrieveProperty(endereco, "numero"));
 		textClienteEndereco.textProperty().addListener(new FilteredChangeListener(textClienteEndereco,
 				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 200)));
-		textClienteEndereco.textProperty().bindBidirectional(generateStringProperty(endereco, "logradouro"));
+		textClienteEndereco.textProperty().bindBidirectional(retrieveProperty(endereco, "logradouro"));
 
 		textClienteEmail.textProperty().addListener(new FilteredChangeListener(textClienteEmail,
 				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 200)));
-		textClienteEmail.textProperty().bindBidirectional(generateStringProperty(entityCliente, "email"));
+		textClienteEmail.textProperty().bindBidirectional(retrieveProperty(entityCliente, "email"));
 
 	}
 
@@ -439,23 +445,22 @@ public class CadastroController implements BaseController {
 		BaseEntity<?> target = null;
 		if (entity instanceof Cliente) {
 			Cliente cliente = (Cliente) entity;
-			// textClienteNome.setText(entityCliente.getNome());
-			// textClienteEmail.setText(entityCliente.getEmail());
+			textClienteNome.setText(entityCliente.getNome());
+			textClienteEmail.setText(entityCliente.getEmail());
 			bloqueadoGroup.selectToggle(IndicadorSN.SIM.equals(entityCliente.getBloqueado()) ? radioClienteBloqueadoSim
 					: radioClienteBloqueadoNao);
 			tipoPessoa
 					.selectToggle(cliente instanceof ClientePF ? radioClientePessoaFisica : radioClientePessoaJuridica);
-			// if (entity instanceof ClientePF) {
-			// ClientePF pf = (ClientePF) entityCliente;
-			// tipoPessoa.selectToggle(radioClientePessoaFisica);
-			// textClienteCpf.setText(pf.getCpf());
-			// textClienteCnh.setText(String.valueOf(pf.getCnh()));
-			// textClienteRg.setText(pf.getRg());
-			// } else {
-			// tipoPessoa.selectToggle(radioClientePessoaJuridica);
-			// textClienteCpf.setText(((ClientePJ)
-			// entityCliente).getCnpj());
-			// }
+			if (entity instanceof ClientePF) {
+				ClientePF pf = (ClientePF) entityCliente;
+				tipoPessoa.selectToggle(radioClientePessoaFisica);
+				textClienteCpf.setText(pf.getCpf());
+				textClienteCnh.setText(String.valueOf(pf.getCnh()));
+				textClienteRg.setText(pf.getRg());
+			} else {
+				tipoPessoa.selectToggle(radioClientePessoaJuridica);
+				textClienteCpf.setText(((ClientePJ) entityCliente).getCnpj());
+			}
 			radioClientePessoaFisica.setDisable(true);
 			radioClientePessoaJuridica.setDisable(true);
 			textClienteCpf.setDisable(true);

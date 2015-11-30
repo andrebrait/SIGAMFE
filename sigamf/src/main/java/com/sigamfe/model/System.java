@@ -16,12 +16,12 @@ import com.sigamfe.model.converter.LocalDateTimeConverter;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Configurable
+
 @Entity
 @Data
 @Table(name = "system")
 @EqualsAndHashCode(callSuper = false, of = "id")
-public class System implements BaseEntity<Byte> {
+public class System extends BaseEntity<Byte> {
 
 	private static final long serialVersionUID = 7797452984436492733L;
 

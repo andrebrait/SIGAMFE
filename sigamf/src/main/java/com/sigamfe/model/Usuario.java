@@ -35,7 +35,7 @@ import lombok.ToString;
  * Classe Usuario. Representa um usuário do sistema.
  */
 
-@Configurable
+
 @Entity
 @Table(name = "usuario")
 @Data

@@ -17,7 +17,7 @@ import lombok.ToString;
 /**
  * Classe ClientePJ. Representa um cliente pessoa jurídica.
  */
-@Configurable
+
 @Entity
 @Table(name = "clientepj")
 @Data

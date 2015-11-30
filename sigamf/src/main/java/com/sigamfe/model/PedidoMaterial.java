@@ -26,7 +26,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@Configurable
+
 @Entity
 @Table(name = "pedidomaterial")
 @Data
