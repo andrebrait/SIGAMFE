@@ -15,18 +15,18 @@ import javax.persistence.Version;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Configurable;
-
 import com.sigamfe.model.PedidoMaterial.PedidoMaterialPK;
 import com.sigamfe.model.base.AuditableBaseEntity;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-
+@Setter(AccessLevel.NONE)
 @Entity
 @Table(name = "pedidomaterial")
 @Data
@@ -107,6 +107,7 @@ public class PedidoMaterial extends AuditableBaseEntity<PedidoMaterialPK> {
 	 *            o novo pedido
 	 */
 	public void setPedido(Pedido pedido) {
+		onFieldChange("pedido", pedido);
 		this.pedido = pedido;
 		if (this.id == null) {
 			this.id = new PedidoMaterialPK();
@@ -121,11 +122,51 @@ public class PedidoMaterial extends AuditableBaseEntity<PedidoMaterialPK> {
 	 *            o novo material
 	 */
 	public void setMaterial(Material material) {
+		onFieldChange("material", material);
 		this.material = material;
 		if (this.id == null) {
 			this.id = new PedidoMaterialPK();
 		}
 		this.getId().setIdMaterial(material == null ? null : material.getId());
+	}
+
+	@Override
+	public void setId(PedidoMaterialPK id) {
+		onFieldChange("id", id);
+		this.id = id;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		onFieldChange("quantidade", quantidade);
+		this.quantidade = quantidade;
+	}
+
+	public void setQuantidadeReposicao(Integer quantidadeReposicao) {
+		onFieldChange("quantidadeReposicao", quantidadeReposicao);
+		this.quantidadeReposicao = quantidadeReposicao;
+	}
+
+	public void setQuantidadeDevolvida(Integer quantidadeDevolvida) {
+		onFieldChange("quantidadeDevolvida", quantidadeDevolvida);
+		this.quantidadeDevolvida = quantidadeDevolvida;
+	}
+
+	@Override
+	public void setUsuarioCriacao(Usuario usuarioCriacao) {
+		onFieldChange("usuarioCriacao", usuarioCriacao);
+		this.usuarioCriacao = usuarioCriacao;
+	}
+
+	@Override
+	public void setUsuarioAtualizacao(Usuario usuarioAtualizacao) {
+		onFieldChange("usuarioAtualizacao", usuarioAtualizacao);
+		this.usuarioAtualizacao = usuarioAtualizacao;
+	}
+
+	@Override
+	public void setVersion(Long version) {
+		onFieldChange("version", version);
+		this.version = version;
 	}
 
 }

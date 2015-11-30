@@ -16,7 +16,6 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.sigamfe.model.base.BaseEntity;
@@ -24,11 +23,13 @@ import com.sigamfe.model.converter.LocalDateTimeConverter;
 import com.sigamfe.model.enums.TipoMovimentoEstoque;
 import com.sigamfe.model.enums.converter.TipoMovimentoEstoqueConverter;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import lombok.ToString;
 
-
+@Setter(AccessLevel.NONE)
 @Entity
 @Table(name = "movimentoestoque")
 @Data
@@ -78,5 +79,47 @@ public class MovimentoEstoque extends BaseEntity<Long> {
 	@Version
 	@Column(name = "VERSION")
 	private Long version;
+
+	@Override
+	public void setId(Long id) {
+		onFieldChange("id", id);
+		this.id = id;
+	}
+
+	public void setMaterial(Material material) {
+		onFieldChange("id", id);
+		this.material = material;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		onFieldChange("quantidade", quantidade);
+		this.quantidade = quantidade;
+	}
+
+	public void setQuantidadeEstoque(Integer quantidadeEstoque) {
+		onFieldChange("quantidadeEstoque", quantidadeEstoque);
+		this.quantidadeEstoque = quantidadeEstoque;
+	}
+
+	public void setTipo(TipoMovimentoEstoque tipo) {
+		onFieldChange("tipo", tipo);
+		this.tipo = tipo;
+	}
+
+	public void setData(LocalDateTime data) {
+		onFieldChange("data", data);
+		this.data = data;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		onFieldChange("usuario", usuario);
+		this.usuario = usuario;
+	}
+
+	@Override
+	public void setVersion(Long version) {
+		onFieldChange("version", version);
+		this.version = version;
+	}
 
 }

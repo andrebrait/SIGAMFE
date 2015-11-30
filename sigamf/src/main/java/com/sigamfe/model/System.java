@@ -8,15 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.beans.factory.annotation.Configurable;
-
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.model.converter.LocalDateTimeConverter;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 
-
+@Setter(AccessLevel.NONE)
 @Entity
 @Data
 @Table(name = "system")
@@ -41,6 +41,17 @@ public class System extends BaseEntity<Byte> {
 	@Override
 	public void setVersion(Long version) {
 
+	}
+
+	@Override
+	public void setId(Byte id) {
+		onFieldChange("id", id);
+		this.id = id;
+	}
+
+	public void setUltimaVezAtualizouPedido(LocalDateTime ultimaVezAtualizouPedido) {
+		onFieldChange("ultimaVezAtualizouPedido", ultimaVezAtualizouPedido);
+		this.ultimaVezAtualizouPedido = ultimaVezAtualizouPedido;
 	}
 
 }

@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.sigamfe.model.base.BaseEntity;
@@ -21,11 +20,13 @@ import com.sigamfe.model.converter.LocalDateTimeConverter;
 import com.sigamfe.model.enums.EstadoPedido;
 import com.sigamfe.model.enums.converter.EstadoPedidoConverter;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import lombok.ToString;
 
-
+@Setter(AccessLevel.NONE)
 @Entity
 @Table(name = "pedidoestado")
 @Data
@@ -69,6 +70,32 @@ public class PedidoEstado extends BaseEntity<Integer> {
 	@Override
 	public void setVersion(Long version) {
 
+	}
+
+	@Override
+	public void setId(Integer id) {
+		onFieldChange("id", id);
+		this.id = id;
+	}
+
+	public void setPedido(Pedido pedido) {
+		onFieldChange("pedido", pedido);
+		this.pedido = pedido;
+	}
+
+	public void setEstado(EstadoPedido estado) {
+		onFieldChange("estado", estado);
+		this.estado = estado;
+	}
+
+	public void setDataMudanca(LocalDateTime dataMudanca) {
+		onFieldChange("dataMudanca", dataMudanca);
+		this.dataMudanca = dataMudanca;
+	}
+
+	public void setUsuarioMudanca(Usuario usuarioMudanca) {
+		onFieldChange("usuarioMudanca", usuarioMudanca);
+		this.usuarioMudanca = usuarioMudanca;
 	}
 
 }

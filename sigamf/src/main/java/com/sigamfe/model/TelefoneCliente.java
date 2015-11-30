@@ -15,19 +15,19 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.beans.factory.annotation.Configurable;
-
 import com.sigamfe.model.TelefoneCliente.TelefoneClientePK;
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.util.TelefoneUtils;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-
+@Setter(AccessLevel.NONE)
 @Entity
 @Table(name = "telefonecliente")
 @Data
@@ -84,6 +84,7 @@ public class TelefoneCliente extends BaseEntity<TelefoneClientePK> {
 	 *            o novo cliente.
 	 */
 	public void setCliente(Cliente cliente) {
+		onFieldChange("cliente", cliente);
 		this.cliente = cliente;
 		if (this.id == null) {
 			this.id = new TelefoneClientePK();
@@ -95,6 +96,7 @@ public class TelefoneCliente extends BaseEntity<TelefoneClientePK> {
 		if (this.getId() == null) {
 			this.id = new TelefoneClientePK();
 		}
+		onFieldChange("telefone", telefone);
 		this.telefone = telefone;
 		this.getId().setTelefone(TelefoneUtils.getTelefoneAsLong(telefone));
 	}
@@ -105,4 +107,22 @@ public class TelefoneCliente extends BaseEntity<TelefoneClientePK> {
 		}
 		return TelefoneUtils.getTelefoneAsString(this.getId().getTelefone());
 	}
+
+	@Override
+	public void setId(TelefoneClientePK id) {
+		onFieldChange("id", id);
+		this.id = id;
+	}
+
+	public void setObservacoes(String observacoes) {
+		onFieldChange("id", id);
+		this.observacoes = observacoes;
+	}
+
+	@Override
+	public void setVersion(Long version) {
+		onFieldChange("id", id);
+		this.version = version;
+	}
+
 }

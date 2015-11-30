@@ -10,15 +10,16 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sigamfe.model.base.BaseEntity;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import lombok.ToString;
 
-
+@Setter(AccessLevel.NONE)
 @Entity
 @Table(name = "materialimagem")
 @Data
@@ -52,8 +53,26 @@ public class ImagemMaterial extends BaseEntity<Integer> {
 	 *            O novo material.
 	 */
 	public void setMaterial(Material material) {
+		onFieldChange("material", material);
 		this.material = material;
 		this.id = material.getId();
+	}
+
+	@Override
+	public void setId(Integer id) {
+		onFieldChange("id", id);
+		this.id = id;
+	}
+
+	public void setImagem(Byte[] imagem) {
+		onFieldChange("imagem", imagem);
+		this.imagem = imagem;
+	}
+
+	@Override
+	public void setVersion(Long version) {
+		onFieldChange("version", version);
+		this.version = version;
 	}
 
 }

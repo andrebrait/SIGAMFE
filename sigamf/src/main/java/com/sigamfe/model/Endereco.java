@@ -13,15 +13,16 @@ import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sigamfe.model.base.BaseEntity;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import lombok.ToString;
 
-
+@Setter(AccessLevel.NONE)
 @Entity
 @Table(name = "endereco")
 @Data
@@ -73,6 +74,47 @@ public class Endereco extends BaseEntity<Long> {
 	@Override
 	public void setVersion(Long version) {
 
+	}
+
+	@Override
+	public void setId(Long id) {
+		onFieldChange("id", id);
+		this.id = id;
+	}
+
+	public void setLogradouro(String logradouro) {
+		onFieldChange("logradouro", logradouro);
+		this.logradouro = logradouro;
+	}
+
+	public void setNumero(String numero) {
+		onFieldChange("numero", numero);
+		this.numero = numero;
+	}
+
+	public void setCep(String cep) {
+		onFieldChange("cep", cep);
+		this.cep = cep;
+	}
+
+	public void setCidade(String cidade) {
+		onFieldChange("cidade", cidade);
+		this.cidade = cidade;
+	}
+
+	public void setUf(String uf) {
+		onFieldChange("uf", uf);
+		this.uf = uf;
+	}
+
+	public void setCliente(Cliente cliente) {
+		onFieldChange("cliente", cliente);
+		this.cliente = cliente;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		onFieldChange("pedidos", pedidos);
+		this.pedidos = pedidos;
 	}
 
 }

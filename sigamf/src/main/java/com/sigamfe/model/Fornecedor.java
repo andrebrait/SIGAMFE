@@ -18,19 +18,20 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sigamfe.model.base.AuditableBaseEntity;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
  * Classe Fornecedor. Representa um fornecedor de materiais.
  */
 
-
+@Setter(AccessLevel.NONE)
 @Entity
 @Table(name = "fornecedor")
 @Data
@@ -72,5 +73,44 @@ public class Fornecedor extends AuditableBaseEntity<Integer> {
 
 	@OneToMany(mappedBy = "fornecedor")
 	private List<TelefoneFornecedor> telefones;
+
+	@Override
+	public void setId(Integer id) {
+		onFieldChange("id", id);
+		this.id = id;
+	}
+
+	public void setDescricao(String descricao) {
+		onFieldChange("id", id);
+		this.descricao = descricao;
+	}
+
+	@Override
+	public void setUsuarioCriacao(Usuario usuarioCriacao) {
+		onFieldChange("usuarioCriacao", usuarioCriacao);
+		this.usuarioCriacao = usuarioCriacao;
+	}
+
+	@Override
+	public void setUsuarioAtualizacao(Usuario usuarioAtualizacao) {
+		onFieldChange("usuarioAtualizacao", usuarioAtualizacao);
+		this.usuarioAtualizacao = usuarioAtualizacao;
+	}
+
+	@Override
+	public void setVersion(Long version) {
+		onFieldChange("version", version);
+		this.version = version;
+	}
+
+	public void setFornecedorMateriais(List<FornecedorMaterial> fornecedorMateriais) {
+		onFieldChange("fornecedorMateriais", fornecedorMateriais);
+		this.fornecedorMateriais = fornecedorMateriais;
+	}
+
+	public void setTelefones(List<TelefoneFornecedor> telefones) {
+		onFieldChange("telefones", telefones);
+		this.telefones = telefones;
+	}
 
 }

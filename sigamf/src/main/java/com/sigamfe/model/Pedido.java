@@ -21,8 +21,6 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.beans.factory.annotation.Configurable;
-
 import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.converter.LocalDateTimeConverter;
 import com.sigamfe.model.enums.EntregaPedido;
@@ -32,11 +30,13 @@ import com.sigamfe.model.enums.converter.EntregaPedidoConverter;
 import com.sigamfe.model.enums.converter.FormaPagamentoConverter;
 import com.sigamfe.model.enums.converter.IndicadorSNConverter;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import lombok.ToString;
 
-
+@Setter(AccessLevel.NONE)
 @Entity
 @Table(name = "pedido")
 @Data
@@ -133,5 +133,104 @@ public class Pedido extends AuditableBaseEntity<Integer> {
 
 	@OneToMany(mappedBy = "pedido")
 	private List<PedidoPagamento> pagamentos;
+
+	@Override
+	public void setId(Integer id) {
+		onFieldChange("id", id);
+		this.id = id;
+	}
+
+	public void setCliente(Cliente cliente) {
+		onFieldChange("cliente", cliente);
+		this.cliente = cliente;
+	}
+
+	public void setFormaPagamento(FormaPagamento formaPagamento) {
+		onFieldChange("formaPagamento", formaPagamento);
+		this.formaPagamento = formaPagamento;
+	}
+
+	public void setPrazo(IndicadorSN prazo) {
+		onFieldChange("prazo", prazo);
+		this.prazo = prazo;
+	}
+
+	public void setDesconto(BigDecimal desconto) {
+		onFieldChange("desconto", desconto);
+		this.desconto = desconto;
+	}
+
+	public void setTotalBruto(BigDecimal totalBruto) {
+		onFieldChange("totalBruto", totalBruto);
+		this.totalBruto = totalBruto;
+	}
+
+	public void setTurnoEntrega(EntregaPedido turnoEntrega) {
+		onFieldChange("turnoEntrega", turnoEntrega);
+		this.turnoEntrega = turnoEntrega;
+	}
+
+	public void setEnderecoEntrega(Endereco enderecoEntrega) {
+		onFieldChange("enderecoEntrega", enderecoEntrega);
+		this.enderecoEntrega = enderecoEntrega;
+	}
+
+	public void setTaxaEntrega(BigDecimal taxaEntrega) {
+		onFieldChange("taxaEntrega", taxaEntrega);
+		this.taxaEntrega = taxaEntrega;
+	}
+
+	public void setTotal(BigDecimal total) {
+		onFieldChange("total", total);
+		this.total = total;
+	}
+
+	public void setDataEntrega(LocalDateTime dataEntrega) {
+		onFieldChange("dataEntrega", dataEntrega);
+		this.dataEntrega = dataEntrega;
+	}
+
+	public void setDataDevolucao(LocalDateTime dataDevolucao) {
+		onFieldChange("dataDevolucao", dataDevolucao);
+		this.dataDevolucao = dataDevolucao;
+	}
+
+	public void setObservacao(String observacao) {
+		onFieldChange("observacao", observacao);
+		this.observacao = observacao;
+	}
+
+	@Override
+	public void setUsuarioCriacao(Usuario usuarioCriacao) {
+		onFieldChange("usuarioCriacao", usuarioCriacao);
+		this.usuarioCriacao = usuarioCriacao;
+	}
+
+	@Override
+	public void setUsuarioAtualizacao(Usuario usuarioAtualizacao) {
+		onFieldChange("usuarioAtualizacao", usuarioAtualizacao);
+		this.usuarioAtualizacao = usuarioAtualizacao;
+	}
+
+	@Override
+	public void setVersion(Long version) {
+		onFieldChange("version", version);
+		this.version = version;
+	}
+
+	public void setMateriaisPedido(List<PedidoMaterial> materiaisPedido) {
+		onFieldChange("materiaisPedido", materiaisPedido);
+		this.materiaisPedido = materiaisPedido;
+	}
+
+	public void setEstados(List<PedidoEstado> estados) {
+		onFieldChange("estados", estados);
+		this.estados = estados;
+	}
+
+	public void setPagamentos(List<PedidoPagamento> pagamentos) {
+		onFieldChange("pagamentos", pagamentos);
+		this.pagamentos = pagamentos;
+	}
 
 }

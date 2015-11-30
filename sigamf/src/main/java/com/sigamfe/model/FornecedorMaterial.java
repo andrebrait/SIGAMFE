@@ -15,20 +15,20 @@ import javax.persistence.Version;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Configurable;
-
 import com.sigamfe.model.FornecedorMaterial.FornecedorMaterialPK;
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.model.enums.IndicadorUnidade;
 import com.sigamfe.model.enums.converter.IndicadorUnidadeConverter;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-
+@Setter(AccessLevel.NONE)
 @Entity
 @Table(name = "fornecedormaterial")
 @Data
@@ -93,6 +93,7 @@ public class FornecedorMaterial extends BaseEntity<FornecedorMaterialPK> {
 	 *            o novo fornecedor
 	 */
 	public void setFornecedor(Fornecedor fornecedor) {
+		onFieldChange("fornecedor", fornecedor);
 		this.fornecedor = fornecedor;
 		if (this.id == null) {
 			this.id = new FornecedorMaterialPK();
@@ -107,11 +108,34 @@ public class FornecedorMaterial extends BaseEntity<FornecedorMaterialPK> {
 	 *            o novo material
 	 */
 	public void setMaterial(Material material) {
+		onFieldChange("material", material);
 		this.material = material;
 		if (this.id == null) {
 			this.id = new FornecedorMaterialPK();
 		}
 		this.getId().setIdMaterial(material == null ? null : material.getId());
+	}
+
+	@Override
+	public void setId(FornecedorMaterialPK id) {
+		onFieldChange("id", id);
+		this.id = id;
+	}
+
+	public void setPreco(BigDecimal preco) {
+		onFieldChange("preco", preco);
+		this.preco = preco;
+	}
+
+	public void setUnidade(IndicadorUnidade unidade) {
+		onFieldChange("unidade", unidade);
+		this.unidade = unidade;
+	}
+
+	@Override
+	public void setVersion(Long version) {
+		onFieldChange("version", version);
+		this.version = version;
 	}
 
 }

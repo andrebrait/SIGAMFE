@@ -19,7 +19,6 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.br.CPF;
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
-import org.springframework.beans.factory.annotation.Configurable;
 
 import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.enums.IndicadorSN;
@@ -27,15 +26,17 @@ import com.sigamfe.model.enums.PermissaoUsuario;
 import com.sigamfe.model.enums.converter.IndicadorSNConverter;
 import com.sigamfe.model.enums.converter.PermissaoUsuarioConverter;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import lombok.ToString;
 
 /**
  * Classe Usuario. Representa um usuário do sistema.
  */
 
-
+@Setter(AccessLevel.NONE)
 @Entity
 @Table(name = "usuario")
 @Data
@@ -101,6 +102,60 @@ public class Usuario extends AuditableBaseEntity<Integer> {
 
 	public void setSenhaEncriptando(PooledPBEStringEncryptor encryptor, String senha) {
 		setSenha(encryptor.encrypt(senha));
+	}
+
+	@Override
+	public void setId(Integer id) {
+		onFieldChange("id", id);
+		this.id = id;
+	}
+
+	public void setLogin(String login) {
+		onFieldChange("login", login);
+		this.login = login;
+	}
+
+	public void setSenha(String senha) {
+		onFieldChange("senha", senha);
+		this.senha = senha;
+	}
+
+	public void setPermissao(PermissaoUsuario permissao) {
+		onFieldChange("permissao", permissao);
+		this.permissao = permissao;
+	}
+
+	public void setCpf(String cpf) {
+		onFieldChange("cpf", cpf);
+		this.cpf = cpf;
+	}
+
+	public void setTelefone(Long telefone) {
+		onFieldChange("telefone", telefone);
+		this.telefone = telefone;
+	}
+
+	public void setAtivo(IndicadorSN ativo) {
+		onFieldChange("ativo", ativo);
+		this.ativo = ativo;
+	}
+
+	@Override
+	public void setUsuarioCriacao(Usuario usuarioCriacao) {
+		onFieldChange("usuarioCriacao", usuarioCriacao);
+		this.usuarioCriacao = usuarioCriacao;
+	}
+
+	@Override
+	public void setUsuarioAtualizacao(Usuario usuarioAtualizacao) {
+		onFieldChange("usuarioAtualizacao", usuarioAtualizacao);
+		this.usuarioAtualizacao = usuarioAtualizacao;
+	}
+
+	@Override
+	public void setVersion(Long version) {
+		onFieldChange("version", version);
+		this.version = version;
 	}
 
 }
