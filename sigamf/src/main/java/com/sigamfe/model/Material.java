@@ -21,17 +21,17 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.beans.factory.annotation.Configurable;
-
 import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.enums.IndicadorUnidade;
 import com.sigamfe.model.enums.converter.IndicadorUnidadeConverter;
 
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Setter;
 import lombok.ToString;
 
-
+@Setter(AccessLevel.NONE)
 @Entity
 @Table(name = "material")
 @Data
@@ -99,5 +99,74 @@ public class Material extends AuditableBaseEntity<Integer> {
 
 	@OneToOne(mappedBy = "material")
 	private ImagemMaterial imagem;
+
+	@Override
+	public void setId(Integer id) {
+		onFieldChange("id", id);
+		this.id = id;
+	}
+
+	public void setCodigo(Integer codigo) {
+		onFieldChange("codigo", codigo);
+		this.codigo = codigo;
+	}
+
+	public void setDescricao(String descricao) {
+		onFieldChange("descricao", descricao);
+		this.descricao = descricao;
+	}
+
+	public void setValorAluguel(BigDecimal valorAluguel) {
+		onFieldChange("valorAluguel", valorAluguel);
+		this.valorAluguel = valorAluguel;
+	}
+
+	public void setValorReposicao(BigDecimal valorReposicao) {
+		onFieldChange("valorReposicao", valorReposicao);
+		this.valorReposicao = valorReposicao;
+	}
+
+	public void setUnidade(IndicadorUnidade unidade) {
+		onFieldChange("unidade", unidade);
+		this.unidade = unidade;
+	}
+
+	@Override
+	public void setUsuarioCriacao(Usuario usuarioCriacao) {
+		onFieldChange("usuarioCriacao", usuarioCriacao);
+		this.usuarioCriacao = usuarioCriacao;
+	}
+
+	@Override
+	public void setUsuarioAtualizacao(Usuario usuarioAtualizacao) {
+		onFieldChange("usuarioAtualizacao", usuarioAtualizacao);
+		this.usuarioAtualizacao = usuarioAtualizacao;
+	}
+
+	@Override
+	public void setVersion(Long version) {
+		onFieldChange("version", version);
+		this.version = version;
+	}
+
+	public void setPedidosMaterial(List<PedidoMaterial> pedidosMaterial) {
+		onFieldChange("pedidosMaterial", pedidosMaterial);
+		this.pedidosMaterial = pedidosMaterial;
+	}
+
+	public void setFornecedoresMaterial(List<FornecedorMaterial> fornecedoresMaterial) {
+		onFieldChange("fornecedoresMaterial", fornecedoresMaterial);
+		this.fornecedoresMaterial = fornecedoresMaterial;
+	}
+
+	public void setMovimentosEstoque(List<MovimentoEstoque> movimentosEstoque) {
+		onFieldChange("movimentosEstoque", movimentosEstoque);
+		this.movimentosEstoque = movimentosEstoque;
+	}
+
+	public void setImagem(ImagemMaterial imagem) {
+		onFieldChange("imagem", imagem);
+		this.imagem = imagem;
+	}
 
 }

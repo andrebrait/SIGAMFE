@@ -18,19 +18,19 @@ import javax.persistence.Version;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Configurable;
-
 import com.sigamfe.model.PedidoPagamento.PedidoPagamentoPK;
 import com.sigamfe.model.base.AuditableBaseEntity;
 import com.sigamfe.model.converter.LocalDateTimeConverter;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-
+@Setter(AccessLevel.NONE)
 @Entity
 @Table(name = "pedidopagamento")
 @Data
@@ -107,10 +107,51 @@ public class PedidoPagamento extends AuditableBaseEntity<PedidoPagamentoPK> {
 	 *            o novo pedido
 	 */
 	public void setPedido(Pedido pedido) {
+		onFieldChange("pedido", pedido);
 		this.pedido = pedido;
 		if (this.id == null) {
 			this.id = new PedidoPagamentoPK();
 		}
 		this.getId().setIdPedido(pedido == null ? null : pedido.getId());
 	}
+
+	@Override
+	public void setId(PedidoPagamentoPK id) {
+		onFieldChange("id", id);
+		this.id = id;
+	}
+
+	public void setValor(BigDecimal valor) {
+		onFieldChange("valor", valor);
+		this.valor = valor;
+	}
+
+	public void setDataEsperada(LocalDateTime dataEsperada) {
+		onFieldChange("dataEsperada", dataEsperada);
+		this.dataEsperada = dataEsperada;
+	}
+
+	public void setDataPagamento(LocalDateTime dataPagamento) {
+		onFieldChange("dataPagamento", dataPagamento);
+		this.dataPagamento = dataPagamento;
+	}
+
+	@Override
+	public void setUsuarioCriacao(Usuario usuarioCriacao) {
+		onFieldChange("usuarioCriacao", usuarioCriacao);
+		this.usuarioCriacao = usuarioCriacao;
+	}
+
+	@Override
+	public void setUsuarioAtualizacao(Usuario usuarioAtualizacao) {
+		onFieldChange("usuarioAtualizacao", usuarioAtualizacao);
+		this.usuarioAtualizacao = usuarioAtualizacao;
+	}
+
+	@Override
+	public void setVersion(Long version) {
+		onFieldChange("version", version);
+		this.version = version;
+	}
+
 }

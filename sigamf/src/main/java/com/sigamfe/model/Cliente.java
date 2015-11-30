@@ -128,26 +128,6 @@ public abstract class Cliente extends AuditableBaseEntity<Integer> {
 	private String rg;
 
 	/**
-	 * Sets the cnh value.
-	 *
-	 * @param cnh
-	 *            the new cnh value
-	 */
-	public void setCnhValue(String cnh) {
-		this.cnh = cnh;
-	}
-
-	/**
-	 * Sets the rg value.
-	 *
-	 * @param rg
-	 *            the new rg value
-	 */
-	public void setRgValue(String rg) {
-		this.rg = rg;
-	}
-
-	/**
 	 * Seta o CPF se for pessoa física ou CNPJ se for pessoa jurídica.
 	 *
 	 * @param cp
@@ -312,7 +292,7 @@ public abstract class Cliente extends AuditableBaseEntity<Integer> {
 	 */
 	public void setCnh(String cnh) {
 		onFieldChange("cnh", cnh);
-		setCnhValue(cnh);
+		this.cnh = cnh;
 	}
 
 	/**
@@ -323,7 +303,7 @@ public abstract class Cliente extends AuditableBaseEntity<Integer> {
 	 */
 	public void setRg(String rg) {
 		onFieldChange("rg", rg);
-		setRgValue(rg);
+		this.rg = rg;
 	}
 
 }

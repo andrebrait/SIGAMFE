@@ -14,18 +14,18 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.springframework.beans.factory.annotation.Configurable;
-
 import com.sigamfe.model.TelefoneFornecedor.TelefoneFornecedorPK;
 import com.sigamfe.model.base.BaseEntity;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
-
+@Setter(AccessLevel.NONE)
 @Entity
 @Table(name = "telefonefornecedor")
 @Data
@@ -79,11 +79,29 @@ public class TelefoneFornecedor extends BaseEntity<TelefoneFornecedorPK> {
 	 *            o novo fornecedor.
 	 */
 	public void setFornecedor(Fornecedor fornecedor) {
+		onFieldChange("fornecedor", fornecedor);
 		this.fornecedor = fornecedor;
 		if (this.id == null) {
 			this.id = new TelefoneFornecedorPK();
 		}
 		this.getId().setIdFornecedor(fornecedor == null ? null : fornecedor.getId());
+	}
+
+	@Override
+	public void setId(TelefoneFornecedorPK id) {
+		onFieldChange("id", id);
+		this.id = id;
+	}
+
+	public void setObservacoes(String observacoes) {
+		onFieldChange("observacoes", observacoes);
+		this.observacoes = observacoes;
+	}
+
+	@Override
+	public void setVersion(Long version) {
+		onFieldChange("version", version);
+		this.version = version;
 	}
 
 }
