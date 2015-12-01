@@ -1,8 +1,5 @@
 package com.sigamfe.controller;
 
-import java.math.BigDecimal;
-
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Lazy;
@@ -11,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.sigamfe.business.ClientePFBusiness;
 import com.sigamfe.business.ClientePJBusiness;
+import com.sigamfe.business.MaterialBusiness;
 import com.sigamfe.business.UsuarioBusiness;
 import com.sigamfe.configuration.constants.Labels;
 import com.sigamfe.configuration.constants.Messages;
@@ -29,9 +27,9 @@ import com.sigamfe.model.enums.IndicadorUnidade;
 import com.sigamfe.model.enums.PermissaoUsuario;
 import com.sigamfe.model.enums.converter.javafx.FxBigDecimalConverter;
 import com.sigamfe.model.enums.converter.javafx.FxEnumConverter;
+import com.sigamfe.model.enums.converter.javafx.FxIntegerConverter;
 import com.sigamfe.util.FilteredChangeListener;
 import com.sigamfe.util.MaskValidator;
-import com.sigamfe.util.TelefoneUtils;
 import com.sigamfe.util.TextFieldUtils;
 
 import javafx.fxml.FXML;
@@ -70,6 +68,12 @@ public class CadastroController implements BaseController {
 
 	@Autowired
 	private ClientePJBusiness clientePJBusiness;
+
+	@Autowired
+	private MaterialBusiness materialBusiness;
+
+	@Autowired
+	private UsuarioBusiness usuarioBusiness;
 
 	@FXML
 	private ToggleGroup tipoPessoa;
@@ -136,23 +140,18 @@ public class CadastroController implements BaseController {
 
 	@Override
 	public void initializeWindow() {
+		initCliente();
+		initMaterial();
+		initUsuario();
+	}
 
+	private void initCliente() {
 		entityCliente = new Cliente() {
 
-			private static final long serialVersionUID = -8479948750805801165L;
+			private static final long serialVersionUID = -1L;
 
 		};
-		entityCliente.setBloqueado(IndicadorSN.NAO);
-		entityCliente.setJaFoiBloqueado(IndicadorSN.NAO);
-		entityMaterial = new Material();
-		entityUsuario = new Usuario();
 		endereco = new Endereco();
-
-		// Inicializando o combo de unidade de materiais
-		comboMaterialUnidade.getItems().addAll(IndicadorUnidade.values());
-		comboMaterialUnidade.setConverter(new FxEnumConverter<>(IndicadorUnidade.class));
-		comboMaterialUnidade.valueProperty().bindBidirectional(retrieveProperty(entityMaterial, "unidade"));
-
 		tipoPessoa.selectedToggleProperty().addListener((obs, oldValue, newValue) -> {
 			boolean pj = newValue.equals(radioClientePessoaJuridica);
 			textClienteRg.setDisable(pj);
@@ -168,6 +167,9 @@ public class CadastroController implements BaseController {
 				labelClienteTipoPessoa.setText(Labels.CPF + Labels.OBRIGATORIO);
 			}
 		});
+
+		bloqueadoGroup.selectedToggleProperty().addListener((obs, oldValue, newValue) -> entityCliente
+				.setBloqueado(newValue.equals(radioClienteBloqueadoSim) ? IndicadorSN.SIM : IndicadorSN.NAO));
 
 		// Setando os filtros e eventos de edição da tabela de telefones.
 		tableClienteTelefones.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -201,41 +203,35 @@ public class CadastroController implements BaseController {
 				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, MaskValidator.CNH_VALIDATOR)));
 		textClienteCnh.textProperty().bindBidirectional(retrieveProperty(entityCliente, "cnh"));
 
-		textMaterialAluguel.textProperty().addListener(new FilteredChangeListener(textMaterialAluguel,
-				(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2)));
-		textMaterialAluguel.textProperty().bindBidirectional(retrieveProperty(entityMaterial, "valorAluguel"),
-				new FxBigDecimalConverter());
-		textMaterialReposicao.textProperty().addListener(new FilteredChangeListener(textMaterialReposicao,
-				(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2)));
-		textMaterialReposicao.textProperty().addListener((obs, oldValue, newValue) -> entityMaterial
-				.setValorReposicao(StringUtils.isBlank(newValue) ? null : new BigDecimal(newValue)));
-
 		textClienteNome.textProperty().addListener(new FilteredChangeListener(textClienteNome,
 				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 100)));
 		textClienteNome.textProperty().bindBidirectional(retrieveProperty(entityCliente, "nome"));
-		textClienteCidade.textProperty().addListener(new FilteredChangeListener(textClienteCidade,
-				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 200)));
-		textClienteCidade.textProperty().bindBidirectional(retrieveProperty(endereco, "cidade"));
-		textClienteUf.textProperty().addListener(new FilteredChangeListener(textClienteUf,
-				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, MaskValidator.UF_VALIDATOR)));
-		textClienteUf.textProperty().bindBidirectional(retrieveProperty(endereco, "uf"));
-		textClienteNumero.textProperty().addListener(new FilteredChangeListener(textClienteNumero,
-				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 30)));
-		textClienteNumero.textProperty().bindBidirectional(retrieveProperty(endereco, "numero"));
-		textClienteEndereco.textProperty().addListener(new FilteredChangeListener(textClienteEndereco,
-				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 200)));
-		textClienteEndereco.textProperty().bindBidirectional(retrieveProperty(endereco, "logradouro"));
 
 		textClienteEmail.textProperty().addListener(new FilteredChangeListener(textClienteEmail,
 				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 200)));
 		textClienteEmail.textProperty().bindBidirectional(retrieveProperty(entityCliente, "email"));
 
+		textClienteCidade.textProperty().addListener(new FilteredChangeListener(textClienteCidade,
+				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 200)));
+		textClienteCidade.textProperty().bindBidirectional(retrieveProperty(endereco, "cidade"));
+
+		textClienteUf.textProperty().addListener(new FilteredChangeListener(textClienteUf,
+				(newValue, oldValue) -> TextFieldUtils.processMask(newValue, oldValue, MaskValidator.UF_VALIDATOR)));
+		textClienteUf.textProperty().bindBidirectional(retrieveProperty(endereco, "uf"));
+
+		textClienteNumero.textProperty().addListener(new FilteredChangeListener(textClienteNumero,
+				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 30)));
+		textClienteNumero.textProperty().bindBidirectional(retrieveProperty(endereco, "numero"));
+
+		textClienteEndereco.textProperty().addListener(new FilteredChangeListener(textClienteEndereco,
+				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 200)));
+		textClienteEndereco.textProperty().bindBidirectional(retrieveProperty(endereco, "logradouro"));
 	}
 
-	private void resetScreen() {
+	private void resetScreenCliente() {
 		new Cliente() {
 
-			private static final long serialVersionUID = -8479948750805801165L;
+			private static final long serialVersionUID = -1L;
 
 		}.copyProperties(entityCliente);
 		new Endereco().copyProperties(endereco);
@@ -319,7 +315,6 @@ public class CadastroController implements BaseController {
 		showInformation("Sucesso", "Cliente cadastrado com sucesso!");
 		toSave.copyProperties(entityCliente);
 		toSave.getEndereco().copyProperties(endereco);
-
 	}
 
 	@FXML
@@ -331,9 +326,10 @@ public class CadastroController implements BaseController {
 				} else {
 					clientePJBusiness.delete(entityCliente.getId());
 				}
+				resetScreenCliente();
 			}
 		} else {
-			resetScreen();
+			resetScreenCliente();
 		}
 	}
 
@@ -393,7 +389,43 @@ public class CadastroController implements BaseController {
 
 	@FXML
 	public void excluirMaterial() {
+		if (entityMaterial.getId() != null) {
+			if (showConfirmation("Excluir material", Messages.CONFIRM_EXCLUSAO)) {
+				materialBusiness.delete(entityMaterial.getId());
+				resetScreenMaterial();
+			}
+		} else {
+			resetScreenMaterial();
+		}
+	}
 
+	private void initMaterial() {
+		entityMaterial = new Material();
+
+		textMaterialCodigo.textProperty().addListener(new FilteredChangeListener(textMaterialCodigo,
+				(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 0, 4, 0)));
+		textMaterialCodigo.textProperty().bindBidirectional(retrieveProperty(entityMaterial, "codigo"),
+				new FxIntegerConverter());
+
+		textMaterialAluguel.textProperty().addListener(new FilteredChangeListener(textMaterialAluguel,
+				(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2)));
+		textMaterialAluguel.textProperty().bindBidirectional(retrieveProperty(entityMaterial, "valorAluguel"),
+				new FxBigDecimalConverter());
+
+		textMaterialReposicao.textProperty().addListener(new FilteredChangeListener(textMaterialReposicao,
+				(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2)));
+		textMaterialReposicao.textProperty().bindBidirectional(retrieveProperty(entityMaterial, "valorReposicao"),
+				new FxBigDecimalConverter());
+
+		// Inicializando o combo de unidade de materiais
+		comboMaterialUnidade.getItems().addAll(IndicadorUnidade.values());
+		comboMaterialUnidade.setConverter(new FxEnumConverter<>(IndicadorUnidade.class));
+		comboMaterialUnidade.valueProperty().bindBidirectional(retrieveProperty(entityMaterial, "unidade"));
+	}
+
+	private void resetScreenMaterial() {
+		textMaterialCodigo.setDisable(false);
+		new Material().copyProperties(entityMaterial);
 	}
 
 	/*
@@ -410,17 +442,7 @@ public class CadastroController implements BaseController {
 	private ComboBox<PermissaoUsuario> comboUsuarioPermissao;
 
 	@FXML
-	private TextField textUsuarioSenha;
-
-	@FXML
 	private TextField textUsuarioTelefone;
-
-	@Autowired
-	private UsuarioBusiness usuarioBusiness;
-
-	private void resetScreenUsuario() {
-		new Usuario().copyProperties(entityUsuario);
-	}
 
 	@FXML
 	public void pesquisaUsuarioLogin() {
@@ -442,53 +464,62 @@ public class CadastroController implements BaseController {
 
 	}
 
+	private void initUsuario() {
+		entityUsuario = new Usuario();
+
+		textUsuarioCpf.textProperty().addListener(new FilteredChangeListener(textUsuarioCpf,
+				(newValue, oldValue) -> MaskValidator.CPF_VALIDATOR.validate(newValue, oldValue)));
+		textUsuarioCpf.textProperty().bindBidirectional(retrieveProperty(entityUsuario, "cpf"));
+	}
+
 	@FXML
 	public void excluirUsuario() {
 		if (entityUsuario.getId() != null) {
-			if (showConfirmation("Excluir Usuário", Messages.CONFIRM_EXCLUSAO)) {
+			if (showConfirmation("Excluir usuário", Messages.CONFIRM_EXCLUSAO)) {
 				usuarioBusiness.delete(entityUsuario.getId());
+				resetScreenUsuario();
 			}
 		} else {
 			resetScreenUsuario();
 		}
 	}
 
+	private void resetScreenUsuario() {
+		new Usuario().copyProperties(entityUsuario);
+		textUsuarioLogin.setDisable(false);
+		textUsuarioCpf.setDisable(false);
+	}
+
 	@FXML
-	public void salvaUsuario() {
-		if (entityUsuario == null) {
-			entityUsuario = new Usuario();
+	public void salvarUsuario() {
+		Usuario toSave = new Usuario();
+		entityUsuario.copyProperties(toSave);
+		if (toSave.getId() == null) {
+			toSave.setSenha("12345678");
 		}
-		entityUsuario.setCpf(textUsuarioCpf.getText());
-		entityUsuario.setLogin(textUsuarioLogin.getText());
-		entityUsuario.setSenha(textUsuarioSenha.getText());
-		entityUsuario.setTelefone(TelefoneUtils.getTelefoneAsLong(textUsuarioTelefone.getText()));
+		usuarioBusiness.save(toSave);
+		showInformation("Sucesso", "Usuario cadastrado com sucesso!");
+		if (showConfirmation("Adicionar novo", "Deseja adicionar outro usuário?")) {
+			resetScreenUsuario();
+		} else {
+			loadEntity(toSave);
+		}
 	}
 
 	@Override
 	public void loadEntity(BaseEntity<?> entity) {
 		BaseEntity<?> target = null;
 		if (entity instanceof Cliente) {
+			target = entityCliente;
 			Cliente cliente = (Cliente) entity;
-			textClienteNome.setText(entityCliente.getNome());
-			textClienteEmail.setText(entityCliente.getEmail());
+			cliente.copyProperties(entityCliente);
 			bloqueadoGroup.selectToggle(IndicadorSN.SIM.equals(entityCliente.getBloqueado()) ? radioClienteBloqueadoSim
 					: radioClienteBloqueadoNao);
 			tipoPessoa
 					.selectToggle(cliente instanceof ClientePF ? radioClientePessoaFisica : radioClientePessoaJuridica);
-			if (entity instanceof ClientePF) {
-				ClientePF pf = (ClientePF) entityCliente;
-				tipoPessoa.selectToggle(radioClientePessoaFisica);
-				textClienteCpf.setText(pf.getCpf());
-				textClienteCnh.setText(String.valueOf(pf.getCnh()));
-				textClienteRg.setText(pf.getRg());
-			} else {
-				tipoPessoa.selectToggle(radioClientePessoaJuridica);
-				textClienteCpf.setText(((ClientePJ) entityCliente).getCnpj());
-			}
 			radioClientePessoaFisica.setDisable(true);
 			radioClientePessoaJuridica.setDisable(true);
 			textClienteCpf.setDisable(true);
-			target = entityCliente;
 			if (cliente.getEndereco() != null) {
 				cliente.getEndereco().copyProperties(endereco);
 			} else {
@@ -496,8 +527,11 @@ public class CadastroController implements BaseController {
 			}
 		} else if (entity instanceof Usuario) {
 			target = entityUsuario;
+			textUsuarioLogin.setDisable(true);
+			textUsuarioCpf.setDisable(true);
 		} else if (entity instanceof Material) {
 			target = entityMaterial;
+			textMaterialCodigo.setDisable(true);
 		}
 		entity.copyProperties(target);
 	}
