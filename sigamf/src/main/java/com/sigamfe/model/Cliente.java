@@ -128,6 +128,14 @@ public abstract class Cliente extends AuditableBaseEntity<Integer> {
 	private String rg;
 
 	/**
+	 * Instantiates a new cliente.
+	 */
+	public Cliente() {
+		bloqueado = IndicadorSN.NAO;
+		jaFoiBloqueado = IndicadorSN.SIM;
+	}
+
+	/**
 	 * Seta o CPF se for pessoa física ou CNPJ se for pessoa jurídica.
 	 *
 	 * @param cp
