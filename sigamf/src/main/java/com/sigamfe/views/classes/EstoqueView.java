@@ -14,6 +14,8 @@ import lombok.Setter;
 @Component
 public class EstoqueView extends AbstractFxmlView {
 
+	private static final long serialVersionUID = 1720989179232686654L;
+
 	@Getter
 	@Setter
 	private Stage currentStage;
