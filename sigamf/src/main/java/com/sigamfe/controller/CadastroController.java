@@ -1,7 +1,6 @@
 package com.sigamfe.controller;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,7 @@ import com.sigamfe.model.Usuario;
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.model.enums.IndicadorSN;
 import com.sigamfe.model.enums.IndicadorUnidade;
+import com.sigamfe.model.enums.converter.javafx.FxBigDecimalConverter;
 import com.sigamfe.model.enums.converter.javafx.FxEnumConverter;
 import com.sigamfe.util.FilteredChangeListener;
 import com.sigamfe.util.MaskValidator;
@@ -153,18 +153,18 @@ public class CadastroController implements BaseController {
 		comboMaterialUnidade.valueProperty().bindBidirectional(retrieveProperty(entityMaterial, "unidade"));
 
 		tipoPessoa.selectedToggleProperty().addListener((obs, oldValue, newValue) -> {
-			boolean pf = newValue.equals(radioClientePessoaFisica);
-			textClienteRg.setDisable(!pf);
-			textClienteCnh.setDisable(!pf);
+			boolean pj = newValue.equals(radioClientePessoaJuridica);
+			textClienteRg.setDisable(pj);
+			textClienteCnh.setDisable(pj);
 			// O Espaço no final serve para forçar o refresh do campo
 			textClienteCpf.setText(textClienteCpf.getText() + " ");
-			buttonPesquisaClienteRg.setDisable(!pf);
-			if (!pf) {
+			buttonPesquisaClienteRg.setDisable(pj);
+			if (pj) {
 				textClienteRg.clear();
 				textClienteCnh.clear();
 				labelClienteTipoPessoa.setText(Labels.CNPJ + Labels.OBRIGATORIO);
 			} else {
-				labelClienteTipoPessoa.setText(Labels.CNPJ + Labels.OBRIGATORIO);
+				labelClienteTipoPessoa.setText(Labels.CPF + Labels.OBRIGATORIO);
 			}
 		});
 
@@ -202,9 +202,8 @@ public class CadastroController implements BaseController {
 
 		textMaterialAluguel.textProperty().addListener(new FilteredChangeListener(textMaterialAluguel,
 				(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2)));
-		textMaterialAluguel.textProperty().addListener((obs, oldValue, newValue) -> entityMaterial
-				.setValorAluguel(StringUtils.isBlank(newValue) ? null : new BigDecimal(newValue)));
-
+		textMaterialAluguel.textProperty().bindBidirectional(retrieveProperty(entityMaterial, "valorAluguel"),
+				new FxBigDecimalConverter());
 		textMaterialReposicao.textProperty().addListener(new FilteredChangeListener(textMaterialReposicao,
 				(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2)));
 		textMaterialReposicao.textProperty().addListener((obs, oldValue, newValue) -> entityMaterial
@@ -282,8 +281,7 @@ public class CadastroController implements BaseController {
 				.addListener(new FilteredChangeListener(dialogNovoTelefone.getEditor(),
 						(newValue, oldValue) -> MaskValidator.getVersionByLength(newValue, oldValue,
 								MaskValidator.TELEFONE_8_VALIDATOR, MaskValidator.TELEFONE_9_VALIDATOR)));
-		Optional<String> result = dialogNovoTelefone.showAndWait();
-		result.ifPresent((str) -> {
+		dialogNovoTelefone.showAndWait().ifPresent((str) -> {
 			TelefoneCliente tc = new TelefoneCliente();
 			tc.setCliente(entityCliente);
 			tc.setTelefone(str);
