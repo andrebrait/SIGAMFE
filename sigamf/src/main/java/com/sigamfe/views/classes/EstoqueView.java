@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.sigamfe.configuration.constants.Titles;
+import com.sigamfe.views.classes.base.AbstractFxmlView;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -11,7 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Component
-public class EstoqueView {
+public class EstoqueView extends AbstractFxmlView {
 
 	@Getter
 	@Setter

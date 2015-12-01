@@ -1,7 +1,5 @@
 package com.sigamfe.controller;
 
-import java.time.LocalDate;
-
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
@@ -30,6 +28,5 @@ public class DisponibilidadeController {
 
 	public void initializeWindow() {
 		// Inserir inicialização da tabela
-		dataFutura.setOnAction(event -> LocalDate data = dataFutura.getValue());
 	}
 }

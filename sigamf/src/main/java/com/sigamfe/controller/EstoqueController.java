@@ -6,15 +6,15 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.sigamfe.model.Material;
+import com.sigamfe.util.FilteredChangeListener;
+import com.sigamfe.util.TextFieldUtils;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 
 @Component
 @Lazy
@@ -46,11 +46,14 @@ public class EstoqueController {
 		tableInserir.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		tableInserir.getSelectionModel().selectedItemProperty().addListener(
 				(obs, oldSelection, newSelection) -> buttonRemoverMaterial.setDisable(newSelection == null));
-		tableInserir.getColumns().get(0).setCellFactory(ComboBoxTableCell.forTableColumn(entityMaterial));
-		tableInserirQuantidade.setCellFactory(TextFieldTableCell.<Material> forTableColumn());
+		// tableInserir.getColumns().get(0).setCellFactory(ComboBoxTableCell.forTableColumn(entityMaterial));
+		// tableInserirQuantidade.setCellFactory(TextFieldTableCell.<Material>
+		// forTableColumn());
 		tableInserirQuantidade.setOnEditCommit(t -> t.getRowValue().setQuantidade(t.getNewValue()));
 		tableInserirQuantidade.setCellValueFactory(new PropertyValueFactory<>("Quantidade"));
-		tableInserirQuantidade.textProperty().addListener((obs, oldValue, newValue) -> TextFieldsUtils);
+		tableInserirQuantidade.textProperty()
+				.addListener(new FilteredChangeListener(tableInserirQuantidade.textProperty(),
+						(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 0, 7, 0)));
 
 		// Tabela Consultar
 		tableConsultar.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("Material"));
