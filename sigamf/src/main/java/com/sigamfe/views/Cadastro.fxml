@@ -422,7 +422,7 @@
                      <children>
                         <VBox layoutX="55.0" layoutY="45.0">
                            <children>
-                              <HBox layoutX="55.0" layoutY="45.0" prefHeight="304.0" prefWidth="694.0">
+                              <HBox layoutX="55.0" layoutY="45.0">
                                  <children>
                                     <VBox prefHeight="342.0" prefWidth="0.0" HBox.hgrow="ALWAYS">
                                        <children>
@@ -435,7 +435,7 @@
                                              </VBox.margin>
                                           </Label>
                                           <Separator prefHeight="21.0" prefWidth="200.0" visible="false" VBox.vgrow="ALWAYS" />
-                                          <Label fx:id="labelClienteTipoPessoa1" prefHeight="17.0" prefWidth="100.0" text="Permissão*">
+                                          <Label prefHeight="17.0" prefWidth="100.0" text="Permissão*">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -507,18 +507,18 @@
                               </HBox>
                               <VBox prefHeight="210.0" prefWidth="697.0">
                                  <children>
-                                    <VBox prefHeight="190.0" prefWidth="697.0" />
+                                    <VBox prefHeight="137.0" prefWidth="697.0" />
                                     <HBox alignment="CENTER" prefHeight="52.0" prefWidth="697.0">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#salvarMaterial" text="Salvar" />
+                                          <Button mnemonicParsing="false" onAction="#salvarUsuario" text="Salvar" />
                                           <Separator orientation="VERTICAL" prefHeight="200.0" prefWidth="30.0" visible="false" />
-                                          <Button mnemonicParsing="false" onAction="#excluirMaterial" text="Excluir" />
+                                          <Button mnemonicParsing="false" onAction="#excluirUsuario" text="Excluir" />
                                           <Separator orientation="VERTICAL" prefHeight="200.0" prefWidth="30.0" visible="false" />
                                           <Button cancelButton="true" mnemonicParsing="false" onAction="#cancelar" text="Cancelar" />
                                        </children>
-                                       <padding>
-                                          <Insets top="9.0" />
-                                       </padding>
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
                                     </HBox>
                                  </children>
                               </VBox>
