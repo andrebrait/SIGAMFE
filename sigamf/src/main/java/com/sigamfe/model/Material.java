@@ -59,6 +59,11 @@ public class Material extends AuditableBaseEntity<Integer> {
 	@Column(name = "DESCRICAO", length = 200, nullable = true)
 	private String descricao;
 
+	// Alterar size se precisar. estou supondo que o max seria 9.999.999
+	@Size(max = 7)
+	@Column(name = "QUANTIDADE", length = 7, nullable = true)
+	private Integer quantidade;
+
 	@NotNull
 	@Digits(fraction = 2, integer = 6)
 	@Column(name = "VALORALUG", nullable = false, precision = 8, scale = 2)
@@ -114,6 +119,11 @@ public class Material extends AuditableBaseEntity<Integer> {
 	public void setDescricao(String descricao) {
 		onFieldChange("descricao", descricao);
 		this.descricao = descricao;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		onFieldChange("quantidade", quantidade);
+		this.quantidade = quantidade;
 	}
 
 	public void setValorAluguel(BigDecimal valorAluguel) {

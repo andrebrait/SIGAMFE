@@ -2,6 +2,7 @@ package com.sigamfe.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import org.apache.commons.lang3.StringUtils;
@@ -51,7 +52,7 @@ public class TextFieldUtils {
 			if (fractionDigits != 0) {
 				num = num.divide(new BigDecimal(Math.pow(10, fractionDigits)));
 			}
-			NumberFormat nf = NumberFormat.getNumberInstance();
+			NumberFormat nf = DecimalFormat.getNumberInstance();
 			nf.setMinimumFractionDigits(fractionDigits);
 			nf.setMaximumFractionDigits(fractionDigits);
 			nf.setMinimumIntegerDigits(minIntegerDigits);

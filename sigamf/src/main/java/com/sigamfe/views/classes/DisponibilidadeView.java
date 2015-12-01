@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Component
-public class EstoqueView {
+public class DisponibilidadeView {
 
 	@Getter
 	@Setter
@@ -20,7 +20,6 @@ public class EstoqueView {
 	@Autowired
 	private MainWindowView mainWindowView;
 
-	@Override
 	public void newStage() {
 		Stage stage = new Stage();
 		stage.setScene(new Scene(getView()));
