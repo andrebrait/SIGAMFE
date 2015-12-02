@@ -8,7 +8,8 @@ import org.junit.runners.Suite.SuiteClasses;
  * Unit test for simple App.
  */
 @RunWith(Suite.class)
-@SuiteClasses({ UsuarioBusinessTest.class })
+@SuiteClasses({ MaterialBusinessTest.class, UsuarioBusinessTest.class, ClientePFBusinessTest.class,
+		ClientePJBusinessTest.class })
 public class AppTest {
 
 }
