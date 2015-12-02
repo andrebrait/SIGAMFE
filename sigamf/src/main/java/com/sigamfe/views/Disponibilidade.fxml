@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="33.0" layoutY="35.0" text="HOJE" />
+      <Label layoutX="34.0" layoutY="52.0" text="Disponibilidade dos Nateriais" />
+      <Label layoutX="33.0" layoutY="187.0" text="MATERIAIS PERDIDOS ATÉ HOJE" />
+      <Label layoutX="33.0" layoutY="204.0" text="disponibilidade dos Materiais" />
+      <Label layoutX="36.0" layoutY="348.0" text="FUTURO" />
+      <Label layoutX="34.0" layoutY="369.0" text="Data" />
+      <DatePicker layoutX="69.0" layoutY="365.0" />
+      <TreeTableView layoutX="36.0" layoutY="79.0" prefHeight="84.0" prefWidth="673.0">
+        <columns>
+          <TreeTableColumn prefWidth="75.0" text="C1" />
+          <TreeTableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TreeTableView>
+      <TreeTableView layoutX="47.0" layoutY="233.0" prefHeight="84.0" prefWidth="673.0">
+         <columns>
+            <TreeTableColumn prefWidth="75.0" text="C1" />
+            <TreeTableColumn prefWidth="75.0" text="C2" />
+         </columns>
+      </TreeTableView>
+      <TreeTableView layoutX="58.0" layoutY="405.0" prefHeight="84.0" prefWidth="673.0">
+         <columns>
+            <TreeTableColumn prefWidth="75.0" text="C1" />
+            <TreeTableColumn prefWidth="75.0" text="C2" />
+         </columns>
+      </TreeTableView>
+      <Button layoutX="358.0" layoutY="535.0" mnemonicParsing="false" text="Fechar" />
+   </children>
+</Pane>

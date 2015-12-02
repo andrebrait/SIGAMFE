@@ -6,6 +6,26 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.40">
-	<!-- TODO Add Nodes -->
-</AnchorPane>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Separator layoutX="397.0" layoutY="26.0" orientation="VERTICAL" prefHeight="460.0" prefWidth="7.0" />
+      <Label layoutX="38.0" layoutY="53.0" text="Inserir" />
+      <TableView layoutX="38.0" layoutY="84.0" prefHeight="213.0" prefWidth="327.0">
+        <columns>
+          <TableColumn prefWidth="126.0" text="Material" />
+            <TableColumn prefWidth="120.0" text="Quantidade" />
+        </columns>
+      </TableView>
+      <Label layoutX="445.0" layoutY="53.0" text="Consultar" />
+      <TableView layoutX="445.0" layoutY="91.0" prefHeight="200.0" prefWidth="327.0">
+        <columns>
+          <TableColumn prefWidth="169.0" text="Material" />
+          <TableColumn prefWidth="157.0" text="Quantidade" />
+        </columns>
+      </TableView>
+      <Button layoutX="150.0" layoutY="364.0" mnemonicParsing="false" text="Inserir" />
+      <Button layoutX="609.0" layoutY="364.0" mnemonicParsing="false" text="Consultar" />
+      <Button layoutX="378.0" layoutY="527.0" mnemonicParsing="false" text="Ccelaran" />
+      <Button layoutX="215.0" layoutY="364.0" mnemonicParsing="false" text="Remover" />
+   </children>
+</Pane>
