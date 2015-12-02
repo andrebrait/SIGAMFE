@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -68,7 +69,7 @@ public abstract class Cliente extends AuditableBaseEntity<Integer> {
 
 	/** The endereco. */
 	@NotNull
-	@OneToOne
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ENDERECO", nullable = false)
 	private Endereco endereco;
 
@@ -112,7 +113,7 @@ public abstract class Cliente extends AuditableBaseEntity<Integer> {
 	private List<Pedido> pedidos;
 
 	/** The telefones. */
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	private List<TelefoneCliente> telefones;
 
 	/** The cp. */

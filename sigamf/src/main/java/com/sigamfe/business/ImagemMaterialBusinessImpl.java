@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.sigamfe.business.base.AbstractBusiness;
 import com.sigamfe.model.ImagemMaterial;
+import com.sigamfe.model.Material;
 import com.sigamfe.repository.ImagemMaterialRepository;
 
 import lombok.Getter;
@@ -23,4 +24,9 @@ public class ImagemMaterialBusinessImpl extends AbstractBusiness<Integer, Imagem
 	@Getter
 	@Autowired
 	private ImagemMaterialRepository repository;
+
+	@Override
+	public ImagemMaterial findByMaterial(Material material) {
+		return repository.findByMaterial(material);
+	}
 }

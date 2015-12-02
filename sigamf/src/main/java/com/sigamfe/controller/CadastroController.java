@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.sigamfe.business.ClientePFBusiness;
 import com.sigamfe.business.ClientePJBusiness;
+import com.sigamfe.business.ImagemMaterialBusiness;
 import com.sigamfe.business.MaterialBusiness;
 import com.sigamfe.business.UsuarioBusiness;
 import com.sigamfe.configuration.constants.Labels;
@@ -34,6 +35,7 @@ import com.sigamfe.model.enums.converter.javafx.FxIntegerConverter;
 import com.sigamfe.util.FilteredChangeListener;
 import com.sigamfe.util.ImageUtils;
 import com.sigamfe.util.MaskValidator;
+import com.sigamfe.util.TelefoneUtils.TelefoneConverter;
 import com.sigamfe.util.TextFieldUtils;
 
 import javafx.collections.FXCollections;
@@ -85,6 +87,9 @@ public class CadastroController implements BaseController {
 
 	@Autowired
 	private UsuarioBusiness usuarioBusiness;
+
+	@Autowired
+	private ImagemMaterialBusiness imagemMaterialBusiness;
 
 	@FXML
 	private ToggleGroup tipoPessoa;
@@ -581,7 +586,8 @@ public class CadastroController implements BaseController {
 				.addListener(new FilteredChangeListener(textUsuarioTelefone,
 						(newValue, oldValue) -> MaskValidator.getVersionByLength(newValue, oldValue,
 								MaskValidator.TELEFONE_8_VALIDATOR, MaskValidator.TELEFONE_9_VALIDATOR)));
-		textUsuarioTelefone.textProperty().bindBidirectional(retrieveProperty(entityUsuario, "telefone"));
+		textUsuarioTelefone.textProperty().bindBidirectional(retrieveProperty(entityUsuario, "telefone"),
+				new TelefoneConverter());
 	}
 
 	@FXML
@@ -646,8 +652,11 @@ public class CadastroController implements BaseController {
 			target = entityMaterial;
 			textMaterialCodigo.setDisable(true);
 			entity.copyProperties(target);
+			ImagemMaterial imagem = imagemMaterialBusiness.findById(entityMaterial.getId());
+			entityMaterial.setImagem(imagem);
 			if (entityMaterial.getImagem() != null) {
 				imagemMaterial.setImage(ImageUtils.convertBytesToImage(entityMaterial.getImagem().getImagem()));
+				setStackOrder(paneMaterialShowImagem, paneMaterialSelectImagem);
 			}
 		}
 	}

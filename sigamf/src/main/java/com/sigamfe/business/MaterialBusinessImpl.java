@@ -5,6 +5,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sigamfe.business.base.AbstractBusiness;
 import com.sigamfe.model.ImagemMaterial;
@@ -28,6 +29,7 @@ public class MaterialBusinessImpl extends AbstractBusiness<Integer, Material> im
 	@Autowired
 	private ImagemMaterialBusiness imagemMaterialBusiness;
 
+	@Transactional
 	@Override
 	public Material save(Material entity) {
 		ImagemMaterial imagem = entity.getImagem();

@@ -82,7 +82,7 @@ public class Usuario extends AuditableBaseEntity<Integer> {
 	@NotNull
 	@Convert(converter = IndicadorSNConverter.class)
 	@Column(name = "INDICADORATIVO", nullable = false, length = 1)
-	private IndicadorSN ativo;
+	private IndicadorSN ativo = IndicadorSN.SIM;
 
 	@ManyToOne
 	@JoinColumn(name = "USUARIOCRIACAO", nullable = true)
