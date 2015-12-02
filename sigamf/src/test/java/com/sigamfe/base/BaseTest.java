@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sigamfe.business.UsuarioBusiness;
 import com.sigamfe.configuration.SigamfeContext;
 import com.sigamfe.model.Usuario;
 import com.sigamfe.model.enums.IndicadorSN;
@@ -23,18 +24,24 @@ import com.sigamfe.model.enums.PermissaoUsuario;
 public abstract class BaseTest {
 
 	@Autowired
+	private UsuarioBusiness usuarioBusiness;
+
+	@Autowired
 	private PooledPBEStringEncryptor encryptor;
 
 	@Before
 	public void initialize() {
-		Usuario usuario = new Usuario();
-		usuario.setLogin("testeAdmin");
-		usuario.setSenhaEncriptando(encryptor, "testePass");
-		usuario.setAtivo(IndicadorSN.SIM);
-		usuario.setCpf("015.289.223-89");
-		usuario.setTelefone(3133333333L);
-		usuario.setPermissao(PermissaoUsuario.ADMINISTRADOR);
-		SigamfeContext.usuarioLogado = usuario;
+		if (SigamfeContext.usuarioLogado == null) {
+			Usuario usuario = new Usuario();
+			usuario.setLogin("testeAdmin");
+			usuario.setSenhaEncriptando(encryptor, "testePass");
+			usuario.setAtivo(IndicadorSN.SIM);
+			usuario.setCpf("015.338.906-09");
+			usuario.setTelefone(3133333333L);
+			usuario.setPermissao(PermissaoUsuario.ADMINISTRADOR);
+			usuarioBusiness.save(usuario);
+			SigamfeContext.usuarioLogado = usuario;
+		}
 	}
 
 }
