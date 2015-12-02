@@ -1,4 +1,4 @@
-package com.sigamfe;
+package com.sigamfe.base;
 
 import java.util.Properties;
 

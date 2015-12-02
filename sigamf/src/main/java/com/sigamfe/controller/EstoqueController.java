@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.sigamfe.controller.base.BaseController;
 import com.sigamfe.model.Material;
+import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.util.FilteredChangeListener;
 import com.sigamfe.util.TextFieldUtils;
 
@@ -19,7 +21,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 @Component
 @Lazy
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-public class EstoqueController {
+public class EstoqueController implements BaseController {
+
+	private static final long serialVersionUID = 6485441790538865501L;
 
 	private Material entityMaterial;
 
@@ -35,12 +39,9 @@ public class EstoqueController {
 	@FXML
 	private TableView<Material> tableConsultar;
 
+	@Override
 	public void initializeWindow() {
-		entityMaterial = new Material() {
-
-			private static final long serialVersionUID = -1342694126956506751L;
-
-		};
+		entityMaterial = new Material();
 
 		// Tabela Inserir
 		tableInserir.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -50,15 +51,21 @@ public class EstoqueController {
 		// tableInserirQuantidade.setCellFactory(TextFieldTableCell.<Material>
 		// forTableColumn());
 		tableInserirQuantidade.setOnEditCommit(t -> t.getRowValue().setQuantidade(t.getNewValue()));
-		tableInserirQuantidade.setCellValueFactory(new PropertyValueFactory<>("Quantidade"));
+		tableInserirQuantidade.setCellValueFactory(new PropertyValueFactory<>("quantidade"));
 		tableInserirQuantidade.textProperty()
 				.addListener(new FilteredChangeListener(tableInserirQuantidade.textProperty(),
 						(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 0, 7, 0)));
 
 		// Tabela Consultar
-		tableConsultar.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("Material"));
+		tableConsultar.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("material"));
 		tableConsultar.getColumns().get(0).setEditable(false);
-		tableConsultar.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("Quantidade"));
+		tableConsultar.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("quantidade"));
 		tableConsultar.getColumns().get(1).setEditable(false);
+	}
+
+	@Override
+	public void loadEntity(BaseEntity<?> entity) {
+		// TODO Auto-generated method stub
+
 	}
 }
