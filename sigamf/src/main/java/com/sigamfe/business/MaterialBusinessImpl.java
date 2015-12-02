@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.sigamfe.business.base.AbstractBusiness;
+import com.sigamfe.model.ImagemMaterial;
 import com.sigamfe.model.Material;
 import com.sigamfe.repository.MaterialRepository;
 
@@ -22,4 +23,30 @@ public class MaterialBusinessImpl extends AbstractBusiness<Integer, Material> im
 	@Getter
 	@Autowired
 	private MaterialRepository repository;
+
+	@Getter
+	@Autowired
+	private ImagemMaterialBusiness imagemMaterialBusiness;
+
+	@Override
+	public Material save(Material entity) {
+		ImagemMaterial imagem = entity.getImagem();
+		entity.setImagem(null);
+		Material returnEntity = super.save(entity);
+		if (imagem != null) {
+			imagem.setMaterial(returnEntity);
+			entity.setImagem(imagemMaterialBusiness.save(imagem));
+		}
+		return entity;
+	}
+
+	@Override
+	public Material findByCodigo(Integer codigo) {
+		return repository.findByCodigo(codigo);
+	}
+
+	@Override
+	public Material findByDescricao(String codigo) {
+		return repository.findByDescricao(codigo);
+	}
 }

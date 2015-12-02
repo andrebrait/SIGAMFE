@@ -25,7 +25,7 @@ public class UsuarioBusinessTest extends BaseTest {
 		usuario.setLogin("admSigamfe");
 		usuario.setSenhaEncriptando(encryptor, "sigPass");
 		usuario.setAtivo(IndicadorSN.SIM);
-		usuario.setCpf("014.795.246-89");
+		usuario.setCpf("015.338.906-09");
 		usuario.setTelefone(930040829L);
 		usuario.setPermissao(PermissaoUsuario.ADMINISTRADOR);
 		usuarioBusiness.save(usuario);

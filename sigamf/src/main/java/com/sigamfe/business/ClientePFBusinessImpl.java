@@ -40,12 +40,29 @@ public class ClientePFBusinessImpl extends AbstractBusiness<Integer, ClientePF> 
 		List<TelefoneCliente> tc = entity.getTelefones();
 		entity.setTelefones(null);
 		entity = super.save(entity);
-		for (TelefoneCliente t : tc) {
-			t.setCliente(entity);
+		if (tc != null) {
+			for (TelefoneCliente t : tc) {
+				t.setCliente(entity);
+			}
+			tc = telefoneClienteBusiness.save(tc);
 		}
-		tc = telefoneClienteBusiness.save(tc);
 		entity.setTelefones(tc);
 		return entity;
+	}
+
+	@Override
+	public ClientePF findByCpf(String cpf) {
+		return repository.findByCpf(cpf);
+	}
+
+	@Override
+	public ClientePF findByNome(String nome) {
+		return repository.findByNome(nome);
+	}
+
+	@Override
+	public ClientePF findByRg(String rg) {
+		return repository.findByRg(rg);
 	}
 
 }

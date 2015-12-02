@@ -16,6 +16,11 @@ public class FxLongConverter extends StringConverter<Long> {
 
 	@Override
 	public Long fromString(String string) {
+		if (string == null) {
+			return null;
+		}
+		string = StringUtils.remove(string, ".");
+		string = StringUtils.remove(string, ",");
 		if (StringUtils.isBlank(string)) {
 			return null;
 		}

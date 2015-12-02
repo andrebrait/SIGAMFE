@@ -1,5 +1,7 @@
 package com.sigamfe.controller;
 
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Lazy;
@@ -18,6 +20,7 @@ import com.sigamfe.model.Cliente;
 import com.sigamfe.model.ClientePF;
 import com.sigamfe.model.ClientePJ;
 import com.sigamfe.model.Endereco;
+import com.sigamfe.model.ImagemMaterial;
 import com.sigamfe.model.Material;
 import com.sigamfe.model.TelefoneCliente;
 import com.sigamfe.model.Usuario;
@@ -29,10 +32,14 @@ import com.sigamfe.model.enums.converter.javafx.FxBigDecimalConverter;
 import com.sigamfe.model.enums.converter.javafx.FxEnumConverter;
 import com.sigamfe.model.enums.converter.javafx.FxIntegerConverter;
 import com.sigamfe.util.FilteredChangeListener;
+import com.sigamfe.util.ImageUtils;
 import com.sigamfe.util.MaskValidator;
 import com.sigamfe.util.TextFieldUtils;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -45,8 +52,12 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 @Component
 @Lazy
@@ -250,17 +261,45 @@ public class CadastroController implements BaseController {
 
 	@FXML
 	public void pesquisaClienteNome() {
-
+		Cliente buscado;
+		if (isPessoaFisica()) {
+			buscado = clientePFBusiness.findByNome(entityCliente.getNome());
+		} else {
+			buscado = clientePJBusiness.findByNome(entityCliente.getNome());
+		}
+		if (buscado == null) {
+			showError("Erro", "Cliente não encontrado!");
+		} else {
+			showInformation("Sucesso", "Cliente encontrado com sucesso!");
+			loadEntity(buscado);
+		}
 	}
 
 	@FXML
 	public void pesquisaClienteCpfCnpj() {
-
+		Cliente buscado;
+		if (isPessoaFisica()) {
+			buscado = clientePFBusiness.findByCpf(entityCliente.getCp());
+		} else {
+			buscado = clientePJBusiness.findByCnpj(entityCliente.getCp());
+		}
+		if (buscado == null) {
+			showError("Erro", "Cliente não encontrado!");
+		} else {
+			showInformation("Sucesso", "Cliente encontrado com sucesso!");
+			loadEntity(buscado);
+		}
 	}
 
 	@FXML
 	public void pesquisaClienteRg() {
-
+		ClientePF buscado = clientePFBusiness.findByRg(entityCliente.getRg());
+		if (buscado == null) {
+			showError("Erro", "Cliente não encontrado!");
+		} else {
+			showInformation("Sucesso", "Cliente encontrado com sucesso!");
+			loadEntity(buscado);
+		}
 	}
 
 	@FXML
@@ -343,7 +382,11 @@ public class CadastroController implements BaseController {
 	 */
 
 	@FXML
-	private StackPane paneImagemMaterial;
+	private StackPane paneMaterialImagem;
+
+	private Pane paneMaterialShowImagem;
+
+	private Pane paneMaterialSelectImagem;
 
 	@FXML
 	private ImageView imagemMaterial;
@@ -365,26 +408,60 @@ public class CadastroController implements BaseController {
 
 	@FXML
 	public void removeImagemMaterial() {
+		imagemMaterial.setImage(null);
+		entityMaterial.setImagem(null);
+		setStackOrder(paneMaterialSelectImagem, paneMaterialShowImagem);
 	}
 
 	@FXML
 	public void adicionarImagemMaterial() {
-
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Abrir imagem");
+		fileChooser.getExtensionFilters()
+				.add(new ExtensionFilter("Imagens", "*.jpg", "*.jpeg", "*.png", "*.gif", "*.bmp"));
+		File selectedFile = fileChooser.showOpenDialog(getParentStage(imagemMaterial));
+		if (selectedFile != null) {
+			imagemMaterial.setImage(new Image("file:" + selectedFile.getAbsolutePath()));
+			entityMaterial.setImagem(new ImagemMaterial());
+			entityMaterial.getImagem().setMaterial(entityMaterial);
+			entityMaterial.getImagem().setImagem(ImageUtils.convertImageToBytes(imagemMaterial.getImage()));
+			setStackOrder(paneMaterialShowImagem, paneMaterialSelectImagem);
+		}
 	}
 
 	@FXML
 	public void buscaMaterialCodigo() {
-
+		Material buscado = materialBusiness.findByCodigo(entityMaterial.getCodigo());
+		if (buscado == null) {
+			showError("Erro", "Material não encontrado!");
+		} else {
+			showInformation("Sucesso", "Material encontrado com sucesso!");
+			loadEntity(buscado);
+		}
 	}
 
 	@FXML
 	public void buscaMaterialDescricao() {
-
+		Material buscado = materialBusiness.findByDescricao(entityMaterial.getDescricao());
+		if (buscado == null) {
+			showError("Erro", "Material não encontrado!");
+		} else {
+			showInformation("Sucesso", "Material encontrado com sucesso!");
+			loadEntity(buscado);
+		}
 	}
 
 	@FXML
 	public void salvarMaterial() {
-
+		Material toSave = new Material();
+		entityMaterial.copyProperties(toSave);
+		materialBusiness.save(toSave);
+		showInformation("Sucesso", "Material cadastrado com sucesso!");
+		if (showConfirmation("Adicionar novo", "Deseja adicionar outro material?")) {
+			resetScreenMaterial();
+		} else {
+			loadEntity(toSave);
+		}
 	}
 
 	@FXML
@@ -407,6 +484,10 @@ public class CadastroController implements BaseController {
 		textMaterialCodigo.textProperty().bindBidirectional(retrieveProperty(entityMaterial, "codigo"),
 				new FxIntegerConverter());
 
+		textMaterialDescricao.textProperty().addListener(new FilteredChangeListener(textMaterialDescricao,
+				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 200)));
+		textMaterialDescricao.textProperty().bindBidirectional(retrieveProperty(entityMaterial, "descricao"));
+
 		textMaterialAluguel.textProperty().addListener(new FilteredChangeListener(textMaterialAluguel,
 				(newValue, oldValue) -> TextFieldUtils.processMaxDecimal(newValue, oldValue, 1, 6, 2)));
 		textMaterialAluguel.textProperty().bindBidirectional(retrieveProperty(entityMaterial, "valorAluguel"),
@@ -421,11 +502,26 @@ public class CadastroController implements BaseController {
 		comboMaterialUnidade.getItems().addAll(IndicadorUnidade.values());
 		comboMaterialUnidade.setConverter(new FxEnumConverter<>(IndicadorUnidade.class));
 		comboMaterialUnidade.valueProperty().bindBidirectional(retrieveProperty(entityMaterial, "unidade"));
+
+		imagemMaterial.setPreserveRatio(true);
+		imagemMaterial.setFitHeight(220);
+		imagemMaterial.setFitHeight(220);
+
+		paneMaterialSelectImagem = (Pane) paneMaterialImagem.getChildren().get(0);
+		paneMaterialShowImagem = (Pane) paneMaterialImagem.getChildren().get(1);
+
+	}
+
+	private void setStackOrder(Node first, Node second) {
+		ObservableList<Node> workingCollection = FXCollections.observableArrayList(first, second);
+		paneMaterialImagem.getChildren().setAll(workingCollection);
 	}
 
 	private void resetScreenMaterial() {
-		textMaterialCodigo.setDisable(false);
 		new Material().copyProperties(entityMaterial);
+		textMaterialCodigo.setDisable(false);
+		imagemMaterial.setImage(null);
+		setStackOrder(paneMaterialSelectImagem, paneMaterialShowImagem);
 	}
 
 	/*
@@ -446,22 +542,24 @@ public class CadastroController implements BaseController {
 
 	@FXML
 	public void pesquisaUsuarioLogin() {
-
+		Usuario buscado = usuarioBusiness.findByLogin(entityUsuario.getLogin());
+		if (buscado == null) {
+			showError("Erro", "Usuário não encontrado!");
+		} else {
+			showInformation("Sucesso", "Usuário encontrado com sucesso!");
+			loadEntity(buscado);
+		}
 	}
 
 	@FXML
-	public void pesquisaUsuarioCPF() {
-
-	}
-
-	@FXML
-	public void pesquisaUsuarioTelefone() {
-
-	}
-
-	@FXML
-	public void pesquisaUsuarioPermissao() {
-
+	public void pesquisaUsuarioCpf() {
+		Usuario buscado = usuarioBusiness.findByCpf(entityUsuario.getCpf());
+		if (buscado == null) {
+			showError("Erro", "Usuário não encontrado!");
+		} else {
+			showInformation("Sucesso", "Usuário encontrado com sucesso!");
+			loadEntity(buscado);
+		}
 	}
 
 	private void initUsuario() {
@@ -470,6 +568,20 @@ public class CadastroController implements BaseController {
 		textUsuarioCpf.textProperty().addListener(new FilteredChangeListener(textUsuarioCpf,
 				(newValue, oldValue) -> MaskValidator.CPF_VALIDATOR.validate(newValue, oldValue)));
 		textUsuarioCpf.textProperty().bindBidirectional(retrieveProperty(entityUsuario, "cpf"));
+
+		textUsuarioLogin.textProperty().addListener(new FilteredChangeListener(textUsuarioCpf,
+				(newValue, oldValue) -> TextFieldUtils.processMaxChars(newValue, 20)));
+		textUsuarioLogin.textProperty().bindBidirectional(retrieveProperty(entityUsuario, "login"));
+
+		comboUsuarioPermissao.getItems().addAll(PermissaoUsuario.values());
+		comboUsuarioPermissao.setConverter(new FxEnumConverter<>(PermissaoUsuario.class));
+		comboUsuarioPermissao.valueProperty().bindBidirectional(retrieveProperty(entityUsuario, "permissao"));
+
+		textUsuarioTelefone.textProperty()
+				.addListener(new FilteredChangeListener(textUsuarioTelefone,
+						(newValue, oldValue) -> MaskValidator.getVersionByLength(newValue, oldValue,
+								MaskValidator.TELEFONE_8_VALIDATOR, MaskValidator.TELEFONE_9_VALIDATOR)));
+		textUsuarioTelefone.textProperty().bindBidirectional(retrieveProperty(entityUsuario, "telefone"));
 	}
 
 	@FXML
@@ -529,11 +641,15 @@ public class CadastroController implements BaseController {
 			target = entityUsuario;
 			textUsuarioLogin.setDisable(true);
 			textUsuarioCpf.setDisable(true);
+			entity.copyProperties(target);
 		} else if (entity instanceof Material) {
 			target = entityMaterial;
 			textMaterialCodigo.setDisable(true);
+			entity.copyProperties(target);
+			if (entityMaterial.getImagem() != null) {
+				imagemMaterial.setImage(ImageUtils.convertBytesToImage(entityMaterial.getImagem().getImagem()));
+			}
 		}
-		entity.copyProperties(target);
 	}
 
 }

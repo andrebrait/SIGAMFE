@@ -53,4 +53,9 @@ public class UsuarioBusinessImpl extends AbstractBusiness<Integer, Usuario> impl
 		return repository.findByLogin(login);
 	}
 
+	@Override
+	public Usuario findByCpf(String cpf) {
+		return repository.findByCpf(cpf);
+	}
+
 }

@@ -8,4 +8,8 @@ import com.sigamfe.repository.base.BaseRepository;
 @Repository
 public interface ClientePJRepository extends BaseRepository<Integer, ClientePJ>, ClientePJRepositoryCustom {
 
+	ClientePJ findByCnpj(String cnpj);
+
+	ClientePJ findByNome(String nome);
+
 }

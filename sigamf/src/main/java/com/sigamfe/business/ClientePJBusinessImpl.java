@@ -40,11 +40,23 @@ public class ClientePJBusinessImpl extends AbstractBusiness<Integer, ClientePJ> 
 		List<TelefoneCliente> tc = entity.getTelefones();
 		entity.setTelefones(null);
 		entity = super.save(entity);
-		for (TelefoneCliente t : tc) {
-			t.setCliente(entity);
+		if (tc != null) {
+			for (TelefoneCliente t : tc) {
+				t.setCliente(entity);
+			}
+			tc = telefoneClienteBusiness.save(tc);
 		}
-		tc = telefoneClienteBusiness.save(tc);
 		entity.setTelefones(tc);
 		return entity;
+	}
+
+	@Override
+	public ClientePJ findByCnpj(String cnpj) {
+		return repository.findByCnpj(cnpj);
+	}
+
+	@Override
+	public ClientePJ findByNome(String nome) {
+		return repository.findByNome(nome);
 	}
 }

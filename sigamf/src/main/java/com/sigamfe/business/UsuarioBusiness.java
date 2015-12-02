@@ -13,4 +13,6 @@ public interface UsuarioBusiness extends BaseBusiness<Integer, Usuario> {
 
 	PooledPBEStringEncryptor getEncryptor();
 
+	Usuario findByCpf(String cpf);
+
 }

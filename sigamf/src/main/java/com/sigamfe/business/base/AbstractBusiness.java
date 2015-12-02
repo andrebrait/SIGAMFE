@@ -104,7 +104,8 @@ public abstract class AbstractBusiness<ID extends Serializable, E extends BaseEn
 			if (audit.getDataCriacao() == null) {
 				audit.setDataCriacao(dataAtual);
 			}
-			audit.setUsuarioAtualizacao(SigamfeContext.usuarioLogado);
+			audit.setUsuarioAtualizacao(
+					entity.equals(SigamfeContext.usuarioLogado) ? null : SigamfeContext.usuarioLogado);
 			audit.setDataAtualizacao(dataAtual);
 		}
 	}

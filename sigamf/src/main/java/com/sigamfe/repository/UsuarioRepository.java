@@ -13,9 +13,12 @@ import com.sigamfe.repository.base.BaseRepository;
 @Repository
 public interface UsuarioRepository extends BaseRepository<Integer, Usuario>, UsuarioRepositoryCustom {
 
-	public Usuario findByLogin(String login);
+	@Query("select a from Usuario a where a.login = :login")
+	public Usuario findByLogin(@Param("login") String login);
 
-	@Query("select a from Usuario a where a.ativo =:ativo")
+	public Usuario findByCpf(String cpf);
+
+	@Query("select a from Usuario a where a.ativo = :ativo")
 	public List<Usuario> findByAtivo(@Param("ativo") IndicadorSN ativo);
 
 }

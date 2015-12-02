@@ -29,19 +29,32 @@ public abstract class BaseTest {
 	@Autowired
 	private PooledPBEStringEncryptor encryptor;
 
+	private static Usuario usuario_static;
+
 	@Before
 	public void initialize() {
-		if (SigamfeContext.usuarioLogado == null) {
-			Usuario usuario = new Usuario();
-			usuario.setLogin("testeAdmin");
-			usuario.setSenhaEncriptando(encryptor, "testePass");
-			usuario.setAtivo(IndicadorSN.SIM);
-			usuario.setCpf("015.338.906-09");
-			usuario.setTelefone(3133333333L);
-			usuario.setPermissao(PermissaoUsuario.ADMINISTRADOR);
-			usuarioBusiness.save(usuario);
-			SigamfeContext.usuarioLogado = usuario;
+		SigamfeContext.testing = true;
+		if (usuario_static != null) {
+			usuarioBusiness.save(usuario_static);
+			SigamfeContext.usuarioLogado = usuario_static;
+			return;
 		}
+		Usuario usuario = usuarioBusiness.findByLogin("admin123");
+		if (usuario == null) {
+			try {
+				usuario = new Usuario();
+				usuario.setLogin("admin123");
+				usuario.setSenhaEncriptando(encryptor, "admin123");
+				usuario.setAtivo(IndicadorSN.SIM);
+				usuario.setCpf("014.795.246-89");
+				usuario.setTelefone(3133333333L);
+				usuario.setPermissao(PermissaoUsuario.ADMINISTRADOR);
+				usuario_static = usuarioBusiness.save(usuario);
+			} catch (Exception e) {
+
+			}
+		}
+		SigamfeContext.usuarioLogado = usuario_static;
 	}
 
 }

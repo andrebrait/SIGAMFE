@@ -16,6 +16,11 @@ public class FxIntegerConverter extends StringConverter<Integer> {
 
 	@Override
 	public Integer fromString(String string) {
+		if (string == null) {
+			return null;
+		}
+		string = StringUtils.remove(string, ".");
+		string = StringUtils.remove(string, ",");
 		if (StringUtils.isBlank(string)) {
 			return null;
 		}

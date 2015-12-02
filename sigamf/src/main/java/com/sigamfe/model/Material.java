@@ -59,11 +59,6 @@ public class Material extends AuditableBaseEntity<Integer> {
 	@Column(name = "DESCRICAO", length = 200, nullable = true)
 	private String descricao;
 
-	// Alterar size se precisar. estou supondo que o max seria 9.999.999
-	@Size(max = 7)
-	@Column(name = "QUANTIDADE", length = 7, nullable = true)
-	private Integer quantidade;
-
 	@NotNull
 	@Digits(fraction = 2, integer = 6)
 	@Column(name = "VALORALUG", nullable = false, precision = 8, scale = 2)
@@ -104,6 +99,8 @@ public class Material extends AuditableBaseEntity<Integer> {
 
 	@OneToOne(mappedBy = "material")
 	private ImagemMaterial imagem;
+
+	private transient Integer quantidade;
 
 	@Override
 	public void setId(Integer id) {

@@ -3,11 +3,9 @@ package com.sigamfe;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 
 import com.sigamfe.base.BaseTest;
 import com.sigamfe.business.ClientePFBusiness;
-import com.sigamfe.model.Cliente;
 import com.sigamfe.model.ClientePF;
 import com.sigamfe.model.Endereco;
 import com.sigamfe.model.enums.IndicadorSN;
@@ -16,9 +14,6 @@ public class ClientePFBusinessTest extends BaseTest {
 
 	@Autowired
 	private ClientePFBusiness clientePFBusiness;
-
-	@Autowired
-	private ApplicationContext applicationContext;
 
 	@Test
 	public void tes_findAll() {
@@ -29,14 +24,14 @@ public class ClientePFBusinessTest extends BaseTest {
 		endereco.setLogradouro("Rua Jacuí");
 		endereco.setNumero("12");
 
-		Cliente cliente = new ClientePF();
+		ClientePF cliente = new ClientePF();
 		cliente.setNome("João da Silva");
-		cliente.setCp("123456789-22");
+		cliente.setCpf("015.338.906-09");
 		cliente.setEmail("joao@sigamfe.com.br");
 		cliente.setEndereco(endereco);
 		cliente.setBloqueado(IndicadorSN.NAO);
 		cliente.setJaFoiBloqueado(IndicadorSN.NAO);
-		clientePFBusiness.save((ClientePF) cliente);
+		clientePFBusiness.save(cliente);
 		Assert.assertTrue(!clientePFBusiness.findAll().isEmpty());
 	}
 }

@@ -9,6 +9,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.context.annotation.Configuration;
 
+import com.sigamfe.configuration.SigamfeContext;
 import com.sigamfe.configuration.constants.Titles;
 import com.sigamfe.exception.BusinessException;
 import com.sigamfe.exception.GenericException;
@@ -31,6 +32,10 @@ public class ExceptionHandler {
 	}
 
 	private static void showErrorAlert(Throwable ex) {
+
+		if (SigamfeContext.testing) {
+			return;
+		}
 
 		Alert alert = new Alert(AlertType.ERROR);
 

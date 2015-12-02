@@ -32,7 +32,7 @@ public class TestConfiguration {
 		HikariConfig hikariConfig = new HikariConfig();
 		hikariConfig.setDriverClassName("org.h2.Driver");
 		hikariConfig.setUsername("sa");
-		hikariConfig.setJdbcUrl("jdbc:h2:mem:datajpa;DB_CLOSE_ON_EXIT=FALSE");
+		hikariConfig.setJdbcUrl("jdbc:h2:mem:datajpa;DB_CLOSE_ON_EXIT=FALSE;");
 		hikariConfig.setAutoCommit(AUTO_COMMIT);
 		return new HikariDataSource(hikariConfig);
 	}

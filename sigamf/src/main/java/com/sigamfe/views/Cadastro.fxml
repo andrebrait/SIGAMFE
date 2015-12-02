@@ -258,9 +258,9 @@
                            <children>
                               <HBox alignment="CENTER" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <StackPane fx:id="paneImagemMaterial">
+                                    <StackPane fx:id="paneMaterialImagem">
                                        <children>
-                                          <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="300.0" style="-fx-background-color: derive(-fx-base, 26.4%);">
+                                          <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="300.0" style="-fx-background-color: derive(-fx-base, 26.4%);" StackPane.alignment="CENTER">
                                              <children>
                                                 <ImageView fx:id="imagemMaterial" fitHeight="220.0" fitWidth="220.0" layoutX="40.0" pickOnBounds="true" preserveRatio="true">
                                                    <viewport>
@@ -456,7 +456,7 @@
                                              <children>
                                                 <TextField fx:id="textUsuarioLogin" maxWidth="348.0" prefHeight="25.0" prefWidth="175.0" />
                                                 <Separator orientation="VERTICAL" visible="false" />
-                                                <Button mnemonicParsing="false">
+                                                <Button mnemonicParsing="false" onAction="#pesquisaUsuarioLogin">
                                                    <graphic>
                                                       <FontAwesomeIconView glyphName="SEARCH" />
                                                    </graphic>
@@ -476,7 +476,7 @@
                                                 <HBox>
                                                    <children>
                                                       <Separator orientation="VERTICAL" visible="false" />
-                                                      <Button mnemonicParsing="false">
+                                                      <Button mnemonicParsing="false" onAction="#pesquisaUsuarioCpf">
                                                          <graphic>
                                                             <FontAwesomeIconView glyphName="SEARCH" />
                                                          </graphic>
