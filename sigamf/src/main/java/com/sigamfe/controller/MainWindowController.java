@@ -8,6 +8,8 @@ import com.sigamfe.business.SystemBusiness;
 import com.sigamfe.controller.base.BaseController;
 import com.sigamfe.model.base.BaseEntity;
 import com.sigamfe.views.classes.CadastroView;
+import com.sigamfe.views.classes.DisponibilidadeView;
+import com.sigamfe.views.classes.EstoqueView;
 
 import javafx.fxml.FXML;
 
@@ -22,6 +24,12 @@ public class MainWindowController implements BaseController {
 
 	@Autowired
 	private CadastroView cadastroView;
+
+	@Autowired
+	private DisponibilidadeView disponibilidadeView;
+
+	@Autowired
+	private EstoqueView estoqueView;
 
 	@Override
 	public void initializeWindow() {
@@ -72,13 +80,14 @@ public class MainWindowController implements BaseController {
 
 	@FXML
 	public void estoqueDisponibilidade() {
-		// TODO Auto-generated method stub
-
+		disponibilidadeView.newStage();
+		disponibilidadeView.getCurrentStage().showAndWait();
 	}
 
 	@FXML
 	public void estoqueInserir() {
-		// TODO Auto-generated method stub
+		estoqueView.newStage();
+		estoqueView.getCurrentStage().showAndWait();
 
 	}
 
