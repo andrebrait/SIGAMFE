@@ -1,29 +1,7 @@
-# README #
+# SIGAMFE #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+### Portuguese ###
+O SIGAMFE é um sistema experimental escrito em Java utilizando JavaFX e Spring Framework juntos em uma aplicação desktop. Ele é licensiado sob a GPL Version 3 e é completamente grátis e livre para qualquer pessoa usar e modificar.
 
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
-
-### How do I get set up? ###
-
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+### English ###
+SIGAMFE is an experimental system written in Java using JavaFX and Spring Framework together as a Desktop Application. It is released under the GPL Version 3 and is completely free for anyone to use and modify.
