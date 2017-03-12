@@ -146,10 +146,6 @@
 			<version>5.0.1.Final</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-jpamodelgen</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>de.jensd</groupId>
 			<artifactId>fontawesomefx</artifactId>
 			<version>8.6</version>
@@ -235,6 +231,36 @@
 				<configuration>
 					<mainClass>com.sigamfe.SigamfeApp</mainClass>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.bsc.maven</groupId>
+				<artifactId>maven-processor-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<id>process</id>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<phase>generate-sources</phase>
+						<configuration>
+							<processors>
+								<processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
+							</processors>
+							<configuration>
+								<outputDirectory>${project.build.directory}/generated-sources/apt</outputDirectory>
+							</configuration>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.hibernate</groupId>
+						<artifactId>hibernate-jpamodelgen</artifactId>
+						<scope>compile</scope>
+						<version>5.2.8.Final</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
